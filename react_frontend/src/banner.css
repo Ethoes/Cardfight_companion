@@ -1,0 +1,23 @@
+.Banner {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .Banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .Banner-title {
+    font-size: 24px;
+  }
+  
+  .Banner-username {
+    font-size: 18px;
+  }

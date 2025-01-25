@@ -15,3 +15,23 @@ def get_image_path_by_id(card_id):
     row = cursor.fetchone()
     conn.close()
     return row[0] if row else None
+
+def create_user(username, password):
+    try:
+        conn = sqlite3.connect(r'C:\Users\Calvin\python filed\scraped_data.db')
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+def validate_user(username, password):
+    conn = sqlite3.connect(r'C:\Users\Calvin\python filed\scraped_data.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+    row = cursor.fetchone()
+    conn.close()
+    return row is not None

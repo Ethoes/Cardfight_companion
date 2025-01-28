@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import Login from './login/login.js';
 import Register from './login/register.js';
 import { fetchCardImage } from './database/databaseApi.js';
 import Banner from './banner.js';
+import DeckBuilder from './deckbuilder';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,19 +53,31 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Banner username={username} />
-      <input
-        type="text"
-        value={cardId}
-        onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
-        placeholder="Enter card ID"
-      />
-      <button onClick={handleSearch}>Search</button>
-      {error && <p>{error}</p>}
-      {imageSrc && <img src={imageSrc} alt="Card" />}
-    </div>
+    <Router>
+      <div className="App">
+        <Banner username={username} />
+        <Routes>
+          <Route path="/deck-builder" element={<DeckBuilder />} />
+          <Route path="/" element={
+            <div>
+              <input
+                type="text"
+                value={cardId}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                placeholder="Enter card ID"
+              />
+              <button onClick={handleSearch}>Search</button>
+              {error && <p>{error}</p>}
+              {imageSrc && <img src={imageSrc} alt="Card" />}
+              <Link to="/deck-builder">
+                <button>Go to Deck Builder</button>
+              </Link>
+            </div>
+          } />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

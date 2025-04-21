@@ -1,0 +1,103 @@
+.CreateNewDeck-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Make the container take the full viewport height */
+  }
+  
+  .CreateNewDeck-title {
+    margin-bottom: 10px;
+  }
+  
+  .CreateNewDeck-dropdown {
+    outline: 2px solid black; /* Default outline color */
+    padding: 5px;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 10px;
+    width: 50%;
+  }
+  
+  .CreateNewDeck-input-container {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin-top: 10px;
+  }
+  
+  .CreateNewDeck-input {
+    flex: 1;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .CreateNewDeck-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .CreateNewDeck-grid {
+    flex-grow: 1; /* Allow the grid to grow and take up remaining space */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    width: 80%;
+    max-height: 70%; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    padding: 10px; /* Optional: Add padding inside the container */
+  }
+  
+  .CreateNewDeck-card {
+    text-align: center;
+  }
+  
+  .CreateNewDeck-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+
+  .CreateNewDeck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust card size */
+    gap: 10px; /* Add spacing between cards */
+  }
+  
+  .CreateNewDeck-card {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 150px; /* Set a fixed width for the card */
+    height: 250px; /* Set a fixed height for the card */
+    overflow: hidden; /* Ensure content doesn't overflow */
+  }
+  
+  .CreateNewDeck-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .CreateNewDeck-card-counter {
+    position: absolute;
+    bottom: 5px; /* Position the counter at the bottom */
+    right: 5px; /* Position the counter at the right */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+  }

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { SearchCard } from './api'; // Import the HTTP request function
+import './CreateNewDeck.css'; // Import the CSS file
 
 function CreateNewDeck() {
   const [selectedOption, setSelectedOption] = useState('');
-  const [CardSearch, setDeckName] = useState('');
+  const [CardSearch, setCardSearch] = useState('');
   const [SearchResult, setSearchResult] = useState('');
+  const [CurrentDeck, setCurrentDeck] = useState([]); ;
+  const [DeckName, setDeckName] = useState('');
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -27,37 +30,32 @@ function CreateNewDeck() {
       try {
         const result = await SearchCard(CardSearch, selectedOption); // Call the HTTP request function
         setSearchResult(result);
-        console.log('Deck created:', result);
       } catch (error) {
-        console.error('Failed to create deck:', error);
+        console.error('failed to search', error);
       }
     }
   };
 
+  const handleCardClick = (card) => {
+    console.log('Card clicked:', card);
+    if (CurrentDeck.length >= 50) {
+      alert('You can only add 50 cards to a deck!'); // Alert if the deck exceeds 50 cards
+      return;
+    }
+    setCurrentDeck((prevDeck) => [...prevDeck, card]); // Update the state with a new card
+  };
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '100vh', // Make the container take the full viewport height
-      }}
-    >
-      <h2>Create New Deck</h2>
+    <div className="CreateNewDeck-container">
+      <h2 className="CreateNewDeck-title">Create New Deck</h2>
       <p>Create a deck of a nation of your choosing.</p>
   
       {/* Dropdown menu */}
       <select
         value={selectedOption}
         onChange={handleChange}
-        style={{
-          outline: `2px solid ${getOutlineColor()}`,
-          padding: '5px',
-          borderRadius: '4px',
-          display: 'block',
-          marginBottom: '10px',
-          width: '50%',
-        }}
+        className="CreateNewDeck-dropdown"
+        style={{ outline: `2px solid ${getOutlineColor()}` }} // Dynamic outline color
       >
         <option value="" disabled>Select an option</option>
         <option value="Keter Sanctuary">Keter Sanctuary</option>
@@ -69,77 +67,76 @@ function CreateNewDeck() {
       </select>
   
       {/* Text input field */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '50%',
-          marginTop: '10px',
-        }}
-      >
+      <div className="CreateNewDeck-input-container">
         <input
           type="text"
           value={CardSearch}
-          onChange={(e) => setDeckName(e.target.value)}
+          onChange={(e) => setCardSearch(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleKeyPress(e);
             }
           }}
           placeholder="Search for a card and press Enter"
-          style={{
-            flex: 1,
-            padding: '5px',
-            borderRadius: '4px',
-            border: '1px solid #ccc',
-          }}
+          className="CreateNewDeck-input"
         />
         <button
           onClick={() => handleKeyPress({ key: 'Enter' })}
-          style={{
-            marginLeft: '10px',
-            padding: '5px 10px',
-            borderRadius: '4px',
-            border: 'none',
-            backgroundColor: `${getOutlineColor()}`,
-            color: 'black',
-            cursor: 'pointer',
-          }}
+          className="CreateNewDeck-button"
+          style={{ backgroundColor: `${getOutlineColor()}` }} // Dynamic background color
         >
           Search
         </button>
       </div>
   
       {/* Grid container */}
-      <div
-        style={{
-          flexGrow: 1, // Allow the grid to grow and take up remaining space
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-          gap: '10px',
-          marginTop: '20px',
-          width: '80%',
-          maxHeight: '70%', // Adjust the height as needed
-          overflowY: 'auto', // Enable vertical scrolling
-          border: '1px solid #ccc', // Optional: Add a border for better visibility
-          padding: '10px', // Optional: Add padding inside the container
-        }}
-      >
-        {SearchResult && SearchResult.map((card, index) => (
-          <div key={index} style={{ textAlign: 'center' }}>
-            <img
-              src={`data:image/png;base64,${card.image}`} // Assuming the image is base64 encoded
-              alt={card.name || 'Card Image'}
+      <div className="CreateNewDeck-grid">
+        {SearchResult && SearchResult.map((card, index) => {
+          const cardCount = CurrentDeck.filter((deckCard) => deckCard.name === card.name).length; // Count occurrences of the card in CurrentDeck
+
+          return (
+            <div
+              key={index}
+              className="CreateNewDeck-card"
+              onClick={() => handleCardClick(card)}
               style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '8px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                position: 'relative', // Ensure relative positioning for the counter
+                cursor: 'pointer',
+                display: 'inline-block', // Ensure the card wraps tightly around the image
               }}
-            />
-            <p>{card.name}</p> {/* Display card name */}
-          </div>
-        ))}
+            >
+              <img
+                src={`data:image/png;base64,${card.image}`}
+                alt={card.name || 'Card Image'}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                }}
+              />
+              <p>{card.name}</p>
+              <div
+                className="CreateNewDeck-card-counter"
+                style={{
+                  position: 'absolute',
+                  bottom: '40px', // Position the counter at the bottom
+                  right: '5px', // Position the counter at the right
+                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '12px',
+                }}
+              >
+                {cardCount}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

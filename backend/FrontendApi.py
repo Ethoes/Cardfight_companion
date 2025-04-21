@@ -74,14 +74,9 @@ def search():
         # Add images to each row in the result
         for row in result:
             if 'id' in row:  # Assuming each row has an 'id' field
-                print(f"[DEBUG] Processing row with ID: {row['id']}")
                 image = get_image(row['id'])
                 if image:
                     row['image'] = image
-                else:
-                    print(f"[DEBUG] No image found for ID: {row['id']}")
-            else:
-                print("[DEBUG] Row does not contain an 'id' field:", row)
         return jsonify(result), 200
     else:
         return jsonify({"error": "No results found"}), 404
@@ -96,13 +91,11 @@ def get_image(card_id):
 
         # Construct the full image path
         image_path = "Z:\\cfv stuffs\\Cardfight_companion\\database\\images\\" + image_path
-        print(f"[INFO] Attempting to open image file: {image_path}")
 
         # Check if the file exists and read it
         with open(image_path, 'rb') as image_file:
             import base64
             encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-            print(f"[INFO] Successfully encoded image for card ID: {card_id}")
             return encoded_image
     except FileNotFoundError:
         print(f"[ERROR] Image file not found: {image_path}")

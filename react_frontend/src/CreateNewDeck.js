@@ -168,6 +168,38 @@ function CreateNewDeck() {
           );
         })}
       </div>
+        <div className="CreateNewDeck-deckname-container" style={{ marginTop: '20px', textAlign: 'center' }}>
+          <input
+            type="text"
+            value={DeckName}
+            onChange={(e) => setDeckName(e.target.value)}
+            placeholder="Enter deck name"
+            className="CreateNewDeck-deckname-input"
+            style={{
+              padding: '10px',
+              fontSize: '16px',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              marginRight: '10px',
+              width: '200px',
+            }}
+          />
+          <button
+            onClick={() => alert(`Deck name set to: ${DeckName}`)}
+            className="CreateNewDeck-deckname-button"
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              backgroundColor: '#007BFF',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Create Deck
+          </button>
+        </div>
     </div>
   );
 }

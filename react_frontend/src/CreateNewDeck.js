@@ -38,11 +38,37 @@ function CreateNewDeck() {
 
   const handleCardClick = (card) => {
     console.log('Card clicked:', card);
+  
+    // Check if the deck already has 50 cards
     if (CurrentDeck.length >= 50) {
-      alert('You can only add 50 cards to a deck!'); // Alert if the deck exceeds 50 cards
+      alert('You can only add 50 cards to a deck!');
       return;
     }
-    setCurrentDeck((prevDeck) => [...prevDeck, card]); // Update the state with a new card
+  
+    // Count occurrences of the card's ID in the deck
+    const cardCount = CurrentDeck.filter((deckCard) => deckCard.id === card.id).length;
+    if (cardCount >= 4) {
+      alert('You can only add up to 4 of the same card to a deck!');
+      return;
+    }
+  
+    // Add the card to the deck
+    setCurrentDeck((prevDeck) => [...prevDeck, card]);
+  };
+
+  const handleCardRemove = (card) => {
+    console.log('Card removed:', card);
+  
+    // Remove one instance of the card from the deck
+    setCurrentDeck((prevDeck) => {
+      const cardIndex = prevDeck.findIndex((deckCard) => deckCard.id === card.id);
+      if (cardIndex !== -1) {
+        const updatedDeck = [...prevDeck];
+        updatedDeck.splice(cardIndex, 1); // Remove the card at the found index
+        return updatedDeck;
+      }
+      return prevDeck; // If the card is not found, return the original deck
+    });
   };
 
   return (
@@ -99,6 +125,10 @@ function CreateNewDeck() {
               key={index}
               className="CreateNewDeck-card"
               onClick={() => handleCardClick(card)}
+              onContextMenu={(e) => {
+                e.preventDefault(); // Prevent the default context menu from appearing
+                handleCardRemove(card); // Call the function to remove the card
+              }}
               style={{
                 position: 'relative', // Ensure relative positioning for the counter
                 cursor: 'pointer',
@@ -119,8 +149,8 @@ function CreateNewDeck() {
                 className="CreateNewDeck-card-counter"
                 style={{
                   position: 'absolute',
-                  bottom: '40px', // Position the counter at the bottom
-                  right: '5px', // Position the counter at the right
+                  bottom: '40px',
+                  right: '5px',
                   backgroundColor: 'rgba(0, 0, 0, 0.7)',
                   color: 'white',
                   borderRadius: '50%',

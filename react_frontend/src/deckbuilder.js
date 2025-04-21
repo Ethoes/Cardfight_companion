@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function DeckBuilder() {
   return (
     <div>
       <h2>Deck Builder</h2>
-      {/* Add your deck builder content here */}
+      <Link to="/create-new-deck">
+        <button>Create New Deck</button>
+      </Link>
     </div>
   );
 }

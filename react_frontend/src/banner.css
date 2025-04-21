@@ -21,3 +21,11 @@
   .Banner-username {
     font-size: 18px;
   }
+
+  .Banner-title {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit the text color from the parent */
+    font-size: inherit; /* Inherit the font size from the parent */
+    font-weight: inherit; /* Inherit the font weight from the parent */
+    cursor: pointer; /* Optional: Keep the pointer cursor for clickable behavior */
+  }

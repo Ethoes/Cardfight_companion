@@ -6,6 +6,7 @@ import Register from './login/register.js';
 import { fetchCardImage } from './database/databaseApi.js';
 import Banner from './banner.js';
 import DeckBuilder from './deckbuilder';
+import CreateNewDeck from './CreateNewDeck.js'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,6 +76,7 @@ function App() {
               </Link>
             </div>
           } />
+          <Route path="/create-new-deck" element={<CreateNewDeck />} />
         </Routes>
       </div>
     </Router>

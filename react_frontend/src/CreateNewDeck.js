@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { SearchCard } from './api'; // Import the HTTP request function
+import { useNavigate } from 'react-router-dom';
+import { SearchCard, postNewDeck } from './api'; // Import the HTTP request function
 import './CreateNewDeck.css'; // Import the CSS file
 
-function CreateNewDeck() {
+function CreateNewDeck({ username }) {
   const [selectedOption, setSelectedOption] = useState('');
   const [CardSearch, setCardSearch] = useState('');
   const [SearchResult, setSearchResult] = useState('');
   const [CurrentDeck, setCurrentDeck] = useState([]); ;
   const [DeckName, setDeckName] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -69,6 +72,33 @@ function CreateNewDeck() {
       }
       return prevDeck; // If the card is not found, return the original deck
     });
+  };
+
+  const createDeck = async (deckName) => {
+    if (deckName.trim() === '') {
+      alert('Please enter a valid deck name.');
+      return;
+    }
+  
+    if (CurrentDeck.length < 50) {
+      alert('You need to add 50 cards to create a deck!');
+      return;
+    }
+    
+    try {
+      const result = await postNewDeck(deckName, CurrentDeck, username);
+      console.log(result.status)
+      if (result.status === 200) { // Check for a successful response
+        console.log('Deck created:', { name: deckName, cards: CurrentDeck });
+        alert(`Deck "${deckName}" created successfully!`);
+        navigate('/'); // Navigate to the home page
+      } else {
+        alert('Failed to create the deck. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error creating deck:', error);
+      alert('An error occurred while creating the deck.');
+    }
   };
 
   return (
@@ -138,30 +168,9 @@ function CreateNewDeck() {
               <img
                 src={`data:image/png;base64,${card.image}`}
                 alt={card.name || 'Card Image'}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block',
-                }}
               />
               <p>{card.name}</p>
-              <div
-                className="CreateNewDeck-card-counter"
-                style={{
-                  position: 'absolute',
-                  bottom: '40px',
-                  right: '5px',
-                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: '24px',
-                  height: '24px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '12px',
-                }}
-              >
+              <div className="CreateNewDeck-card-counter">
                 {cardCount}
               </div>
             </div>
@@ -175,27 +184,10 @@ function CreateNewDeck() {
             onChange={(e) => setDeckName(e.target.value)}
             placeholder="Enter deck name"
             className="CreateNewDeck-deckname-input"
-            style={{
-              padding: '10px',
-              fontSize: '16px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              marginRight: '10px',
-              width: '200px',
-            }}
           />
           <button
-            onClick={() => alert(`Deck name set to: ${DeckName}`)}
+            onClick={() => createDeck(DeckName)}
             className="CreateNewDeck-deckname-button"
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              backgroundColor: '#007BFF',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
           >
             Create Deck
           </button>

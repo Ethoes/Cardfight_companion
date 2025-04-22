@@ -6,7 +6,7 @@ import mimetypes
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -57,6 +57,11 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
+    
+@app.route('/createDeck', methods=['POST'])
+def createDeck():
+    data = request.get_json()
+    return jsonify({"message": "Deck creation succesful"}), 200
     
 @app.route('/search', methods=['POST'])
 def search():

@@ -1,5 +1,4 @@
 export async function SearchCard(CardSearch, selectedOption) {
-    console.log('Searching for cards:', CardSearch);
     try {
       const response = await fetch('http://127.0.0.1:5000/search', {
         method: 'POST',
@@ -18,6 +17,29 @@ export async function SearchCard(CardSearch, selectedOption) {
       return data;
     } catch (error) {
       console.error('Error searching:', error);
+      throw error;
+    }
+  }
+
+  export async function postNewDeck(Deckname, CurrentDeck, User) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/createDeck', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: Deckname, deck: CurrentDeck, user: User }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Deck created succesfully:', data);
+      return response;
+    } catch (error) {
+      console.error('Error creating deck:', error);
       throw error;
     }
   }

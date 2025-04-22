@@ -76,7 +76,7 @@ function App() {
               </Link>
             </div>
           } />
-          <Route path="/create-new-deck" element={<CreateNewDeck />} />
+          <Route path="/create-new-deck" element={<CreateNewDeck username={username} />} />
         </Routes>
       </div>
     </Router>

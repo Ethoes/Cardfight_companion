@@ -7,6 +7,8 @@ import { fetchCardImage } from './database/databaseApi.js';
 import Banner from './banner.js';
 import DeckBuilder from './deckbuilder';
 import CreateNewDeck from './CreateNewDeck.js'
+import ViewDecks from './ViewDecks';
+import DeckDetails from './DeckDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,6 +61,8 @@ function App() {
         <Banner username={username} />
         <Routes>
           <Route path="/deck-builder" element={<DeckBuilder />} />
+          <Route path="/view-decks" element={<ViewDecks username={username} />} />
+          <Route path="/deck-details" element={<DeckDetails />} />
           <Route path="/" element={
             <div>
               <input

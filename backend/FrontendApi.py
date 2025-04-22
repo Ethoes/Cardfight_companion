@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, send_file, abort
 from flask_cors import CORS
-from DatabaseService import get_data_from_db, get_image_path_by_id, create_user, validate_user, search_card
+from DatabaseService import get_data_from_db, get_image_path_by_id, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username
 import os
 import mimetypes
 
@@ -61,7 +61,27 @@ def login():
 @app.route('/createDeck', methods=['POST'])
 def createDeck():
     data = request.get_json()
-    return jsonify({"message": "Deck creation succesful"}), 200
+    if not data or 'name' not in data or 'deck' not in data or 'user' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    deck_name = data['name']
+    username = data['user']
+    card_ids = [card['id'] for card in data['deck']]
+
+    try:
+        # Save the deck and get the deck_id
+        deck_id = save_deck(deck_name, username)
+        if not deck_id:
+            return jsonify({"error": "Failed to save deck"}), 500
+
+        # Save the cards associated with the deck
+        if not save_deck_cards(deck_id, card_ids):
+            return jsonify({"error": "Failed to save deck cards"}), 500
+
+        return jsonify({"message": "Deck creation successful", "deck_id": deck_id}), 200
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        return jsonify({"error": "Failed to create deck"}), 500
     
 @app.route('/search', methods=['POST'])
 def search():
@@ -85,6 +105,19 @@ def search():
         return jsonify(result), 200
     else:
         return jsonify({"error": "No results found"}), 404
+    
+@app.route('/decks', methods=['POST'])
+def get_decks():
+    data = request.get_json()
+    if not data or 'username' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    username = data['username']
+    decks = get_decks_by_username(username)
+    if not decks:
+        return jsonify({"error": "No decks found"}), 404
+
+    return jsonify(decks), 200
     
 def get_image(card_id):
     try:

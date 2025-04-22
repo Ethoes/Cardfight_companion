@@ -84,12 +84,15 @@ function CreateNewDeck({ username }) {
       alert('You need to add 50 cards to create a deck!');
       return;
     }
-    
+  
+    // Create a duplicate array without the image field
+    const deckWithoutImages = CurrentDeck.map(({ image, ...rest }) => rest);
+  
     try {
-      const result = await postNewDeck(deckName, CurrentDeck, username);
-      console.log(result.status)
+      const result = await postNewDeck(deckName, deckWithoutImages, username);
+      console.log(result.status);
       if (result.status === 200) { // Check for a successful response
-        console.log('Deck created:', { name: deckName, cards: CurrentDeck });
+        console.log('Deck created:', { name: deckName, cards: deckWithoutImages });
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/'); // Navigate to the home page
       } else {
@@ -100,7 +103,6 @@ function CreateNewDeck({ username }) {
       alert('An error occurred while creating the deck.');
     }
   };
-
   return (
     <div className="CreateNewDeck-container">
       <h2 className="CreateNewDeck-title">Create New Deck</h2>

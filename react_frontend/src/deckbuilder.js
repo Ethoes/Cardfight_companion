@@ -8,6 +8,9 @@ function DeckBuilder() {
       <Link to="/create-new-deck">
         <button>Create New Deck</button>
       </Link>
+      <Link to="/view-decks">
+        <button>View All Decks</button>
+      </Link>
     </div>
   );
 }

@@ -21,14 +21,14 @@ export async function SearchCard(CardSearch, selectedOption) {
     }
   }
 
-  export async function postNewDeck(Deckname, CurrentDeck, User) {
+  export async function postNewDeck(Deckname, CurrentDeck, User, description) {
     try {
       const response = await fetch('http://127.0.0.1:5000/createDeck', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: Deckname, deck: CurrentDeck, user: User }),
+        body: JSON.stringify({ name: Deckname, deck: CurrentDeck, user: User, description: description }),
       });
   
       if (!response.ok) {

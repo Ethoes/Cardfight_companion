@@ -9,6 +9,7 @@ function CreateNewDeck({ username }) {
   const [SearchResult, setSearchResult] = useState('');
   const [CurrentDeck, setCurrentDeck] = useState([]); ;
   const [DeckName, setDeckName] = useState('');
+  const [DeckDescription, setDeckDescription] = useState('');
 
   const navigate = useNavigate();
 
@@ -89,10 +90,10 @@ function CreateNewDeck({ username }) {
     const deckWithoutImages = CurrentDeck.map(({ image, ...rest }) => rest);
   
     try {
-      const result = await postNewDeck(deckName, deckWithoutImages, username);
+      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription); // Pass description
       console.log(result.status);
       if (result.status === 200) { // Check for a successful response
-        console.log('Deck created:', { name: deckName, cards: deckWithoutImages });
+        console.log('Deck created:', { name: deckName, description: DeckDescription, cards: deckWithoutImages });
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/'); // Navigate to the home page
       } else {
@@ -103,6 +104,7 @@ function CreateNewDeck({ username }) {
       alert('An error occurred while creating the deck.');
     }
   };
+
   return (
     <div className="CreateNewDeck-container">
       <h2 className="CreateNewDeck-title">Create New Deck</h2>
@@ -187,13 +189,20 @@ function CreateNewDeck({ username }) {
             placeholder="Enter deck name"
             className="CreateNewDeck-deckname-input"
           />
+          <textarea
+            value={DeckDescription}
+            onChange={(e) => setDeckDescription(e.target.value)}
+            placeholder="Enter deck description"
+            className="CreateNewDeck-description-input"
+            style={{ marginTop: '10px', width: '100%', height: '80px' }} // Optional styling
+          />
           <button
             onClick={() => createDeck(DeckName)}
             className="CreateNewDeck-deckname-button"
           >
             Create Deck
           </button>
-        </div>
+      </div>
     </div>
   );
 }

@@ -48,7 +48,7 @@ def search_card(name, nation):
     conn.close()
     return [dict(row) for row in rows]
 
-def save_deck(deck_name, username):
+def save_deck(deck_name, username, description):
     """
     Save a new deck to the `decks` table.
     Returns the `deck_id` of the newly created deck.
@@ -57,7 +57,7 @@ def save_deck(deck_name, username):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         # Insert the deck into the `decks` table
-        cursor.execute("INSERT INTO decks (deck_name, username) VALUES (?, ?)", (deck_name, username))
+        cursor.execute("INSERT INTO decks (deck_name, username, description) VALUES (?, ?, ?)", (deck_name, username, description))
         conn.commit()
         deck_id = cursor.lastrowid  # Get the ID of the newly inserted deck
         conn.close()
@@ -88,13 +88,31 @@ def get_decks_by_username(username):
         # Query the database for decks associated with the username
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        cursor.execute("SELECT deck_id, deck_name FROM decks WHERE username = ?", (username,))
+        cursor.execute("SELECT deck_id, deck_name, description FROM decks WHERE username = ?", (username,))
         rows = cursor.fetchall()
         conn.close()
 
         # Format the result as a list of dictionaries
-        decks = [{"id": row[0], "name": row[1]} for row in rows]
+        decks = [{"id": row[0], "name": row[1], "description": row[2]} for row in rows]
         return decks
     except Exception as e:
         print(f"[ERROR] Failed to get decks: {e}")
+        return None
+    
+def get_cards_by_deck_id(deck_id):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT c.id, c.name, c.nation, c.image_path
+            FROM deck_cards dc
+            JOIN scraped_data c ON dc.card_id = c.id
+            WHERE dc.deck_id = ?
+        """, (deck_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(row) for row in rows]
+    except Exception as e:
+        print(f"[ERROR] Failed to get cards by deck ID: {e}")
         return None

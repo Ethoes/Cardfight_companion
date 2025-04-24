@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, send_file, abort
 from flask_cors import CORS
-from DatabaseService import get_data_from_db, get_image_path_by_id, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username
+from DatabaseService import get_data_from_db, get_image_path_by_id, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username, get_cards_by_deck_id
 import os
 import mimetypes
 
@@ -61,16 +61,17 @@ def login():
 @app.route('/createDeck', methods=['POST'])
 def createDeck():
     data = request.get_json()
-    if not data or 'name' not in data or 'deck' not in data or 'user' not in data:
+    if not data or 'name' not in data or 'deck' not in data or 'user' not in data or 'description' not in data:
         return jsonify({"error": "Invalid input"}), 400
 
     deck_name = data['name']
     username = data['user']
+    description = data['description']
     card_ids = [card['id'] for card in data['deck']]
 
     try:
         # Save the deck and get the deck_id
-        deck_id = save_deck(deck_name, username)
+        deck_id = save_deck(deck_name, username, description)
         if not deck_id:
             return jsonify({"error": "Failed to save deck"}), 500
 
@@ -118,6 +119,26 @@ def get_decks():
         return jsonify({"error": "No decks found"}), 404
 
     return jsonify(decks), 200
+
+@app.route('/decks/<int:deck_id>/cards', methods=['GET'])
+def get_deck_cards(deck_id):
+    try:
+        # Query the database for cards associated with the deck_id
+        cards = get_cards_by_deck_id(deck_id)
+        if not cards:
+            return jsonify({"error": "No cards found for this deck"}), 404
+
+        # Add images to each card
+        for card in cards:
+            if 'id' in card:  # Assuming each card has an 'id' field
+                image = get_image(card['id'])
+                if image:
+                    card['image'] = image
+
+        return jsonify(cards), 200
+    except Exception as e:
+        print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")
+        return jsonify({"error": "Failed to retrieve cards"}), 500
     
 def get_image(card_id):
     try:

@@ -105,10 +105,13 @@ def get_cards_by_deck_id(deck_id):
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT c.id, c.name, c.nation, c.image_path
+            SELECT c.id, c.name, c.nation, c.image_path, c.grade_skill
             FROM deck_cards dc
             JOIN scraped_data c ON dc.card_id = c.id
             WHERE dc.deck_id = ?
+            ORDER BY 
+                CAST(SUBSTR(c.grade_skill, INSTR(c.grade_skill, 'Grade ') + 6, 1) AS INTEGER) ASC, 
+                c.name ASC
         """, (deck_id,))
         rows = cursor.fetchall()
         conn.close()

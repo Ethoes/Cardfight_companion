@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SearchCard, postNewDeck } from './api';
+import { SearchCard, postNewDeck } from '../api';
 import './CreateNewDeck.css';
 
 function CreateNewDeck({ username }) {

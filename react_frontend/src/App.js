@@ -4,11 +4,11 @@ import './App.css';
 import Login from './login/login.js';
 import Register from './login/register.js';
 import { fetchCardImage } from './database/databaseApi.js';
-import Banner from './banner.js';
-import DeckBuilder from './deckbuilder';
-import CreateNewDeck from './CreateNewDeck.js'
-import ViewDecks from './ViewDecks';
-import DeckDetails from './DeckDetails';
+import Banner from './banner/banner.js';
+import DeckBuilder from './deckbuilder/deckbuilder.js';
+import CreateNewDeck from './create_new_deck/CreateNewDeck.js'
+import ViewDecks from './view_deck/ViewDecks.js';
+import DeckDetails from './deck_details/DeckDetails.js';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -8,6 +8,7 @@ function DeckDetails() {
   const [cards, setCards] = useState([]); // State to store the cards
   const [loading, setLoading] = useState(true); // State to track loading status
   const [deckName, setDeckName] = useState(deck?.name || ''); // State for deck name input
+  const [modalCard, setModalCard] = useState(null); // State for the modal card
 
   useEffect(() => {
     if (deck) {
@@ -32,6 +33,14 @@ function DeckDetails() {
     }
   }, [deck]);
 
+  const openModal = (card) => {
+    setModalCard(card); // Set the selected card for the modal
+  };
+  
+  const closeModal = () => {
+    setModalCard(null); // Close the modal
+  };
+
   if (!deck) {
     return <p>No deck selected.</p>;
   }
@@ -50,6 +59,7 @@ function DeckDetails() {
             <div
               key={index}
               className="CreateNewDeck-card"
+              onClick={() => openModal(card)} // Open the modal on click
               onContextMenu={(e) => {
                 e.preventDefault(); // Prevent the default context menu from appearing
               }}
@@ -63,9 +73,35 @@ function DeckDetails() {
                 src={`data:image/png;base64,${card.image}`}
                 alt={card.name || 'Card Image'}
               />
-              {/* <p>{card.name}</p> */}
             </div>
           ))}
+        </div>
+      )}
+
+      {modalCard && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal}>X</button>
+            <img
+              src={`data:image/png;base64,${modalCard.image}`}
+              alt={modalCard.name || 'Card Image'}
+              className="modal-image"
+            />
+            <h3>{modalCard.name}</h3>
+            <p><strong>Effect:</strong> {modalCard.effect}</p>
+            <p><strong>Type:</strong> {modalCard.card_type}</p>
+            <p><strong>Grade/Skill:</strong> {modalCard.grade_skill}</p>
+            <p><strong>Power:</strong> {modalCard.power}</p>
+            <p><strong>Critical:</strong> {modalCard.critical}</p>
+            <p><strong>Shield:</strong> {modalCard.shield}</p>
+            <p><strong>Nation:</strong> {modalCard.nation}</p>
+            <p><strong>Race:</strong> {modalCard.race}</p>
+            <p><strong>Trigger Effect:</strong> {modalCard.trigger_effect}</p>
+            <p><strong>Format:</strong> {modalCard.format}</p>
+            <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
+            <p><strong>Clan:</strong> {modalCard.clan}</p>
+            <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+          </div>
         </div>
       )}
     </div>

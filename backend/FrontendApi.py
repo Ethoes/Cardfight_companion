@@ -90,13 +90,17 @@ def search():
     data = request.get_json()
     if not data or 'name' not in data or 'nation' not in data:
         return jsonify({"error": "Invalid input"}), 400
+
     name = data['name']
     nation = data['nation']
-    result = search_card(name, nation)
+    grade = data.get('grade', None)  # Get the grade parameter if provided
+    unitType = data.get('unitType', None)  # Get the unitType parameter if provided
+
+    result = search_card(name, nation, grade, unitType)  # Pass grade to the search_card function
     if result:
         # Convert sqlite3.Row objects to dictionaries
         result = [dict(row) for row in result]
-        
+
         # Add images to each row in the result
         for row in result:
             if 'id' in row:  # Assuming each row has an 'id' field
@@ -139,6 +143,7 @@ def get_deck_cards(deck_id):
     except Exception as e:
         print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")
         return jsonify({"error": "Failed to retrieve cards"}), 500
+    
     
 def get_image(card_id):
     try:

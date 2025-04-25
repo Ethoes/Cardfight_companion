@@ -39,11 +39,28 @@ def validate_user(username, password):
     conn.close()
     return row is not None
 
-def search_card(name, nation):
+def search_card(name, nation=None, grade=None, unitType=None):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM scraped_data WHERE name LIKE ? AND nation = ?", ('%' + name + '%', nation))
+
+    # Build the query dynamically based on whether nation and grade are provided
+    query = "SELECT * FROM scraped_data WHERE name LIKE ?"
+    params = ['%' + name + '%']
+
+    if nation:  # Add nation filter if provided
+        query += " AND nation LIKE ?"
+        params.append('%' + nation + '%')
+
+    if grade:  # Add grade filter if provided
+        query += " AND grade_skill LIKE ?"
+        params.append('%' + grade + '%')  # Use LIKE to match any string containing the grade
+    
+    if unitType:
+        query += " AND card_type LIKE ?"
+        params.append('%' + unitType + '%')
+
+    cursor.execute(query, params)
     rows = cursor.fetchall()
     conn.close()
     return [dict(row) for row in rows]
@@ -105,7 +122,24 @@ def get_cards_by_deck_id(deck_id):
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT c.id, c.name, c.nation, c.image_path, c.grade_skill
+            SELECT 
+                c.id, 
+                c.url, 
+                c.name, 
+                c.effect, 
+                c.card_type, 
+                c.grade_skill, 
+                c.power, 
+                c.critical, 
+                c.shield, 
+                c.nation, 
+                c.race, 
+                c.trigger_effect, 
+                c.format, 
+                c.illustrator, 
+                c.clan, 
+                c.flavor, 
+                c.image_path
             FROM deck_cards dc
             JOIN scraped_data c ON dc.card_id = c.id
             WHERE dc.deck_id = ?

@@ -1,11 +1,11 @@
-export async function SearchCard(CardSearch, selectedOption) {
+export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType) {
     try {
       const response = await fetch('http://127.0.0.1:5000/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: CardSearch, nation: selectedOption }),
+        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType }),
       });
   
       if (!response.ok) {

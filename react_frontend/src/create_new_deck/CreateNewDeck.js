@@ -5,6 +5,7 @@ import './CreateNewDeck.css';
 
 function CreateNewDeck({ username }) {
   const [selectedOption, setSelectedOption] = useState('');
+  const [selectedClan, setSelectedClan] = useState('');
   const [CardSearch, setCardSearch] = useState('');
   const [SearchResult, setSearchResult] = useState([]);
   const [CurrentDeck, setCurrentDeck] = useState([]);
@@ -14,6 +15,9 @@ function CreateNewDeck({ username }) {
   const [selectedGrade, setSelectedGrade] = useState('');
   const [selectedUnitType, setSelectedUnitType] = useState('');
   const [modalCard, setModalCard] = useState(null);
+  const [format, setFormat] = useState(null); // State for selected format
+  const [showFormatModal, setShowFormatModal] = useState(true); // State to control format selection modal
+
 
   const navigate = useNavigate();
 
@@ -23,6 +27,11 @@ function CreateNewDeck({ username }) {
 
   const handleGradeChange = (event) => {
     setSelectedGrade(event.target.value); // Update selected grade
+  };
+
+  const handleFormatSelection = (selectedFormat) => {
+    setFormat(selectedFormat); // Set the selected format
+    setShowFormatModal(false); // Close the format selection modal
   };
 
   const getOutlineColor = () => {
@@ -42,9 +51,17 @@ function CreateNewDeck({ username }) {
       // Clear previous search results and show loading icon
       setSearchResult([]);
       setLoading(true);
-
+  
       try {
-        const result = await SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType); // Call the HTTP request function
+        // Include the format in the request only if it's "Standard"
+        const result = await SearchCard(
+          CardSearch,
+          selectedOption,
+          selectedGrade,
+          selectedUnitType,
+          format === 'Standard' ? format : null,
+          selectedClan
+        );
         setSearchResult(result); // Update with new search results
       } catch (error) {
         console.error('Failed to search', error);
@@ -56,28 +73,33 @@ function CreateNewDeck({ username }) {
 
   const handleCardClick = (card) => {
     console.log('Card clicked:', card);
-
+  
     const cardCount = CurrentDeck.filter((deckCard) => deckCard.id === card.id).length;
     if (cardCount >= 4) {
       alert('You can only add up to 4 of the same card to a deck!');
       return;
     }
-
+  
     const gUnits = CurrentDeck.filter((deckCard) => deckCard.type === 'G Unit');
     const regularCards = CurrentDeck.filter((deckCard) => deckCard.type !== 'G Unit');
-
-    if (card.card_type === 'G Unit') {
+  
+    if (card.type === 'G Unit') {
       if (gUnits.length >= 16) {
         alert('You can only add up to 16 G units to a deck!');
         return;
       }
     } else {
-      if (regularCards.length >= 50) {
-        alert('You can only add 50 regular cards to a deck!');
+      // Validate the number of regular cards based on the selected format
+      if (format === 'Standard' && regularCards.length >= 54) {
+        alert('In Standard format, you can only add up to 54 regular cards to a deck!');
+        return;
+      }
+      if (format === 'Premium' && regularCards.length >= 50) {
+        alert('In Premium format, you can only add up to 50 regular cards to a deck!');
         return;
       }
     }
-
+  
     setCurrentDeck((prevDeck) => [...prevDeck, card]);
   };
 
@@ -109,23 +131,29 @@ function CreateNewDeck({ username }) {
       alert('Please enter a valid deck name.');
       return;
     }
-
-    const gUnits = CurrentDeck.filter((deckCard) => deckCard.card_type === 'G Unit');
-    const regularCards = CurrentDeck.filter((deckCard) => deckCard.card_type !== 'G Unit');
-
-    if (regularCards.length !== 50) {
-      alert('You need exactly 50 regular cards to create a deck!');
+  
+    const gUnits = CurrentDeck.filter((deckCard) => deckCard.type === 'G Unit');
+    const regularCards = CurrentDeck.filter((deckCard) => deckCard.type !== 'G Unit');
+  
+    // Validate the number of cards based on the selected format
+    if (format === 'Standard' && regularCards.length !== 54) {
+      alert('In Standard format, you need exactly 54 cards to create a deck!');
       return;
     }
+    if (format === 'Premium' && regularCards.length !== 50) {
+      alert('In Premium format, you need exactly 50 cards to create a deck!');
+      return;
+    }
+  
     if (gUnits.length > 16) {
       alert('You can only have up to 16 G units in a deck!');
       return;
     }
-
+  
     const deckWithoutImages = CurrentDeck.map(({ image, ...rest }) => rest);
-
+  
     try {
-      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription);
+      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format);
       if (result.status === 200) {
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/');
@@ -140,27 +168,95 @@ function CreateNewDeck({ username }) {
 
   return (
     <div className="CreateNewDeck-container">
+      {/* Format Selection Modal */}
+      {showFormatModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Select Deck Format</h2>
+            <button
+              className="format-button"
+              onClick={() => handleFormatSelection('Standard')}
+            >
+              Standard
+            </button>
+            <button
+              className="format-button"
+              onClick={() => handleFormatSelection('Premium')}
+            >
+              Premium
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!showFormatModal && (
+        <>
       <h2 className="CreateNewDeck-title">Create New Deck</h2>
-      <p>Create a deck, you wont pussy.</p>
+      <p>Create a deck</p>
+
+      <div className="CreateNewDeck-format">
+          <p><strong>Format:</strong> {format}</p>
+      </div>
 
       <div className="CreateNewDeck-selectors-container">
+        {/* Conditional rendering for Nation or Clan selector */}
         <div className="CreateNewDeck-selector">
-          <label className="CreateNewDeck-label" htmlFor="nation-select">Nation</label>
-          <select
-            id="nation-select"
-            value={selectedOption}
-            onChange={handleChange}
-            className="CreateNewDeck-dropdown"
-            style={{ outline: `2px solid ${getOutlineColor()}` }}
-          >
-            <option value="">None</option> {/* Allow no selection */}
-            <option value="Keter Sanctuary">Keter Sanctuary</option>
-            <option value="Brandt Gate">Brandt Gate</option>
-            <option value="Stoicheia">Stoicheia</option>
-            <option value="Dark States">Dark States</option>
-            <option value="Dragon Empire">Dragon Empire</option>
-            <option value="Lyrical monestario">Lyrical monestario</option>
-          </select>
+        {format === 'Premium' ? (
+          <>
+            <label className="CreateNewDeck-label" htmlFor="clan-select">Clan</label>
+            <select
+              id="clan-select"
+              value={selectedClan} // Use selectedClan for the clan selector
+              onChange={(event) => setSelectedClan(event.target.value)} // Update selectedClan
+              className="CreateNewDeck-dropdown"
+              style={{ outline: `2px solid ${getOutlineColor()}` }}
+            >
+              <option value="">None</option> {/* Allow no selection */}
+              <option value="Royal Paladin">Royal Paladin</option>
+              <option value="Kagero">Kagero</option>
+              <option value="Oracle Think Tank">Oracle Think Tank</option>
+              <option value="Shadow Paladin">Shadow Paladin</option>
+              <option value="Gold Paladin">Gold Paladin</option>
+              <option value="Narukami">Narukami</option>
+              <option value="Aqua Force">Aqua Force</option>
+              <option value="Genesis">Genesis</option>
+              <option value="Great Nature">Great Nature</option>
+              <option value="Neo Nectar">Neo Nectar</option>
+              <option value="Spike Brothers">Spike Brothers</option>
+              <option value="Dark Irregulars">Dark Irregulars</option>
+              <option value="Pale Moon">Pale Moon</option>
+              <option value="Gear Chronicle">Gear Chronicle</option>
+              <option value="Link Joker">Link Joker</option>
+              <option value="Granblue">Granblue</option>
+              <option value="Bermuda Triangle">Bermuda Triangle</option>
+              <option value="Tachikaze">Tachikaze</option>
+              <option value="Murakumo">Murakumo</option>
+              <option value="Nubatama">Nubatama</option>
+              <option value="Nova Grappler">Nova Grappler</option>
+              <option value="Dimension Police">Dimension Police</option>
+              <option value="Megacolony">Megacolony</option>
+            </select>
+          </>
+        ) : (
+          <>
+            <label className="CreateNewDeck-label" htmlFor="nation-select">Nation</label>
+            <select
+              id="nation-select"
+              value={selectedOption} // Use selectedOption for the nation selector
+              onChange={(event) => setSelectedOption(event.target.value)} // Update selectedOption
+              className="CreateNewDeck-dropdown"
+              style={{ outline: `2px solid ${getOutlineColor()}` }}
+            >
+              <option value="">None</option> {/* Allow no selection */}
+              <option value="Keter Sanctuary">Keter Sanctuary</option>
+              <option value="Brandt Gate">Brandt Gate</option>
+              <option value="Stoicheia">Stoicheia</option>
+              <option value="Dark States">Dark States</option>
+              <option value="Dragon Empire">Dragon Empire</option>
+              <option value="Lyrical Monestario">Lyrical Monestario</option>
+            </select>
+          </>
+        )}
         </div>
 
         <div className="CreateNewDeck-selector">
@@ -292,27 +388,38 @@ function CreateNewDeck({ username }) {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>X</button>
-            <img
-              src={`data:image/png;base64,${modalCard.image}`}
-              alt={modalCard.name || 'Card Image'}
-              className="modal-image"
-            />
-            <h3>{modalCard.name}</h3>
-            <p><strong>Effect:</strong> {modalCard.effect}</p>
-            <p><strong>Type:</strong> {modalCard.card_type}</p>
-            <p><strong>Grade/Skill:</strong> {modalCard.grade_skill}</p>
-            <p><strong>Power:</strong> {modalCard.power}</p>
-            <p><strong>Critical:</strong> {modalCard.critical}</p>
-            <p><strong>Shield:</strong> {modalCard.shield}</p>
-            <p><strong>Nation:</strong> {modalCard.nation}</p>
-            <p><strong>Race:</strong> {modalCard.race}</p>
-            <p><strong>Trigger Effect:</strong> {modalCard.trigger_effect}</p>
-            <p><strong>Format:</strong> {modalCard.format}</p>
-            <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
-            <p><strong>Clan:</strong> {modalCard.clan}</p>
-            <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+            <div className="modal-scrollable-content">
+              <img
+                src={`data:image/png;base64,${modalCard.image}`}
+                alt={modalCard.name || 'Card Image'}
+                className="modal-image"
+              />
+              <h3>{modalCard.name}</h3>
+              <p><strong>Effect:</strong> {modalCard.effect}</p>
+              <p><strong>Type:</strong> {modalCard.type}</p>
+              <p><strong>Grade:</strong> {modalCard.grade}</p>
+              <p><strong>Power:</strong> {modalCard.power}</p>
+              <p><strong>Critical:</strong> {modalCard.critical}</p>
+              <p><strong>Shield:</strong> {modalCard.shield}</p>
+              <p><strong>Nation:</strong> {modalCard.nation}</p>
+              <p><strong>Race:</strong> {modalCard.race}</p>
+              <p><strong>Format:</strong> {modalCard.regulation}</p>
+              <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
+              <p><strong>Clan:</strong> {modalCard.clan}</p>
+              <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+              <p><strong>URL:</strong> <a href={modalCard.url} target="_blank" rel="noopener noreferrer">{modalCard.url}</a></p>
+              <p><strong>Set Name:</strong> {modalCard.set_name}</p>
+              <p><strong>Rarity:</strong> {modalCard.rarity}</p>
+              <p><strong>Skill:</strong> {modalCard.skill}</p>
+              <p><strong>Gift:</strong> {modalCard.gift}</p>
+              <p><strong>Regulation:</strong> {modalCard.regulation}</p>
+              <p><strong>Card Number:</strong> {modalCard.number}</p>
+            </div>
           </div>
         </div>
+      )}
+
+      </>
       )}
     </div>
   );

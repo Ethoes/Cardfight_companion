@@ -1,16 +1,16 @@
-from flask import Flask, jsonify, request, send_file, abort
+from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-from DatabaseService import get_data_from_db, get_image_path_by_id, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username, get_cards_by_deck_id
-import os
-import mimetypes
+from DatabaseService import get_data_from_db, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username, get_cards_by_deck_id
+import base64
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
 
 @app.route('/hello', methods=['GET'])
 def hello():
     return "Hello, World!"
+
 
 @app.route('/data', methods=['POST'])
 def get_data():
@@ -18,20 +18,8 @@ def get_data():
     if not data or 'query' not in data or not isinstance(data['query'], str):
         return jsonify({"error": "Invalid input"}), 400
     query = data['query']
-    result = get_data_from_db(query)
+    result = get_data_from_db(query + " LIMIT 300")  # Add LIMIT 300 to the query
     return jsonify(result)
-
-@app.route('/card/<int:card_id>/image', methods=['GET'])
-def get_card_image(card_id):
-    image_path = get_image_path_by_id(card_id)
-    if not image_path:
-        return abort(404, description="Image not found")
-    image_path = "Z:\\cfv stuffs\\Cardfight_companion\\database\\images\\" + image_path
-    if image_path and os.path.exists(image_path):
-        mime_type, _ = mimetypes.guess_type(image_path)
-        return send_file(image_path, mimetype=mime_type)
-    else:
-        return abort(404, description="Image not found" + str(image_path))
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -46,6 +34,7 @@ def register():
     else:
         return jsonify({"error": "User creation failed"}), 500
 
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -57,7 +46,8 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
-    
+
+
 @app.route('/createDeck', methods=['POST'])
 def createDeck():
     data = request.get_json()
@@ -67,11 +57,12 @@ def createDeck():
     deck_name = data['name']
     username = data['user']
     description = data['description']
+    format = data.get('format', None)  # Get the format parameter if provided
     card_ids = [card['id'] for card in data['deck']]
 
     try:
         # Save the deck and get the deck_id
-        deck_id = save_deck(deck_name, username, description)
+        deck_id = save_deck(deck_name, username, description, format)
         if not deck_id:
             return jsonify({"error": "Failed to save deck"}), 500
 
@@ -83,7 +74,8 @@ def createDeck():
     except Exception as e:
         print(f"[ERROR] {e}")
         return jsonify({"error": "Failed to create deck"}), 500
-    
+
+
 @app.route('/search', methods=['POST'])
 def search():
     print("[INFO] Search endpoint called")
@@ -95,22 +87,24 @@ def search():
     nation = data['nation']
     grade = data.get('grade', None)  # Get the grade parameter if provided
     unitType = data.get('unitType', None)  # Get the unitType parameter if provided
+    format = data.get('format', None) 
+    clan = data.get('clan', None)  # Get the clan parameter if provided
 
-    result = search_card(name, nation, grade, unitType)  # Pass grade to the search_card function
+    result = search_card(name, nation, grade, unitType, format, clan)  # Pass grade to the search_card function
     if result:
         # Convert sqlite3.Row objects to dictionaries
         result = [dict(row) for row in result]
 
         # Add images to each row in the result
         for row in result:
-            if 'id' in row:  # Assuming each row has an 'id' field
-                image = get_image(row['id'])
-                if image:
-                    row['image'] = image
+            if 'image_data' in row and row['image_data']:  # Check if 'image_data' exists and is not None
+                row['image'] = base64.b64encode(row['image_data']).decode('utf-8')  # Encode to Base64
+                del row['image_data']  # Remove the raw binary data from the response
         return jsonify(result), 200
     else:
         return jsonify({"error": "No results found"}), 404
-    
+
+
 @app.route('/decks', methods=['POST'])
 def get_decks():
     data = request.get_json()
@@ -124,6 +118,7 @@ def get_decks():
 
     return jsonify(decks), 200
 
+
 @app.route('/decks/<int:deck_id>/cards', methods=['GET'])
 def get_deck_cards(deck_id):
     try:
@@ -134,39 +129,14 @@ def get_deck_cards(deck_id):
 
         # Add images to each card
         for card in cards:
-            if 'id' in card:  # Assuming each card has an 'id' field
-                image = get_image(card['id'])
-                if image:
-                    card['image'] = image
+            if 'image_data' in card and card['image_data']:  # Check if 'image_data' exists and is not None
+                card['image'] = base64.b64encode(card['image_data']).decode('utf-8')  # Encode to Base64
+                del card['image_data']  # Remove the raw binary data from the response
 
         return jsonify(cards), 200
     except Exception as e:
         print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")
         return jsonify({"error": "Failed to retrieve cards"}), 500
-    
-    
-def get_image(card_id):
-    try:
-        # Retrieve the image path
-        image_path = get_image_path_by_id(card_id)
-        if not image_path:
-            print(f"[ERROR] No image path found for card ID: {card_id}")
-            return None
-
-        # Construct the full image path
-        image_path = "Z:\\cfv stuffs\\Cardfight_companion\\database\\images\\" + image_path
-
-        # Check if the file exists and read it
-        with open(image_path, 'rb') as image_file:
-            import base64
-            encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-            return encoded_image
-    except FileNotFoundError:
-        print(f"[ERROR] Image file not found: {image_path}")
-        return None
-    except Exception as e:
-        print(f"[ERROR] Unexpected error while retrieving image for card ID {card_id}: {e}")
-        return None
 
 
 if __name__ == '__main__':

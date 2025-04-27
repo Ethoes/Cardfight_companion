@@ -82,28 +82,37 @@ function DeckDetails() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>X</button>
-            <img
-              src={`data:image/png;base64,${modalCard.image}`}
-              alt={modalCard.name || 'Card Image'}
-              className="modal-image"
-            />
-            <h3>{modalCard.name}</h3>
-            <p><strong>Effect:</strong> {modalCard.effect}</p>
-            <p><strong>Type:</strong> {modalCard.card_type}</p>
-            <p><strong>Grade/Skill:</strong> {modalCard.grade_skill}</p>
-            <p><strong>Power:</strong> {modalCard.power}</p>
-            <p><strong>Critical:</strong> {modalCard.critical}</p>
-            <p><strong>Shield:</strong> {modalCard.shield}</p>
-            <p><strong>Nation:</strong> {modalCard.nation}</p>
-            <p><strong>Race:</strong> {modalCard.race}</p>
-            <p><strong>Trigger Effect:</strong> {modalCard.trigger_effect}</p>
-            <p><strong>Format:</strong> {modalCard.format}</p>
-            <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
-            <p><strong>Clan:</strong> {modalCard.clan}</p>
-            <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+            <div className="modal-scrollable-content">
+              <img
+                src={`data:image/png;base64,${modalCard.image}`}
+                alt={modalCard.name || 'Card Image'}
+                className="modal-image"
+              />
+              <h3>{modalCard.name}</h3>
+              <p><strong>Effect:</strong> {modalCard.effect}</p>
+              <p><strong>Type:</strong> {modalCard.type}</p>
+              <p><strong>Grade:</strong> {modalCard.grade}</p>
+              <p><strong>Power:</strong> {modalCard.power}</p>
+              <p><strong>Critical:</strong> {modalCard.critical}</p>
+              <p><strong>Shield:</strong> {modalCard.shield}</p>
+              <p><strong>Nation:</strong> {modalCard.nation}</p>
+              <p><strong>Race:</strong> {modalCard.race}</p>
+              <p><strong>Format:</strong> {modalCard.regulation}</p>
+              <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
+              <p><strong>Clan:</strong> {modalCard.clan}</p>
+              <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+              <p><strong>URL:</strong> <a href={modalCard.url} target="_blank" rel="noopener noreferrer">{modalCard.url}</a></p>
+              <p><strong>Set Name:</strong> {modalCard.set_name}</p>
+              <p><strong>Rarity:</strong> {modalCard.rarity}</p>
+              <p><strong>Skill:</strong> {modalCard.skill}</p>
+              <p><strong>Gift:</strong> {modalCard.gift}</p>
+              <p><strong>Regulation:</strong> {modalCard.regulation}</p>
+              <p><strong>Card Number:</strong> {modalCard.number}</p>
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -48,6 +48,7 @@ function ViewDecks({ username }) {
           >
             <h3>{deck.name}</h3>
             <p>{deck.description || 'No description available'}</p>
+            <p>{deck.deck_type || 'No format found'}</p>
           </div>
         ))}
       </div>

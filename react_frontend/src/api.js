@@ -1,11 +1,11 @@
-export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType) {
+export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan) {
     try {
       const response = await fetch('http://127.0.0.1:5000/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType }),
+        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType, format: format, clan: selectedClan }),
       });
   
       if (!response.ok) {
@@ -21,14 +21,14 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
     }
   }
 
-  export async function postNewDeck(Deckname, CurrentDeck, User, description) {
+  export async function postNewDeck(Deckname, CurrentDeck, User, description, format) {
     try {
       const response = await fetch('http://127.0.0.1:5000/createDeck', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: Deckname, deck: CurrentDeck, user: User, description: description }),
+        body: JSON.stringify({ name: Deckname, deck: CurrentDeck, user: User, description: description, format: format }),
       });
   
       if (!response.ok) {

@@ -12,14 +12,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+    overflow: hidden; /* Prevent content overflow */
+    padding: 0 20px; /* Add padding to the left and right for spacing */
+    width: 100%; /* Ensure the content spans the full width */
+    box-sizing: border-box; /* Include padding in the element's width */
+}
+
+.Banner-username {
+    font-size: 18px;
+    white-space: nowrap; /* Prevent the username from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis if the text overflows */
+    flex-shrink: 0; /* Prevent the username from shrinking */
+    max-width: 200px; /* Optional: Set a maximum width for the username */
+    margin-left: auto; /* Push the username to the far right */
+    padding-left: 10px; /* Add some spacing between the username and the title */
+}
   
   .Banner-title {
     font-size: 24px;
-  }
-  
-  .Banner-username {
-    font-size: 18px;
   }
 
   .Banner-title {

@@ -9,35 +9,14 @@ import DeckBuilder from './deckbuilder/deckbuilder.js';
 import CreateNewDeck from './create_new_deck/CreateNewDeck.js'
 import ViewDecks from './view_deck/ViewDecks.js';
 import DeckDetails from './deck_details/DeckDetails.js';
+import TournamentNotes from './tournament_notes/TournamentNotes.js';
+import TournamentDetails from './tournament_notes/tournament_details/TournamentDetails.js';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState('');
-  const [cardId, setCardId] = useState('');
-  const [imageSrc, setImageSrc] = useState(null);
-  const [error, setError] = useState(null);
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) { // Only allow numbers
-      setCardId(value);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const handleSearch = async () => {
-    if (cardId) {
-      const { imageUrl, error } = await fetchCardImage(cardId);
-      setImageSrc(imageUrl);
-      setError(error);
-    }
-  };
 
   const handleLogin = (username) => {
     setIsLoggedIn(true);
@@ -63,20 +42,15 @@ function App() {
           <Route path="/deck-builder" element={<DeckBuilder />} />
           <Route path="/view-decks" element={<ViewDecks username={username} />} />
           <Route path="/deck-details" element={<DeckDetails />} />
+          <Route path="/tournament-notes" element={<TournamentNotes username={username}/>} />
+          <Route path="/tournament-details" element={<TournamentDetails />} />
           <Route path="/" element={
             <div>
-              <input
-                type="text"
-                value={cardId}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-                placeholder="Enter card ID"
-              />
-              <button onClick={handleSearch}>Search</button>
-              {error && <p>{error}</p>}
-              {imageSrc && <img src={imageSrc} alt="Card" />}
               <Link to="/deck-builder">
                 <button>Go to Deck Builder</button>
+              </Link>
+              <Link to="/tournament-notes">
+                <button>Go to Tournament Notes</button>
               </Link>
             </div>
           } />

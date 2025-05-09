@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchCard, postNewDeck } from '../api';
 import './CreateNewDeck.css';
@@ -6,6 +6,8 @@ import './CreateNewDeck.css';
 function CreateNewDeck({ username }) {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedClan, setSelectedClan] = useState('');
+  const [selectedSet, setSelectedSet] = useState(''); // State for selected set
+  const [sets, setSets] = useState([]); // State for fetched sets
   const [CardSearch, setCardSearch] = useState('');
   const [SearchResult, setSearchResult] = useState([]);
   const [CurrentDeck, setCurrentDeck] = useState([]);
@@ -46,6 +48,28 @@ function CreateNewDeck({ username }) {
     }
   };
 
+  useEffect(() => {
+    // Fetch the list of sets from the backend
+    const fetchSets = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/sets?format=${format || ''}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setSets(data); // Update the sets state with the fetched data
+      } catch (error) {
+        console.error('Error fetching sets:', error);
+      }
+    };
+  
+    fetchSets();
+  }, [format]); 
+
+  const handleSetChange = (event) => {
+    setSelectedSet(event.target.value); // Update selected set
+  };
+
   const handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       // Clear previous search results and show loading icon
@@ -60,7 +84,8 @@ function CreateNewDeck({ username }) {
           selectedGrade,
           selectedUnitType,
           format === 'Standard' ? format : null,
-          selectedClan
+          selectedClan,
+          selectedSet
         );
         setSearchResult(result); // Update with new search results
       } catch (error) {
@@ -278,7 +303,23 @@ function CreateNewDeck({ username }) {
         </div>
 
         <div className="CreateNewDeck-selector">
-          <label className="CreateNewDeck-label" htmlFor="unit-type-select">Unit Type</label>
+              <label className="CreateNewDeck-label" htmlFor="set-select">Set</label>
+              <select
+                id="set-select"
+                value={selectedSet}
+                onChange={handleSetChange}
+                className="CreateNewDeck-dropdown"
+                style={{ outline: `2px solid ${getOutlineColor()}` }}
+              >
+                <option value="">None</option>
+                {sets.map((set, index) => (
+                  <option key={index} value={set}>{set}</option>
+                ))}
+              </select>
+          </div>
+
+        <div className="CreateNewDeck-selector">
+          <label className="CreateNewDeck-label" htmlFor="unit-type-select">Card Type</label>
           <select
             id="unit-type-select"
             value={selectedUnitType}
@@ -286,12 +327,16 @@ function CreateNewDeck({ username }) {
             className="CreateNewDeck-dropdown"
             style={{ outline: `2px solid ${getOutlineColor()}` }}
           >
-            <option value="">None</option> {/* Allow no selection */}
-            <option value="Trigger Unit">Trigger Unit</option>
-            <option value="G Unit">G Unit</option>
-            <option value="Normal Order">Normal Order</option>
-            <option value="Set Order">Set Order</option>
-            <option value="Blitz Order">Blitz Order</option>
+              <option value="">None</option> {/* Allow no selection */}
+              <option value="Normal Unit">Normal Unit</option>
+              <option value="Trigger Unit">Trigger Unit</option>
+              <option value="G Unit">G Unit</option>
+              <option value="Others">Others</option>
+              <option value="Normal Order">Normal Order</option>
+              <option value="Set Order">Set Order</option>
+              <option value="Blitz Order">Blitz Order</option>
+              <option value="Trigger Order">Trigger Order</option>
+              <option value="Ride Deck Crest">Ride Deck Crest</option>
           </select>
         </div>
       </div>

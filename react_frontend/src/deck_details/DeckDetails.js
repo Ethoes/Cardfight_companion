@@ -9,7 +9,6 @@ function DeckDetails() {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [deckName, setDeckName] = useState(deck?.name || ''); // State for deck name input
   const [modalCard, setModalCard] = useState(null); // State for the modal card
-
   useEffect(() => {
     if (deck) {
       // Fetch cards associated with the deck

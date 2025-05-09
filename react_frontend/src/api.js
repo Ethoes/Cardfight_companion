@@ -1,11 +1,12 @@
-export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan) {
+export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan, selectedSet) {
     try {
+      console.log(selectedSet)
       const response = await fetch('http://127.0.0.1:5000/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType, format: format, clan: selectedClan }),
+        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType, format: format, clan: selectedClan, selectedSet: selectedSet }),
       });
   
       if (!response.ok) {
@@ -40,6 +41,71 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
       return response;
     } catch (error) {
       console.error('Error creating deck:', error);
+      throw error;
+    }
+  }
+
+  export async function fetchUserDecks(username) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/decks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching decks:', error);
+      throw error;
+    }
+  }
+  
+  export async function createTournament(tournamentData) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/createTournament', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tournamentData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating tournament:', error);
+      throw error;
+    }
+  }
+
+  export async function fetchUserTournaments(username) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/tournaments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching tournaments:', error);
       throw error;
     }
   }

@@ -1,7 +1,12 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-from DatabaseService import get_data_from_db, create_user, validate_user, search_card, save_deck, save_deck_cards, get_decks_by_username, get_cards_by_deck_id
+from DatabaseService import (
+    get_data_from_db, create_user, validate_user, search_card, save_deck,
+    save_deck_cards, get_decks_by_username, get_cards_by_deck_id,
+    get_sets_by_format, save_tournament, get_tournaments_by_username  # Import the new function
+)
 import base64
+from cardmarketApi import calculate_deck_cost
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -89,8 +94,9 @@ def search():
     unitType = data.get('unitType', None)  # Get the unitType parameter if provided
     format = data.get('format', None) 
     clan = data.get('clan', None)  # Get the clan parameter if provided
+    set = data.get('selectedSet', None)  # Get the selectedSets parameter if provided
 
-    result = search_card(name, nation, grade, unitType, format, clan)  # Pass grade to the search_card function
+    result = search_card(name, nation, grade, unitType, format, clan, set)  # Pass grade to the search_card function
     if result:
         # Convert sqlite3.Row objects to dictionaries
         result = [dict(row) for row in result]
@@ -118,6 +124,18 @@ def get_decks():
 
     return jsonify(decks), 200
 
+@app.route('/sets', methods=['GET'])
+def get_sets():
+    format = request.args.get('format')  # Get the format parameter from the query string
+    try:
+        sets = get_sets_by_format(format)  # Call the function from DatabaseService.py
+        if sets is None:
+            return jsonify({"error": "Failed to fetch sets"}), 500
+        return jsonify(sets), 200
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch sets: {e}")
+        return jsonify({"error": "Failed to fetch sets"}), 500
+
 
 @app.route('/decks/<int:deck_id>/cards', methods=['GET'])
 def get_deck_cards(deck_id):
@@ -137,7 +155,43 @@ def get_deck_cards(deck_id):
     except Exception as e:
         print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")
         return jsonify({"error": "Failed to retrieve cards"}), 500
+    
+@app.route('/createTournament', methods=['POST'])
+def create_tournament():
+    data = request.get_json()
+    if not data or 'name' not in data or 'description' not in data or 'deck_id' not in data or 'username' not in data:
+        return jsonify({"error": "Invalid input"}), 400
 
+    name = data['name']
+    description = data['description']
+    deck_id = data['deck_id']
+    username = data['username']
+
+    try:
+        # Use the save_tournament function to save the tournament
+        tournament_id = save_tournament(name, description, deck_id, username)
+        if not tournament_id:
+            return jsonify({"error": "Failed to create tournament"}), 500
+
+        return jsonify({"message": "Tournament created successfully", "tournament_id": tournament_id}), 201
+    except Exception as e:
+        print(f"[ERROR] Failed to create tournament: {e}")
+        return jsonify({"error": "Failed to create tournament"}), 500
+    
+@app.route('/tournaments', methods=['POST'])
+def get_user_tournaments():
+    data = request.get_json()
+    if not data or 'username' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    username = data['username']
+
+    try:
+        tournaments = get_tournaments_by_username(username)
+        return jsonify(tournaments), 200
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch tournaments for user {username}: {e}")
+        return jsonify({"error": "Failed to fetch tournaments"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

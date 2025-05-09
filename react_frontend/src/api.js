@@ -109,3 +109,45 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
       throw error;
     }
   }
+
+  export async function saveTournamentDetails(tournamentDetails) {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/saveTournamentDetails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(tournamentDetails),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error saving tournament details:', error);
+    throw error;
+  }
+}
+
+export async function fetchTournamentDetails(tournamentId) {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/tournamentDetails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ tournament_id: tournamentId }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json(); // The response now includes deck information
+  } catch (error) {
+    console.error('Error fetching tournament details:', error);
+    throw error;
+  }
+}

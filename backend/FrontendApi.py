@@ -3,7 +3,8 @@ from flask_cors import CORS
 from DatabaseService import (
     get_data_from_db, create_user, validate_user, search_card, save_deck,
     save_deck_cards, get_decks_by_username, get_cards_by_deck_id,
-    get_sets_by_format, save_tournament, get_tournaments_by_username  # Import the new function
+    get_sets_by_format, save_tournament, get_tournaments_by_username,
+    save_tournament_details,  get_tournament_details_with_deck # Import the new function
 )
 import base64
 from cardmarketApi import calculate_deck_cost
@@ -192,6 +193,47 @@ def get_user_tournaments():
     except Exception as e:
         print(f"[ERROR] Failed to fetch tournaments for user {username}: {e}")
         return jsonify({"error": "Failed to fetch tournaments"}), 500
+
+@app.route('/saveTournamentDetails', methods=['POST'])
+def save_tournament_details_endpoint():
+    data = request.get_json()
+    if not data or 'tournament_id' not in data or 'match_number' not in data or 'opponent_deck_name' not in data or 'match_result' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    tournament_id = data['tournament_id']
+    match_number = data['match_number']
+    opponent_deck_name = data['opponent_deck_name']
+    opponent_deck_log = data.get('opponent_deck_log', None)
+    match_result = data['match_result']
+    match_notes = data.get('match_notes', None)
+
+    try:
+        result = save_tournament_details(tournament_id, match_number, opponent_deck_name, opponent_deck_log, match_result, match_notes)
+        if result:
+            return jsonify({"message": "Tournament details saved successfully"}), 201
+        else:
+            return jsonify({"error": "Failed to save tournament details"}), 500
+    except Exception as e:
+        print(f"[ERROR] Failed to save tournament details: {e}")
+        return jsonify({"error": "Failed to save tournament details"}), 500
+    
+@app.route('/tournamentDetails', methods=['POST'])
+def get_tournament_details():
+    data = request.get_json()
+    if not data or 'tournament_id' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    tournament_id = data['tournament_id']
+
+    try:
+        details = get_tournament_details_with_deck(tournament_id)
+        if details is not None:
+            return jsonify(details), 200
+        else:
+            return jsonify({"error": "Failed to fetch tournament details"}), 500
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch tournament details: {e}")
+        return jsonify({"error": "Failed to fetch tournament details"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -11,12 +11,17 @@
 .TournamentNotes-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch; /* Ensure all columns stretch to the same height */
   padding: 15px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: #ffffff;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 30%, /* Start with transparency */
+    rgba(150, 150, 255, 0.6) 50%, /* Stronger color in the center */
+    rgba(255, 255, 255, 0) 70% /* Taper off faster */
+  ); /* Centered and faster tapering gradient effect */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -31,6 +36,18 @@
   margin-right: 10px;
   font-size: 14px;
   color: #555;
+  text-align: center;
+  padding: 10px;
+  background: none; /* Remove the gradient from the individual columns */
+  border-radius: 4px;
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  box-sizing: border-box; /* Include padding and border in the height calculation */
+}
+
+.TournamentNotes-field:last-child {
+  margin-right: 0; /* Remove margin for the last column */
 }
 
 .TournamentNotes-field strong {

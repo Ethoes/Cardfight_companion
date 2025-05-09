@@ -38,8 +38,9 @@ function TournamentNotes({ username }) {
   }, [username]);
 
   const handleTournamentClick = (tournament) => {
-    navigate('/tournament-details', { state: { tournament } });
-  };
+  const selectedDeck = decks.find((deck) => deck.id === tournament.deck_id);
+  navigate('/tournament-details', { state: { tournament, deck: selectedDeck } });
+};
 
 
   const handleCreateTournament = async () => {
@@ -74,21 +75,26 @@ function TournamentNotes({ username }) {
     <div className="TournamentNotes-container">
       <h2>Your Tournaments</h2>
       <div className="TournamentNotes-list">
-        {tournaments.length > 0 ? (
-          tournaments.map((tournament) => (
-            <div  key={tournament.id}
+          {tournaments.length > 0 ? (
+            tournaments.map((tournament) => {
+              const deck = decks.find((deck) => deck.id === tournament.deck_id); // Find the deck by ID
+              return (
+                <div
+                  key={tournament.id}
                   className="TournamentNotes-item"
                   onClick={() => handleTournamentClick(tournament)}
-                  style={{ cursor: 'pointer' }}>
-              <span className="TournamentNotes-field"><strong>Name:</strong> {tournament.name}</span>
-              <span className="TournamentNotes-field"><strong>Description:</strong> {tournament.description}</span>
-              <span className="TournamentNotes-field"><strong>Deck ID:</strong> {tournament.deck_id}</span>
-            </div>
-          ))
-        ) : (
-          <p>No tournaments found.</p>
-        )}
-      </div>
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="TournamentNotes-field"><strong>Name:</strong> {tournament.name}</span>
+                  <span className="TournamentNotes-field"><strong>Description:</strong> {tournament.description}</span>
+                  <span className="TournamentNotes-field"><strong>Deck Name:</strong> {deck ? deck.name : 'Unknown Deck'}</span>
+                </div>
+              );
+            })
+          ) : (
+            <p>No tournaments found.</p>
+          )}
+        </div>
 
       <button onClick={() => setShowModal(true)} className="TournamentNotes-save-button">
         Create new tournament +

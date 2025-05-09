@@ -1,63 +1,258 @@
+/* Container for the entire page */
 .TournamentDetails-container {
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    max-width: 50%; /* Set the width to half the screen */
-    margin: 0 auto; /* Center the container */
-  }
-  
-  .TournamentDetails-header {
-    background-color: #4caf50;
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .TournamentDetails-header h1 {
-    margin: 0;
-    font-size: 24px;
-  }
-  
-  .TournamentDetails-header p {
-    margin: 10px 0 0;
-    font-size: 16px;
-  }
-  
-  .TournamentDetails-info {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .TournamentDetails-info p {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .TournamentDetails-info strong {
-    color: #333;
-  }
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center elements horizontally */
+  gap: 20px; /* Add spacing between elements */
+}
 
-  .TournamentDetails-add-match-button {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .TournamentDetails-add-match-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-  }
+/* Header section */
+.TournamentDetails-header {
+  background-color: #263b27;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 50%; /* Restrict the width to half the screen */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.TournamentDetails-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.TournamentDetails-header p {
+  margin: 10px 0 0;
+  font-size: 16px;
+}
+
+/* Info section */
+.TournamentDetails-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 50%; /* Restrict the width to half the screen */
+}
+
+.TournamentDetails-info p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Add Match button */
+.TournamentDetails-add-match-button {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 24px;
+  background-color: #263b27;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.TournamentDetails-add-match-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Table container */
+.TournamentDetails-list {
+  margin-top: 20px;
+  width: 75%; /* Set the width to 75% of the screen */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure the table stays within the container */
+}
+
+/* Table header row */
+.TournamentDetails-header-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns */
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Table rows */
+.TournamentDetails-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.TournamentDetails-row:hover {
+  background-color: #e0f7fa; /* Light blue hover effect */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Table cells */
+.TournamentDetails-row div {
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Remove border for the last row */
+.TournamentDetails-row:last-child {
+  border-bottom: none;
+}
+
+/* Make the TournamentDetails-info div clickable */
+.TournamentDetails-info.clickable {
+  cursor: pointer; /* Change the cursor to indicate it's clickable */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.TournamentDetails-info.clickable:hover {
+  background-color: #e0f7fa; /* Add a hover effect */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 480px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Modal input fields */
+.modal-content label {
+  display: block; /* Ensure each label gets its own row */
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%; /* Make inputs take the full width */
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.modal-content .match-number,
+.modal-content .opponent-decklog {
+  width: 48%; /* Set a smaller width for these fields */
+  display: inline-block; /* Allow them to sit side by side if needed */
+  margin-right: 2%; /* Add spacing between fields */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.modal-content .opponent-decklog:last-child {
+  margin-right: 0; /* Remove margin for the last field in the row */
+}
+
+/* Modal buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
+}
+
+.TournamentDetails-list {
+  margin-top: 20px;
+}
+
+.TournamentDetails-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.TournamentDetails-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.TournamentDetails-item strong {
+  color: #333;
+}
+
+/* Style for clickable deck log links */
+.decklog-link {
+  color: #007bff; /* Keep the link color */
+  text-decoration: none; /* Remove the underline */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.decklog-link:hover {
+  color: #0056b3; /* Change color on hover */
+}

@@ -16,12 +16,11 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin-bottom: 10px;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 30%, /* Start with transparency */
-    rgba(150, 150, 255, 0.6) 50%, /* Stronger color in the center */
-    rgba(255, 255, 255, 0) 70% /* Taper off faster */
-  ); /* Centered and faster tapering gradient effect */
+  background: radial-gradient(
+    circle,
+    #699fd0, /* Start with #699fd0 */
+    #a2c4c9 /* Transition to #a2c4c9 */
+  ); /* Gradient originating from the middle */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }

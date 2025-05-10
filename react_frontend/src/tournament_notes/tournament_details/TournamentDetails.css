@@ -1,6 +1,7 @@
 /* Container for the entire page */
 .TournamentDetails-container {
   padding: 20px;
+  padding-top: 80px; /* Add padding to account for the banner height */
   font-family: 'Arial', sans-serif;
   color: #333;
   display: flex;
@@ -20,7 +21,6 @@
   width: 50%; /* Restrict the width to half the screen */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .TournamentDetails-header h1 {
   margin: 0;
   font-size: 24px;
@@ -227,7 +227,7 @@
 }
 
 .TournamentDetails-item {
-  background-color: #f9f9f9;
+  background-color: rgba(240, 240, 240, 0); /* Slightly opaque light grey */
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;

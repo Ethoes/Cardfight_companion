@@ -1,71 +1,73 @@
+/* Container for the entire page */
 .CreateNewDeck-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh; /* Make the container take the full viewport height */
-  }
-  
-  .CreateNewDeck-grid {
-    flex-grow: 1; /* Allow the grid to grow and take up remaining space */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
-    width: 80%;
-    max-height: 70%; /* Adjust the height as needed */
-    overflow-y: auto; /* Enable vertical scrolling */
-    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
-    padding: 10px; /* Optional: Add padding inside the container */
-  }
-  
-  .CreateNewDeck-card {
-    text-align: center;
-  }
-  
-  .CreateNewDeck-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px; /* Add padding to account for the banner height */
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  gap: 20px; /* Add spacing between sections */
+}
+
+/* Background box for the title */
+.CreateNewDeck-title-box {
+  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Gradient background */
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  text-align: center;
+  width: 100%;
+  max-width: 600px; /* Limit the width */
+}
+
+/* Background box for the cards grid */
+.CreateNewDeck-grid-box {
+  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Gradient background */
+  padding: 10px 20px; /* Reduce padding to bring the grid closer to the edges */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  display: flex; /* Use flexbox to align the grid */
+  justify-content: center; /* Center the grid horizontally */
+  align-items: stretch; /* Stretch the grid vertically to fill the box */
+  box-sizing: border-box; /* Include padding in width calculation */
+  width: 100%;
+  max-width: 1200px; /* Limit the width */
+  margin-top: 10px; /* Add a small margin to separate it from the title */
+  height: calc(60vh); /* Adjust height to stretch the box further down */
+  overflow-y: auto; /* Add vertical scrolling if content overflows */
+}
+
+/* Cards grid */
+.CreateNewDeck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 150px); /* Fixed column width of 200px */
+  gap: 10px; /* Consistent gap between cards */
+  justify-content: center; /* Center the grid within the container */
+  width: 100%; /* Make the grid fill the container horizontally */
+  max-width: 100%; /* Prevent the grid from exceeding the container width */
+}
+
+/* Individual card styling */
+.CreateNewDeck-card img {
+  width: 100%; /* Ensure the image fills the card width */
+  height: 90%; /* Reduce the height of the card image to 80% */
+  object-fit: cover; /* Ensure the image scales properly without leaving white space */
+  display: block;
+}
 
 
-  .CreateNewDeck-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust card size */
-    gap: 3px; /* Add spacing between cards */
-  }
-  
-  .CreateNewDeck-card {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    width: 150px; /* Set a fixed width for the card */
-    height: 230px; /* Set a fixed height for the card */
-    overflow: hidden; /* Ensure content doesn't overflow */
-  }
-  
-  .CreateNewDeck-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+/* Individual card styling */
+.CreateNewDeck-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-  .loading-spinner {
-    border: 4px solid #f3f3f3; /* Light gray */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto; /* Center the spinner */
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+.CreateNewDeck-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}

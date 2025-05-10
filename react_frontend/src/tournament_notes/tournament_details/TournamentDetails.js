@@ -16,30 +16,41 @@ function TournamentDetails() {
   const [tournamentDetails, setTournamentDetails] = useState([]);
 
   useEffect(() => {
-    if (tournament) {
-      const loadTournamentDetails = async () => {
-        try {
-          const details = await fetchTournamentDetails(tournament.id);
-          setTournamentDetails(details);
-        } catch (error) {
-          console.error('Error fetching tournament details:', error);
-        }
-      };
+      if (tournament) {
+        const loadTournamentDetails = async () => {
+          try {
+            const details = await fetchTournamentDetails(tournament.id);
+            setTournamentDetails(details);
+          } catch (error) {
+            console.error('Error fetching tournament details:', error);
+          }
+        };
 
-      loadTournamentDetails();
+        loadTournamentDetails();
+      }
+    }, [tournament]);
+
+    if (!tournament || !deck) {
+      return <p>No tournament selected.</p>;
     }
-  }, [tournament]);
 
-  if (!tournament || !deck) {
-    return <p>No tournament selected.</p>;
-  }
+    const handleAddMatch = () => {
+        // Calculate the next match number
+        const allMatchNumbers = tournamentDetails.map((detail) => detail.match_number || 0);
+        const highestMatchNumber = Math.max(0, ...allMatchNumbers);
+        setMatchNumber(highestMatchNumber + 1); // Set the next match number
 
-  const handleAddMatch = () => {
-    setShowModal(true);
-  };
+        setShowModal(true); // Open the modal
+    };
 
-  const handleSaveMatch = async () => {
-    if (!matchNumber.trim() || !opponentDeckName.trim() || !matchResult.trim()) {
+
+    const handleSaveMatch = async () => {
+    if (!matchNumber || isNaN(matchNumber) || matchNumber <= 0) {
+      alert('Please enter a valid match number.');
+      return;
+    }
+
+    if (!opponentDeckName.trim() || !matchResult.trim()) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -51,7 +62,7 @@ function TournamentDetails() {
 
     const tournamentDetailsData = {
       tournament_id: tournament.id,
-      match_number: parseInt(matchNumber, 10),
+      match_number: parseInt(matchNumber, 10), // Ensure matchNumber is an integer
       opponent_deck_name: opponentDeckName,
       opponent_deck_log: opponentDeckLog,
       match_result: matchResult,
@@ -108,11 +119,12 @@ function TournamentDetails() {
         <p><strong>Created By:</strong> {tournament.username}</p>
       </div>
       
-      {showModal && (
+     {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Add New Match</h3>
             <label>
+              Match Number:
               <input
                 type="number"
                 value={matchNumber}
@@ -122,6 +134,7 @@ function TournamentDetails() {
               />
             </label>
             <label>
+              Opponent's Deck Name:
               <input
                 type="text"
                 value={opponentDeckName}
@@ -130,6 +143,7 @@ function TournamentDetails() {
               />
             </label>
             <label>
+              Opponent's Deck Log:
               <input
                 type="text"
                 value={opponentDeckLog}
@@ -144,6 +158,7 @@ function TournamentDetails() {
               />
             </label>
             <label>
+              Match Result:
               <select
                 value={matchResult}
                 onChange={(e) => setMatchResult(e.target.value)}

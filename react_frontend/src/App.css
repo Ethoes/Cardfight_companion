@@ -1,40 +1,82 @@
-/* App.css */
-.App {
+.App-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Center vertically */
   text-align: center;
-  padding-top: 100px; /* Adjust this value as needed */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  /* Remove centering styles from .App */
+  text-align: left;
+  display: block;
+  min-height: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-buttons-container {
+  background: linear-gradient(135deg, #699fd0, #699fd0); /* Use the new color palette */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border for definition */
+  border-radius: 16px; /* Rounded corners for a modern look */
+  padding: 30px; /* Increased padding for better spacing */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* More prominent shadow */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 25px; /* Increased space between buttons */
+  max-width: 450px; /* Slightly wider bounding box */
+  margin: 0 auto; /* Center horizontally */
 }
 
-.App-link {
-  color: #61dafb;
+.App button {
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #3a3f51, #2c2f3a); /* Muted gradient with dark tones */
+  border: none;
+  border-radius: 8px; /* Slightly more rounded corners */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.App button:hover {
+  transform: translateY(-3px); /* Slightly more lift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  background: linear-gradient(135deg, #4a4f63, #3a3d4f); /* Slightly lighter gradient */
+}
+
+.App button:active {
+  transform: translateY(0); /* Reset lift effect */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.App button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(58, 63, 81, 0.5); /* Focus ring with muted color */
+}
+
+
+html {
+  --s: 150px; /* control the size */
+  
+  background:
+    linear-gradient(135deg, #0000 18.75%, #ea9999 0 31.25%, #0000 0),
+    repeating-linear-gradient(45deg, #ea9999 -6.25% 6.25%, #f4cccc 0 18.75%);
+  background-size: var(--s) var(--s);
+  animation: moveBackground 20s linear infinite; /* Add animation */
+}
+
+html, body {
+  overflow: auto; /* Ensure scrolling is enabled globally */
+}
+
+/* Define the animation */
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    background-position: 300px 300px; /* Adjust for diagonal movement */
   }
 }

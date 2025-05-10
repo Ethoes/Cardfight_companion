@@ -215,7 +215,7 @@ function CreateNewDeck({ username }) {
       )}
 
       {!showFormatModal && (
-        <>
+        <div className="CreateNewDeck-middle-box">
       <h2 className="CreateNewDeck-title">Create New Deck</h2>
       <p>Create a deck</p>
 
@@ -339,28 +339,28 @@ function CreateNewDeck({ username }) {
               <option value="Ride Deck Crest">Ride Deck Crest</option>
           </select>
         </div>
-      </div>
 
-      <div className="CreateNewDeck-input-container">
-        <input
-          type="text"
-          value={CardSearch}
-          onChange={(e) => setCardSearch(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleKeyPress(e);
-            }
-          }}
-          placeholder="Search for a card and press Enter"
-          className="CreateNewDeck-input"
-        />
-        <button
-          onClick={() => handleKeyPress({ key: 'Enter' })}
-          className="CreateNewDeck-button"
-          style={{ backgroundColor: `${getOutlineColor()}` }}
-        >
-          Search
-        </button>
+        <div className="CreateNewDeck-input-container">
+          <input
+            type="text"
+            value={CardSearch}
+            onChange={(e) => setCardSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleKeyPress(e);
+              }
+            }}
+            placeholder="Search for a card and press Enter"
+            className="CreateNewDeck-input"
+          />
+          <button
+            onClick={() => handleKeyPress({ key: 'Enter' })}
+            className="CreateNewDeck-button"
+            style={{ backgroundColor: `${getOutlineColor()}` }}
+          >
+            Search
+          </button>
+        </div>
       </div>
 
       {loading && <div className="loading-spinner"></div>} {/* Show loading spinner */}
@@ -464,7 +464,7 @@ function CreateNewDeck({ username }) {
         </div>
       )}
 
-      </>
+      </div>
       )}
     </div>
   );

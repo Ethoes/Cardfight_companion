@@ -1,42 +1,54 @@
 .Banner {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  .Banner-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden; /* Prevent content overflow */
-    padding: 0 20px; /* Add padding to the left and right for spacing */
-    width: 100%; /* Ensure the content spans the full width */
-    box-sizing: border-box; /* Include padding in the element's width */
+  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Use the new color palette */
+  color: #fff; /* White text for contrast */
+  padding: 15px 20px; /* Add padding for spacing */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  background-size: 300% 300%;
+  overflow: hidden; /* Ensure the animation covers the entire banner */
+}
+
+.Banner-content {
+  display: flex;
+  justify-content: space-between; /* Push title and username to the edges */
+  align-items: center;
+  max-width: 100%; /* Use full width */
+  margin: 0; /* Remove centering margin */
+  padding: 0 20px; /* Add padding to the edges */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.Banner-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline */
+  color: #fff; /* White text for contrast */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  margin-left: 0; /* Align closer to the left edge */
+}
+
+.Banner-title:hover {
+  color: #d0e4f7; /* Lighter blue for hover effect */
 }
 
 .Banner-username {
-    font-size: 18px;
-    white-space: nowrap; /* Prevent the username from wrapping */
-    overflow: hidden; /* Hide overflowing text */
-    text-overflow: ellipsis; /* Add ellipsis if the text overflows */
-    flex-shrink: 0; /* Prevent the username from shrinking */
-    max-width: 200px; /* Optional: Set a maximum width for the username */
-    margin-left: auto; /* Push the username to the far right */
-    padding-left: 10px; /* Add some spacing between the username and the title */
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff; /* White text for contrast */
+  background: rgba(255, 255, 255, 0.2); /* Subtle translucent white background */
+  padding: 5px 10px;
+  border-radius: 8px; /* Rounded corners for a modern look */
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for long usernames */
+  max-width: 200px; /* Limit the width */
+  text-align: right;
+  margin-right: 20px; /* Add space between the username and the edge */
 }
-  
-  .Banner-title {
-    font-size: 24px;
-  }
 
-  .Banner-title {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit the text color from the parent */
-    font-size: inherit; /* Inherit the font size from the parent */
-    font-weight: inherit; /* Inherit the font weight from the parent */
-    cursor: pointer; /* Optional: Keep the pointer cursor for clickable behavior */
-  }
+.Banner-username:hover {
+  background: rgba(255, 255, 255, 0.3); /* Slightly more opaque on hover */
+}

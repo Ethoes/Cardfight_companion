@@ -1,0 +1,67 @@
+.DeckBuilder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the top */
+  min-height: 100vh; /* Full screen height */
+  padding: 20px;
+  padding-top: 80px; /* Add padding to account for the banner height */
+  box-sizing: border-box; /* Include padding in height calculation */
+  overflow: hidden; /* Prevent scrolling */
+  position: relative; /* Allow absolute positioning of child elements */
+}
+
+.DeckBuilder-header {
+  background: linear-gradient(135deg, #699fd0, #699fd0); /* Use the color palette */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  margin-top: 20px; /* Add space below the banner */
+  text-align: center;
+  width: 100%;
+  max-width: 600px; /* Limit the width */
+}
+
+.DeckBuilder-buttons-container {
+  background: linear-gradient(135deg, #699fd0, #699fd0); /* Use the color palette */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
+  border-radius: 12px; /* Rounded corners */
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Prominent shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Space between buttons */
+  width: 100%;
+  max-width: 400px; /* Limit the width */
+  position: absolute; /* Position the container independently */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for proper centering */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.DeckBuilder-buttons-container button {
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #3a3f51, #2c2f3a); /* Muted gradient */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.DeckBuilder-buttons-container button:hover {
+  transform: translateY(-3px); /* Lift effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  background: linear-gradient(135deg, #4a4f63, #3a3d4f); /* Slightly lighter gradient */
+}
+
+.DeckBuilder-buttons-container button:active {
+  transform: translateY(0); /* Reset lift effect */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}

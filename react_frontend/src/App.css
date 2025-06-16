@@ -80,3 +80,45 @@ html, body {
     background-position: 300px 300px; /* Adjust for diagonal movement */
   }
 }
+
+.fade-enter {
+  opacity: 0;
+  transform: translateY(20px); /* Start slightly below */
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0); /* Move to the original position */
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0); /* Start at the original position */
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-20px); /* Move slightly above */
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+/* Fade-out animation for exiting */
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+/* Fade-in animation for entering */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}

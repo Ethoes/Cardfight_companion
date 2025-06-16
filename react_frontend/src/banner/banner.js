@@ -1,15 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import './banner.css';
 
-function Banner({ username }) {
+function Banner({ username, onLogout }) {
   return (
     <div className="Banner">
       <div className="Banner-content">
-        <Link to="/" className="Banner-title"> {/* Wrap the title in a Link */}
+        <Link to="/" className="Banner-title">
           Cardfight Companion
         </Link>
-        <div className="Banner-username">{username}</div>
+        <div className="Banner-username">
+          {username}
+          <button className="Banner-logout-button" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );

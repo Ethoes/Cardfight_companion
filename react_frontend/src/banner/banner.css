@@ -52,3 +52,22 @@
 .Banner-username:hover {
   background: rgba(255, 255, 255, 0.3); /* Slightly more opaque on hover */
 }
+
+.Banner .Banner-content .Banner-logout-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #ff4d4d !important; /* Red background */
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+  font-size: 12px !important;
+  box-shadow: none !important; /* Remove any shadow applied globally */
+  transition: none !important; /* Disable global hover animations */
+}
+
+.Banner .Banner-content .Banner-logout-button:hover {
+  background-color: #e60000 !important; /* Darker red on hover */
+  transform: none !important; /* Disable lift effect */
+  box-shadow: none !important; /* Prevent shadow changes on hover */
+}

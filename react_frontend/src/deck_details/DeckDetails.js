@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './DeckDetails.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function DeckDetails() {
   const location = useLocation();
@@ -9,22 +10,24 @@ function DeckDetails() {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [deckName, setDeckName] = useState(deck?.name || ''); // State for deck name input
   const [modalCard, setModalCard] = useState(null); // State for the modal card
+
+  const navigate = useNavigate(); // Initialize useNavigate
+
   useEffect(() => {
     if (deck) {
-      // Fetch cards associated with the deck
       const fetchCards = async () => {
-        setLoading(true); // Set loading to true before making the request
+        setLoading(true);
         try {
           const response = await fetch(`http://127.0.0.1:5000/decks/${deck.id}/cards`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data = await response.json();
-          setCards(data); // Set the fetched cards in state
+          setCards(data); // Set the fetched cards
         } catch (error) {
           console.error('Error fetching cards:', error);
         } finally {
-          setLoading(false); // Set loading to false after the request is complete
+          setLoading(false);
         }
       };
 
@@ -40,12 +43,21 @@ function DeckDetails() {
     setModalCard(null); // Close the modal
   };
 
+  const handleTestHand = () => {
+    console.log('Navigating to TestHand with:', { deck, cards }); // Debug log
+    navigate('/test-hand', { state: { deck, cards } }); // Pass deck and cards
+  };
+
   if (!deck) {
     return <p>No deck selected.</p>;
   }
 
   return (
     <div className="CreateNewDeck-container">
+      <button className="test-hand-button" onClick={handleTestHand}>
+        Test Hand
+      </button>
+
         {/* Title Section */}
         <div className="CreateNewDeck-title-box">
           <h2>{deck.name}</h2>

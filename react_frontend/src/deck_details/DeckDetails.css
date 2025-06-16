@@ -71,3 +71,24 @@
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
+
+.test-hand-button {
+  position: absolute;
+  top: 100px; /* Adjust this value to move the button below the banner */
+  right: 20px;
+  background-color: #4caf50; /* Green background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.test-hand-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}

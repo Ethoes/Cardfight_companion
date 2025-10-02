@@ -34,9 +34,24 @@ function TestHand() {
   });
   const [drop, setDrop] = useState([]); // Drop pile (stack)
   const [damage, setDamage] = useState([]); // Damage zone
+  const [faceDownDamage, setFaceDownDamage] = useState([]); // Indices of face-down cards
   const [showDrop, setShowDrop] = useState(false); // For viewing drop pile
   const [showVanguard, setShowVanguard] = useState(false); // For viewing vanguard pile
   const [dragged, setDragged] = useState(null);
+  const [showDeckMenu, setShowDeckMenu] = useState(false);
+  const [deckMenuPos, setDeckMenuPos] = useState({ x: 0, y: 0 });
+  const [showDeckTopX, setShowDeckTopX] = useState(false);
+  const [deckTopX, setDeckTopX] = useState(1);
+  const [showFullDeck, setShowFullDeck] = useState(false);
+  const [rotatedField, setRotatedField] = useState({}); // { zoneId: degrees }
+
+  React.useEffect(() => {
+    const hideMenu = () => setShowDeckMenu(false);
+    if (showDeckMenu) {
+      window.addEventListener('click', hideMenu);
+      return () => window.removeEventListener('click', hideMenu);
+    }
+  }, [showDeckMenu]);
 
   if (!deck || !cards) {
     return <p>No deck selected for testing.</p>;
@@ -99,6 +114,12 @@ const onFieldDrop = (zoneId) => {
         [zoneId]: field[dragged.zoneId],
         [dragged.zoneId]: null,
       });
+      // Reset rotation for the source zone
+      setRotatedField(prev => {
+        const updated = { ...prev };
+        delete updated[dragged.zoneId];
+        return updated;
+      });
     }
     if (dragged.from === 'vanguard' && typeof dragged.index === 'number' && !field[zoneId]) {
       setField({
@@ -118,6 +139,12 @@ const onFieldDrop = (zoneId) => {
     if (dragged.from === 'damage' && !field[zoneId]) {
       setField({ ...field, [zoneId]: damage[dragged.index] });
       setDamage(damage.filter((_, idx) => idx !== dragged.index));
+    }
+    // New: Allow moving from fullDeck to field
+    if (dragged.from === 'fullDeck' && !field[zoneId]) {
+      setField({ ...field, [zoneId]: deckStack[dragged.index] });
+      setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+      setShowFullDeck(false);
     }
   }
   setDragged(null);
@@ -146,7 +173,27 @@ const onHandDrop = () => {
     setHand([...hand, damage[dragged.index]]);
     setDamage(damage.filter((_, idx) => idx !== dragged.index));
   }
-  setDragged(null);
+  // From deckTopX
+  if (dragged.from === 'deckTopX') {
+    setHand([...hand, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowDeckTopX(false);
+  }
+  // New: From fullDeck to hand
+  if (dragged.from === 'fullDeck') {
+    setHand([...hand, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowFullDeck(false);
+  }
+};
+
+const onDamageCardRightClick = (e, idx) => {
+  e.preventDefault();
+  setFaceDownDamage((prev) =>
+    prev.includes(idx)
+      ? prev.filter((i) => i !== idx)
+      : [...prev, idx]
+  );
 };
 
 // Drop on drop pile
@@ -168,6 +215,18 @@ const onDropDrop = () => {
   if (dragged.from === 'damage' && typeof dragged.index === 'number') {
     setDrop([...drop, damage[dragged.index]]);
     setDamage(damage.filter((_, idx) => idx !== dragged.index));
+  }
+  // From deckTopX
+  if (dragged.from === 'deckTopX') {
+    setDrop([...drop, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowDeckTopX(false);
+  }
+  // New: From fullDeck to drop
+  if (dragged.from === 'fullDeck') {
+    setDrop([...drop, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowFullDeck(false);
   }
   setDragged(null);
 };
@@ -194,6 +253,18 @@ const onDamageDrop = () => {
     setDamage([...damage, drop[dragged.index]]);
     setDrop(drop.filter((_, idx) => idx !== dragged.index));
   }
+  // From deckTopX
+  if (dragged.from === 'deckTopX') {
+    setDamage([...damage, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowDeckTopX(false);
+  }
+  // New: From fullDeck to damage
+  if (dragged.from === 'fullDeck') {
+    setDamage([...damage, deckStack[dragged.index]]);
+    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
+    setShowFullDeck(false);
+  }
   setDragged(null);
 };
 
@@ -203,6 +274,18 @@ const onDamageDrop = () => {
     setHand([...hand, deckStack[0]]);
     setDeckStack(deckStack.slice(1));
   };
+
+  const onFieldCardRightClick = (e, zoneId) => {
+  e.preventDefault();
+  setRotatedField(prev => {
+    const current = prev[zoneId] || 0;
+    // If not rotated, rotate 90deg right. If rotated, rotate back to 0.
+    return {
+      ...prev,
+      [zoneId]: current === 0 ? 90 : 0
+    };
+  });
+};
 
   return (
     <div className="TestHand-container" style={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -235,13 +318,34 @@ const onDamageDrop = () => {
             style={{ width: 90, marginBottom: -20, cursor: 'grab' }}
             draggable
             onDragStart={() => onDamageDragStart(idx)}
-            title="Drag to hand, field, or drop"
+            onContextMenu={(e) => onDamageCardRightClick(e, idx)}
+            title="Drag to hand, field, or drop. Right-click to turn face down/up."
           >
-            <img
-              src={`data:image/jpeg;base64,${card.image}`}
-              alt={card.name || 'Card'}
-              style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
-            />
+            {faceDownDamage.includes(idx) ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: 126, // match image aspect ratio
+                  borderRadius: 8,
+                  background: '#111',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                  transform: 'rotate(-90deg)', // <-- keep rotated
+                  transition: 'transform 0.2s',
+                }}
+              />
+            ) : (
+              <img
+                src={`data:image/jpeg;base64,${card.image}`}
+                alt={card.name || 'Card'}
+                style={{
+                  width: '100%',
+                  borderRadius: 8,
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                  transform: 'rotate(-90deg)',
+                  transition: 'transform 0.2s',
+                }}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -269,6 +373,11 @@ const onDamageDrop = () => {
                     className="VanguardField-card"
                     draggable
                     onDragStart={() => onVanguardPileDragStart(field.vanguard.length - 1)}
+                    onContextMenu={e => onFieldCardRightClick(e, 'vanguard')}
+                    style={{
+                      transform: `rotate(${rotatedField['vanguard'] || 0}deg)`,
+                      transition: 'transform 0.2s',
+                    }}
                   />
                 ) : (
                   <div className="VanguardField-empty">Empty</div>
@@ -309,6 +418,11 @@ const onDamageDrop = () => {
                     className="VanguardField-card"
                     draggable
                     onDragStart={() => onFieldDragStart(zone.id)}
+                    onContextMenu={e => onFieldCardRightClick(e, zone.id)}
+                    style={{
+                      transform: `rotate(${rotatedField[zone.id] || 0}deg)`,
+                      transition: 'transform 0.2s',
+                    }}
                   />
                 ) : (
                   <div className="VanguardField-empty">Empty</div>
@@ -320,6 +434,11 @@ const onDamageDrop = () => {
           <div
             className="VanguardField-zone VanguardField-deckstack"
             onClick={drawCard}
+            onContextMenu={e => {
+              e.preventDefault();
+              setShowDeckMenu(true);
+              setDeckMenuPos({ x: e.clientX, y: e.clientY });
+            }}
             style={{
               cursor: deckStack.length > 0 ? 'pointer' : 'not-allowed',
               background: '#1976d2',
@@ -367,6 +486,11 @@ const onDamageDrop = () => {
                   className="VanguardField-card"
                   draggable
                   onDragStart={() => onFieldDragStart(zone.id)}
+                  onContextMenu={e => onFieldCardRightClick(e, zone.id)}
+                  style={{
+                    transform: `rotate(${rotatedField[zone.id] || 0}deg)`,
+                    transition: 'transform 0.2s',
+                  }}
                 />
               ) : (
                 <div className="VanguardField-empty">Empty</div>
@@ -450,7 +574,7 @@ const onDamageDrop = () => {
           <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
             <button className="modal-close" onClick={() => setShowVanguard(false)}>X</button>
             <h3>Vanguard Pile ({field.vanguard.length})</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            <div style={{ display: 'flex', gap: 32, marginBottom: 92, justifyContent: 'center' }}>
               {field.vanguard.length === 0 && <div>No cards in vanguard pile.</div>}
               {field.vanguard.map((card, idx) => (
                 <div
@@ -478,7 +602,7 @@ const onDamageDrop = () => {
           <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
             <button className="modal-close" onClick={() => setShowDrop(false)}>X</button>
             <h3>Drop Pile ({drop.length})</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
               {drop.length === 0 && <div>No cards in drop.</div>}
               {drop.map((card, idx) => (
                 <div
@@ -500,6 +624,135 @@ const onDamageDrop = () => {
           </div>
         </div>
       )}
+      {showDeckMenu && (
+  <div
+    style={{
+      position: 'fixed',
+      top: deckMenuPos.y,
+      left: deckMenuPos.x,
+      background: '#fff',
+      border: '1px solid #1976d2',
+      borderRadius: 8,
+      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+      zIndex: 2000,
+      minWidth: 180,
+      padding: 8
+    }}
+    onClick={e => e.stopPropagation()}
+    onContextMenu={e => e.preventDefault()}
+  >
+    <div
+      style={{ padding: 8, cursor: 'pointer' }}
+      onClick={() => {
+        setShowDeckMenu(false);
+        setShowDeckTopX(true);
+      }}
+    >
+      Check top X cards
+    </div>
+    <div
+      style={{ padding: 8, cursor: 'pointer' }}
+      onClick={() => {
+        setShowDeckMenu(false);
+        setShowFullDeck(true);
+      }}
+    >
+      Look at whole deck
+    </div>
+    <div
+      style={{ padding: 8, cursor: 'pointer' }}
+      onClick={() => {
+        setShowDeckMenu(false);
+        if (deckStack.length > 0) {
+          setField(f => ({
+            ...f,
+            vanguard: [deckStack[0], ...f.vanguard]
+          }));
+          setDeckStack(ds => ds.slice(1));
+        }
+      }}
+    >
+      Put top card to top of Vanguard pile
+    </div>
+    <div
+      style={{ padding: 8, cursor: 'pointer' }}
+      onClick={() => {
+        setShowDeckMenu(false);
+        setDeckStack(ds => [...ds].sort(() => Math.random() - 0.5));
+      }}
+    >
+      Shuffle
+    </div>
+    <div
+      style={{ padding: 8, cursor: 'pointer', color: '#b71c1c' }}
+      onClick={() => setShowDeckMenu(false)}
+    >
+      Cancel
+    </div>
+  </div>
+)}
+{showDeckTopX && (
+  <div className="modal-overlay" onClick={() => setShowDeckTopX(false)}>
+    <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
+      <button className="modal-close" onClick={() => setShowDeckTopX(false)}>X</button>
+      <h3>Top X Cards</h3>
+      <input
+        type="number"
+        min={1}
+        max={deckStack.length}
+        value={deckTopX}
+        onChange={e => setDeckTopX(Number(e.target.value))}
+        style={{ width: 60, marginBottom: 10 }}
+      />
+      <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
+        {deckStack.slice(0, deckTopX).map((card, idx) => (
+          <div
+            key={idx}
+            style={{ width: 100, cursor: 'grab' }}
+            draggable
+            onDragStart={() => setDragged({ from: 'deckTopX', index: idx })}
+            title="Drag to hand, field, drop, or damage"
+          >
+            <img
+              src={`data:image/jpeg;base64,${card.image}`}
+              alt={card.name || 'Card'}
+              style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
+            />
+            <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+{showFullDeck && (
+  <div className="modal-overlay" onClick={() => setShowFullDeck(false)}>
+    <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
+      <button className="modal-close" onClick={() => setShowFullDeck(false)}>X</button>
+      <h3>Full Deck ({deckStack.length})</h3>
+      <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
+        {deckStack.map((card, idx) => (
+          <div
+            key={idx}
+            style={{ width: 100, cursor: 'grab' }}
+            draggable
+            onDragStart={() => setDragged({ from: 'fullDeck', index: idx })}
+            title="Drag to hand, field, drop, or damage"
+          >
+            <img
+              src={`data:image/jpeg;base64,${card.image}`}
+              alt={card.name || 'Card'}
+              style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
+            />
+            <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

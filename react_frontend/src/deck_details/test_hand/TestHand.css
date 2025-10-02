@@ -65,7 +65,7 @@
   display: grid;
   grid-template-columns: repeat(4, 200px); /* 4 columns: 3 zones + deck */
   grid-template-rows: repeat(2, 300px);
-  gap: 16px;
+  gap: 60px;
   justify-content: center;
   margin-bottom: 32px;
 }

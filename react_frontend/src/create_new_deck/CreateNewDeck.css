@@ -318,3 +318,27 @@ button:hover {
 .format-button:hover {
   background-color: #0056b3;
 }
+
+.CreateNewDeck-ride-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border: 1px solid #1976d2;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 0;
+  z-index: 2;
+  background: #fff;
+  color: #1976d2;
+  transition: background 0.2s, color 0.2s;
+}
+.CreateNewDeck-ride-button:disabled {
+  background: #1976d2;
+  color: #fff;
+  cursor: default;
+}

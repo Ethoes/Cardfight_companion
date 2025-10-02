@@ -19,6 +19,7 @@ function CreateNewDeck({ username }) {
   const [modalCard, setModalCard] = useState(null);
   const [format, setFormat] = useState(null); // State for selected format
   const [showFormatModal, setShowFormatModal] = useState(true); // State to control format selection modal
+  const [rideDeck, setRideDeck] = useState({ 0: null, 1: null, 2: null, 3: null }); // State for ride deck cards
 
 
   const navigate = useNavigate();
@@ -151,11 +152,30 @@ function CreateNewDeck({ username }) {
     setModalCard(null); // Close the modal
   };
 
+  // Helper to select a card for the ride deck
+  const handleSelectRideDeck = (grade, card) => {
+    setRideDeck(prev => ({ ...prev, [grade]: card }));
+  };
+
+  // Validation before creating a Standard deck
+  const validateRideDeck = () => {
+    if (format === 'Standard') {
+      for (let grade = 0; grade <= 3; grade++) {
+        if (!rideDeck[grade]) {
+          alert(`Please select a Grade ${grade} card for your ride deck.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
   const createDeck = async (deckName) => {
     if (deckName.trim() === '') {
       alert('Please enter a valid deck name.');
       return;
     }
+    if (!validateRideDeck()) return;
   
     const gUnits = CurrentDeck.filter((deckCard) => deckCard.type === 'G Unit');
     const regularCards = CurrentDeck.filter((deckCard) => deckCard.type !== 'G Unit');
@@ -178,7 +198,7 @@ function CreateNewDeck({ username }) {
     const deckWithoutImages = CurrentDeck.map(({ image, ...rest }) => rest);
   
     try {
-      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format);
+      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format, rideDeck);
       if (result.status === 200) {
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/');
@@ -368,6 +388,8 @@ function CreateNewDeck({ username }) {
       <div className="CreateNewDeck-grid">
         {SearchResult && SearchResult.map((card, index) => {
           const cardCount = CurrentDeck.filter((deckCard) => deckCard.name === card.name).length;
+          const gradeNum = card.grade && card.grade.startsWith('Grade ') ? Number(card.grade.replace('Grade ', '')) : null;
+          const isRideDeckEligible = format === 'Standard' && [0, 1, 2, 3].includes(gradeNum);
 
           return (
             <div
@@ -384,6 +406,47 @@ function CreateNewDeck({ username }) {
                 display: 'inline-block',
               }}
             >
+              {/* Ride Deck Button (top-left) */}
+              {isRideDeckEligible && (
+                <button
+                  className="CreateNewDeck-ride-button"
+                  style={{
+                    position: 'absolute',
+                    top: 5,
+                    left: 5,
+                    zIndex: 2,
+                    background: rideDeck[gradeNum]?.id === card.id ? '#1976d2' : '#fff',
+                    color: rideDeck[gradeNum]?.id === card.id ? '#fff' : '#1976d2',
+                    border: '1px solid #1976d2',
+                    borderRadius: '50%',
+                    width: 24,
+                    height: 24,
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    fontSize: 16,
+                    lineHeight: '20px',
+                    padding: 0,
+                  }}
+                  title={`Set as Grade ${gradeNum} Ride Deck card`}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleSelectRideDeck(gradeNum, card);
+                  }}
+                  disabled={rideDeck[gradeNum]?.id === card.id}
+                >
+                  {rideDeck[gradeNum]?.id === card.id ? '✓' : '+'}
+                </button>
+              )}
+              {/* Info Button (top-right) */}
+              <button
+                className="CreateNewDeck-info-button"
+                onClick={e => {
+                  e.stopPropagation();
+                  handleMiddleClick(e, card);
+                }}
+              >
+                ℹ️
+              </button>
               <img
                 src={`data:image/png;base64,${card.image}`}
                 alt={card.name || 'Card Image'}
@@ -392,15 +455,6 @@ function CreateNewDeck({ username }) {
               <div className="CreateNewDeck-card-counter">
                 {cardCount}
               </div>
-              <button
-                className="CreateNewDeck-info-button"
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering the card click event
-                  handleMiddleClick(e, card); // Open the modal
-                }}
-              >
-                ℹ️
-              </button>
             </div>
           );
         })}
@@ -439,7 +493,7 @@ function CreateNewDeck({ username }) {
                 alt={modalCard.name || 'Card Image'}
                 className="modal-image"
               />
-              <h3>{modalCard.name}</h3>
+              <h3>{modalCard.name }</h3>
               <p><strong>Effect:</strong> {modalCard.effect}</p>
               <p><strong>Type:</strong> {modalCard.type}</p>
               <p><strong>Grade:</strong> {modalCard.grade}</p>
@@ -464,6 +518,67 @@ function CreateNewDeck({ username }) {
         </div>
       )}
 
+      {format === 'Standard' && (
+        <div className="ride-deck-section">
+          <h3>Ride Deck (Standard Only)</h3>
+          {[0, 1, 2, 3].map(grade => (
+            <div key={grade}>
+              <span>Grade {grade}: </span>
+              {rideDeck[grade]
+                ? <span>{rideDeck[grade].name}</span>
+                : <span style={{ color: 'red' }}>Not selected</span>}
+              <button
+                onClick={() => {
+                  // Show a modal or dropdown to select a card of this grade from CurrentDeck
+                  // For simplicity, just select the first matching card:
+                  const card = CurrentDeck.find(c => c.grade === `Grade ${grade}`);
+                  if (card) handleSelectRideDeck(grade, card);
+                  else alert(`No Grade ${grade} card in deck!`);
+                }}
+              >
+                Select
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {CurrentDeck.map((card, idx) => (
+        <div key={idx} className="deck-card-container" style={{ position: 'relative', display: 'inline-block', margin: 8 }}>
+          {/* Add to Ride Deck button (top-left) */}
+          {format === 'Standard' && card.grade && [0,1,2,3].includes(Number(card.grade.replace('Grade ',''))) && (
+            <button
+              style={{
+                position: 'absolute',
+                top: 2,
+                left: 2,
+                zIndex: 2,
+                background: rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '#1976d2' : '#fff',
+                color: rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '#fff' : '#1976d2',
+                border: '1px solid #1976d2',
+                borderRadius: '50%',
+                width: 24,
+                height: 24,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                fontSize: 16,
+                lineHeight: '20px',
+                padding: 0,
+              }}
+              title={`Set as Grade ${card.grade.replace('Grade ', '')} Ride Deck card`}
+              onClick={() => handleSelectRideDeck(Number(card.grade.replace('Grade ','')), card)}
+              disabled={rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id}
+            >
+              {rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '✓' : '+'}
+            </button>
+          )}
+          {/* Card image and info */}
+          <img src={card.image} alt={card.name} style={{ width: 100, borderRadius: 8 }} />
+          <div>{card.name}</div>
+          <div>{card.grade}</div>
+          {/* ...other card info... */}
+        </div>
+      ))}
       </div>
       )}
     </div>

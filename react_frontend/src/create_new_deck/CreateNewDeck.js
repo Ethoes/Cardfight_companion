@@ -180,13 +180,8 @@ function CreateNewDeck({ username }) {
     const gUnits = CurrentDeck.filter((deckCard) => deckCard.type === 'G Unit');
     const regularCards = CurrentDeck.filter((deckCard) => deckCard.type !== 'G Unit');
   
-    // Validate the number of cards based on the selected format
-    if (format === 'Standard' && regularCards.length !== 54) {
-      alert('In Standard format, you need exactly 54 cards to create a deck!');
-      return;
-    }
-    if (format === 'Premium' && regularCards.length !== 50) {
-      alert('In Premium format, you need exactly 50 cards to create a deck!');
+    if (regularCards.length !== 50) {
+      alert('You need exactly 50 cards to create a deck!');
       return;
     }
   

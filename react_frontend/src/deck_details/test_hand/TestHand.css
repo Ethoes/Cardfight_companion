@@ -63,7 +63,7 @@
 /* Vanguard field grid */
 .VanguardField {
   display: grid;
-  grid-template-columns: repeat(4, 200px); /* 4 columns: 3 zones + deck */
+  grid-template-columns: repeat(var(--field-columns, 4), 200px); /* Dynamic columns */
   grid-template-rows: repeat(2, 300px);
   gap: 60px;
   justify-content: center;

@@ -196,9 +196,17 @@ function CreateNewDeck({ username }) {
     }
   
     const deckWithoutImages = CurrentDeck.map(({ image, ...rest }) => rest);
+    const rideDeckWithoutImages = format === 'Standard' ? 
+      Object.fromEntries(
+        Object.entries(rideDeck).map(([grade, card]) => [
+          grade, 
+          card ? { ...card, image: undefined } : null
+        ])
+      ) : null;
+      console.log(rideDeckWithoutImages)
   
     try {
-      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format, rideDeck);
+      const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format, rideDeckWithoutImages);
       if (result.status === 200) {
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/');

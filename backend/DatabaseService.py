@@ -1,6 +1,11 @@
 import sqlite3
+import os
+import base64
 
-DB_PATH = r'E:\cfv stuffs\Cardfight_companion\database\second db\scraped_data_2.db'  # Define the database path as a constant
+# Get the directory of the current script (backend folder)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Navigate to the database folder relative to the backend folder
+DB_PATH = os.path.join(current_dir, '..', 'database', 'second db', 'scraped_data_2.db')  # Define the database path as a constant
 
 
 def get_data_from_db(query):
@@ -127,6 +132,66 @@ def save_deck(deck_name, username, description, format=None):
         print(f"[ERROR] Failed to save deck: {e}")
         return None
 
+def save_ride_deck(deck_id, ride_deck_cards):
+    """
+    Save the ride deck cards associated with a deck to the `ride_deck` table.
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        # Insert each ride deck card
+        for grade, card in ride_deck_cards.items():
+            if card:  # Only insert if card exists
+                cursor.execute("INSERT INTO ride_deck (deck_id, card_id, grade) VALUES (?, ?, ?)", 
+                             (deck_id, card['id'], grade))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"[ERROR] Failed to save ride deck: {e}")
+        return False
+
+def get_ride_deck_by_deck_id(deck_id):
+    """
+    Get ride deck cards for a specific deck ID.
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT 
+                rd.grade,
+                c.id, 
+                c.name, 
+                c.grade as card_grade,
+                c.type,
+                c.image_data
+            FROM ride_deck rd
+            JOIN cards c ON rd.card_id = c.id
+            WHERE rd.deck_id = ?
+            ORDER BY rd.grade ASC
+        """, (deck_id,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        # Convert to list of dictionaries and add base64 encoded images
+        ride_deck_cards = []
+        for row in rows:
+            card = dict(row)
+            if card['image_data']:
+                card['image'] = base64.b64encode(card['image_data']).decode('utf-8')
+                del card['image_data']
+            ride_deck_cards.append(card)
+        
+        return ride_deck_cards
+    except Exception as e:
+        print(f"[ERROR] Failed to get ride deck: {e}")
+        return []
 
 def save_deck_cards(deck_id, card_ids):
     """

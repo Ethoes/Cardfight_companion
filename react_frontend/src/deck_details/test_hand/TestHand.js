@@ -14,7 +14,7 @@ const FIELD_ZONES = [
 
 function TestHand() {
   const location = useLocation();
-  const { deck, cards } = location.state || {};
+  const { deck, cards, rideDeckCards } = location.state || {};
 
   const filteredCards = deck && deck.format === 'Premium'
     ? (cards || []).filter((card) => card.type !== 'G Unit')
@@ -23,6 +23,7 @@ function TestHand() {
 
   const [hand, setHand] = useState(shuffledCards.slice(0, 5));
   const [deckStack, setDeckStack] = useState(shuffledCards.slice(5));
+  const [rideStack, setRideStack] = useState(rideDeckCards || [])
   // Vanguard is now a stack (array)
   const [field, setField] = useState({
     rg1: null,
@@ -41,7 +42,7 @@ function TestHand() {
   const [showDeckMenu, setShowDeckMenu] = useState(false);
   const [deckMenuPos, setDeckMenuPos] = useState({ x: 0, y: 0 });
   const [showDeckTopX, setShowDeckTopX] = useState(false);
-  const [deckTopX, setDeckTopX] = useState(1);
+  const [deckTopX, setDeckTopXValue] = useState(1); // Changed setter name
   const [showFullDeck, setShowFullDeck] = useState(false);
   const [rotatedField, setRotatedField] = useState({}); // { zoneId: degrees }
 
@@ -275,6 +276,13 @@ const onDamageDrop = () => {
     setDeckStack(deckStack.slice(1));
   };
 
+  //TODO use ridestack not deckstack
+  const rideCard = () => {
+    if (rideStack.length === 0) return;
+    setField({ ...field, vanguard: [...field.vanguard, rideStack[0]] });
+    setRideStack(rideStack.slice(1));
+  };
+
   const onFieldCardRightClick = (e, zoneId) => {
   e.preventDefault();
   setRotatedField(prev => {
@@ -352,8 +360,11 @@ const onDamageDrop = () => {
       {/* Main play area */}
       <div style={{ flex: 1 }}>
         <h2 className="TestHand-title">Test Hand for {deck.name}</h2>
-        <div className="VanguardField">
-          {/* Top row: 3 zones + deck stack */}
+        <div 
+          className="VanguardField"
+          style={{ '--field-columns': rideStack.length > 0 ? 5 : 4 }}
+        >
+          {/* Top row: 3 zones + deck stack + conditionally ride deck */}
           {FIELD_ZONES.slice(0, 3).map((zone) =>
             zone.id === 'vanguard' ? (
               <div
@@ -470,6 +481,49 @@ const onDamageDrop = () => {
               {deckStack.length}
             </div>
           </div>
+          {/* Conditionally render ride deck stack only if there are cards */}
+          {rideStack.length > 0 && (
+            <div
+              className="VanguardField-zone VanguardField-ride"
+              onClick={rideCard}
+              onContextMenu={e => {
+                e.preventDefault();
+                //TODO create methods
+                // setShowRideMenu(true);
+                // setRideMenuPos({ x: e.clientX, y: e.clientY });
+              }}
+              style={{
+                cursor: rideStack.length > 0 ? 'pointer' : 'not-allowed',
+                background: '#1976d2',
+                color: '#fff',
+                border: '2px solid #1976d2',
+                position: 'relative'
+              }}
+              title={rideStack.length > 0 ? 'Click to ride a card' : 'Ride deck is empty'}
+            >
+              <div style={{ fontWeight: 'bold', fontSize: 22, marginBottom: 8 }}>
+                Ride
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: 12,
+                right: 12,
+                background: '#fff',
+                color: '#1976d2',
+                borderRadius: '50%',
+                width: 36,
+                height: 36,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 'bold',
+                fontSize: 18,
+                border: '2px solid #1976d2'
+              }}>
+                {rideStack.length}
+              </div>
+            </div>
+          )}
           {/* Bottom row: 3 zones + drop zone */}
           {FIELD_ZONES.slice(3).map((zone) => (
             <div
@@ -497,7 +551,7 @@ const onDamageDrop = () => {
               )}
             </div>
           ))}
-          {/* Drop zone in bottom row, last column */}
+          {/* Drop zone */}
           <div
             className="VanguardField-zone VanguardField-drop"
             onDragOver={e => e.preventDefault()}
@@ -701,7 +755,7 @@ const onDamageDrop = () => {
         min={1}
         max={deckStack.length}
         value={deckTopX}
-        onChange={e => setDeckTopX(Number(e.target.value))}
+        onChange={e => setDeckTopXValue(Number(e.target.value))} // Updated setter name
         style={{ width: 60, marginBottom: 10 }}
       />
       <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>

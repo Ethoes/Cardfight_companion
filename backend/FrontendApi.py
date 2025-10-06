@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from DatabaseService import (
-    get_data_from_db, create_user, validate_user, search_card, save_deck,
-    save_deck_cards, get_decks_by_username, get_cards_by_deck_id,
+    get_data_from_db, create_user, validate_user, search_card, save_deck, save_ride_deck,
+    save_deck_cards, get_decks_by_username, get_cards_by_deck_id, get_ride_deck_by_deck_id,
     get_sets_by_format, save_tournament, get_tournaments_by_username,
     save_tournament_details,  get_tournament_details_with_deck # Import the new function
 )
@@ -63,7 +63,8 @@ def createDeck():
     deck_name = data['name']
     username = data['user']
     description = data['description']
-    format = data.get('format', None)  # Get the format parameter if provided
+    format = data.get('format', None)
+    ride_deck = data.get('rideDeck', None)
     card_ids = [card['id'] for card in data['deck']]
 
     try:
@@ -75,6 +76,11 @@ def createDeck():
         # Save the cards associated with the deck
         if not save_deck_cards(deck_id, card_ids):
             return jsonify({"error": "Failed to save deck cards"}), 500
+        
+        # Save ride deck if provided (Standard format only)
+        if format == 'Standard' and ride_deck:
+            if not save_ride_deck(deck_id, ride_deck):
+                return jsonify({"error": "Failed to save ride deck"}), 500
 
         return jsonify({"message": "Deck creation successful", "deck_id": deck_id}), 200
     except Exception as e:
@@ -156,6 +162,15 @@ def get_deck_cards(deck_id):
     except Exception as e:
         print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")
         return jsonify({"error": "Failed to retrieve cards"}), 500
+    
+@app.route('/decks/<int:deck_id>/ride-deck', methods=['GET'])
+def get_deck_ride_deck(deck_id):
+    try:
+        ride_deck_cards = get_ride_deck_by_deck_id(deck_id)
+        return jsonify(ride_deck_cards), 200
+    except Exception as e:
+        print(f"[ERROR] Failed to get ride deck for deck ID {deck_id}: {e}")
+        return jsonify({"error": "Failed to retrieve ride deck"}), 500
     
 @app.route('/createTournament', methods=['POST'])
 def create_tournament():

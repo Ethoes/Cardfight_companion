@@ -445,3 +445,31 @@ def get_tournament_details_with_deck(tournament_id):
     except Exception as e:
         print(f"[ERROR] Failed to fetch tournament details: {e}")
         return None
+    
+def delete_deck_by_id(deck_id):
+    """
+    Delete a deck and all its associated cards from the database.
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        # Delete associated deck cards first (foreign key constraint)
+        cursor.execute("DELETE FROM deck_cards WHERE deck_id = ?", (deck_id,))
+        
+        # Delete associated ride deck cards if they exist
+        cursor.execute("DELETE FROM ride_deck WHERE deck_id = ?", (deck_id,))
+        
+        # Delete the deck itself
+        cursor.execute("DELETE FROM decks WHERE deck_id = ?", (deck_id,))
+        
+        conn.commit()
+        
+        # Check if the deck was actually deleted
+        deleted_rows = cursor.rowcount
+        conn.close()
+        
+        return deleted_rows > 0
+    except Exception as e:
+        print(f"[ERROR] Failed to delete deck: {e}")
+        return False

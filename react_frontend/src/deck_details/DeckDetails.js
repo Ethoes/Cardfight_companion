@@ -59,12 +59,40 @@ function DeckDetails() {
     navigate('/test-hand', { state: { deck, cards, rideDeckCards } }); // Pass deck, cards, and rideDeckCards
   };
 
+  const handleDeleteDeck = async () => {
+    if (!deck) return;
+    
+    const confirmDelete = window.confirm(`Are you sure you want to delete the deck "${deck.name}"? This action cannot be undone.`);
+    
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/decks/${deck.id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          alert(`Deck "${deck.name}" has been deleted successfully.`);
+          navigate('/view-decks'); // Navigate back to the deck list
+        } else {
+          const errorData = await response.json();
+          alert(`Failed to delete deck: ${errorData.error || 'Unknown error'}`);
+        }
+      } catch (error) {
+        console.error('Error deleting deck:', error);
+        alert('An error occurred while deleting the deck. Please try again.');
+      }
+    }
+  };
+
   if (!deck) {
     return <p>No deck selected.</p>;
   }
 
   return (
     <div className="CreateNewDeck-container">
+      <button className="delete-deck-button" onClick={handleDeleteDeck}>
+        Delete Deck
+      </button>
       <button className="test-hand-button" onClick={handleTestHand}>
         Test Hand
       </button>

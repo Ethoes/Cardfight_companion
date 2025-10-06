@@ -92,3 +92,24 @@
   background-color: #45a049; /* Darker green on hover */
   transform: translateY(-2px); /* Slight lift on hover */
 }
+
+.delete-deck-button {
+  position: absolute;
+  top: 100px; /* Same as test-hand-button to align horizontally */
+  left: 20px; /* Position on the left side */
+  background-color: #f44336; /* Red background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-deck-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}

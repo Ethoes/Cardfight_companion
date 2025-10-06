@@ -4,7 +4,7 @@ from DatabaseService import (
     get_data_from_db, create_user, validate_user, search_card, save_deck, save_ride_deck,
     save_deck_cards, get_decks_by_username, get_cards_by_deck_id, get_ride_deck_by_deck_id,
     get_sets_by_format, save_tournament, get_tournaments_by_username,
-    save_tournament_details,  get_tournament_details_with_deck # Import the new function
+    save_tournament_details, get_tournament_details_with_deck, delete_deck_by_id # Add this import
 )
 import base64
 from cardmarketApi import calculate_deck_cost
@@ -249,6 +249,18 @@ def get_tournament_details():
     except Exception as e:
         print(f"[ERROR] Failed to fetch tournament details: {e}")
         return jsonify({"error": "Failed to fetch tournament details"}), 500
+
+@app.route('/decks/<int:deck_id>', methods=['DELETE'])
+def delete_deck(deck_id):
+    try:
+        success = delete_deck_by_id(deck_id)
+        if success:
+            return jsonify({"message": "Deck deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Failed to delete deck"}), 500
+    except Exception as e:
+        print(f"[ERROR] Failed to delete deck ID {deck_id}: {e}")
+        return jsonify({"error": "Failed to delete deck"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

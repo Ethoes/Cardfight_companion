@@ -115,13 +115,8 @@ function CreateNewDeck({ username }) {
         return;
       }
     } else {
-      // Validate the number of regular cards based on the selected format
-      if (format === 'Standard' && regularCards.length >= 54) {
-        alert('In Standard format, you can only add up to 54 regular cards to a deck!');
-        return;
-      }
-      if (format === 'Premium' && regularCards.length >= 50) {
-        alert('In Premium format, you can only add up to 50 regular cards to a deck!');
+      if (regularCards.length >= 50) {
+        alert('You can only add up to 50 regular cards to a deck!');
         return;
       }
     }

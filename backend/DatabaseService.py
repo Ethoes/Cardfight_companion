@@ -1,6 +1,6 @@
 import sqlite3
 import os
-import base64
+import base64  # Make sure this import exists
 
 # Get the directory of the current script (backend folder)
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -281,7 +281,34 @@ def get_cards_by_deck_id(deck_id):
         """, (deck_id,))
         rows = cursor.fetchall()
         conn.close()
-        return [dict(row) for row in rows]
+        
+        # Convert to list of dictionaries and handle image encoding
+        cards = []
+        for row in rows:
+            card = dict(row)
+            # Handle image data encoding safely
+            if card['image_data']:
+                try:
+                    # Check if image_data is already a string (base64) or bytes
+                    if isinstance(card['image_data'], bytes):
+                        card['image'] = base64.b64encode(card['image_data']).decode('utf-8')
+                    elif isinstance(card['image_data'], str):
+                        # If it's already a string, assume it's base64 encoded
+                        card['image'] = card['image_data']
+                    else:
+                        # Handle other cases by converting to string
+                        card['image'] = str(card['image_data'])
+                except Exception as img_error:
+                    print(f"[WARNING] Failed to process image data for card {card.get('name', 'unknown')}: {img_error}")
+                    card['image'] = None
+            else:
+                card['image'] = None
+            # Remove the raw image data
+            if 'image_data' in card:
+                del card['image_data']
+            cards.append(card)
+        
+        return cards
     except Exception as e:
         print(f"[ERROR] Failed to get cards by deck ID: {e}")
         return None

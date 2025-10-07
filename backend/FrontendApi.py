@@ -152,12 +152,7 @@ def get_deck_cards(deck_id):
         if not cards:
             return jsonify({"error": "No cards found for this deck"}), 404
 
-        # Add images to each card
-        for card in cards:
-            if 'image_data' in card and card['image_data']:  # Check if 'image_data' exists and is not None
-                card['image'] = base64.b64encode(card['image_data']).decode('utf-8')  # Encode to Base64
-                del card['image_data']  # Remove the raw binary data from the response
-
+        # Image encoding is now handled in get_cards_by_deck_id
         return jsonify(cards), 200
     except Exception as e:
         print(f"[ERROR] Failed to get cards for deck ID {deck_id}: {e}")

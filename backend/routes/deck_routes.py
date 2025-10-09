@@ -12,29 +12,64 @@ deck_bp = Blueprint('deck', __name__)
 @deck_bp.route('/createDeck', methods=['POST'])
 def create_deck():
     data = request.get_json()
-    if not data or 'username' not in data or 'deckName' not in data or 'cards' not in data:
-        return jsonify({"error": "Invalid input"}), 400
     
-    username = data['username']
-    deck_name = data['deckName']
-    cards = data['cards']
+    # Enhanced logging to debug the issue
+    print(f"[DEBUG] Received data: {data}")
+    print(f"[DEBUG] Data type: {type(data)}")
+    
+    if not data:
+        print("[ERROR] No data received")
+        return jsonify({"error": "No data received"}), 400
+    
+    # Check each required field individually for better debugging
+    missing_fields = []
+    if 'user' not in data:  # Changed from 'username' to 'user'
+        missing_fields.append('user')
+    if 'name' not in data:  # Changed from 'deckName' to 'name'
+        missing_fields.append('name')
+    if 'deck' not in data:  # Changed from 'cards' to 'deck'
+        missing_fields.append('deck')
+    
+    if missing_fields:
+        print(f"[ERROR] Missing required fields: {missing_fields}")
+        return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+    
+    username = data['user']  # Changed from data['username']
+    deck_name = data['name']  # Changed from data['deckName']
+    cards = data['deck']  # Changed from data['cards']
     ride_deck = data.get('rideDeck', [])
     deck_format = data.get('format', 'Standard')
     deck_type = data.get('deckType', 'Standard')
     description = data.get('description', '')
     
+    print(f"[DEBUG] Parsed data - Username: {username}, DeckName: {deck_name}, Format: {deck_format}, Type: {deck_type}")
+    print(f"[DEBUG] Cards count: {len(cards) if cards else 0}, RideDeck count: {len(ride_deck) if ride_deck else 0}")
+    
+    # Extract card IDs from the card objects
+    card_ids = [card['id'] for card in cards] if cards else []
+    
     # Save the deck
-    deck_id = save_deck(username, deck_name, deck_format, deck_type, description)
+    deck_id = save_deck(deck_name, username, description, deck_format)
     if not deck_id:
+        print("[ERROR] Failed to save deck to database")
         return jsonify({"error": "Failed to save deck"}), 500
     
+    print(f"[DEBUG] Deck saved with ID: {deck_id}")
+    
     # Save cards
-    if not save_deck_cards(deck_id, cards):
+    if not save_deck_cards(deck_id, card_ids):
+        print("[ERROR] Failed to save deck cards")
         return jsonify({"error": "Failed to save deck cards"}), 500
+    
+    print(f"[DEBUG] Saved {len(card_ids)} cards")
     
     # Save ride deck if present
     if ride_deck and not save_ride_deck(deck_id, ride_deck):
+        print("[ERROR] Failed to save ride deck")
         return jsonify({"error": "Failed to save ride deck"}), 500
+    
+    if ride_deck:
+        print(f"[DEBUG] Saved {len(ride_deck)} ride deck cards")
     
     return jsonify({"message": "Deck created successfully", "deck_id": deck_id}), 201
 

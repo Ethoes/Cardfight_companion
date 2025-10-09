@@ -197,7 +197,8 @@ function CreateNewDeck({ username }) {
   
     try {
       const result = await postNewDeck(deckName, deckWithoutImages, username, DeckDescription, format, rideDeckWithoutImages);
-      if (result.status === 200) {
+      // Check for successful status codes (200 or 201)
+      if (result.status === 200 || result.status === 201) {
         alert(`Deck "${deckName}" created successfully!`);
         navigate('/');
       } else {

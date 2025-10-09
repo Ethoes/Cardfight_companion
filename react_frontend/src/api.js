@@ -37,8 +37,8 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
       }
 
       const data = await response.json();
-      console.log('Deck created succesfully:', data);
-      return response;
+      console.log('Deck created successfully:', data);
+      return { status: response.status, data }; // Return both status and data
     } catch (error) {
       console.error('Error creating deck:', error);
       throw error;

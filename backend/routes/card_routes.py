@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from DatabaseService import get_data_from_db, search_card, get_sets_by_format
+import base64
 
 card_bp = Blueprint('card', __name__)
 
@@ -16,24 +17,33 @@ def get_data():
 
 @card_bp.route('/search', methods=['POST'])
 def search():
+    print("[INFO] Search endpoint called")
     data = request.get_json()
-    if not data:
+    if not data or 'name' not in data or 'nation' not in data:
         return jsonify({"error": "Invalid input"}), 400
-    
-    # Extract search parameters
-    card_name = data.get('cardName', '')
-    card_type = data.get('cardType', '')
-    clan = data.get('clan', '')
-    format_filter = data.get('format', '')
-    grade = data.get('grade', '')
-    
-    # Call the search function
-    cards = search_card(card_name, card_type, clan, format_filter, grade)
-    
-    if cards is None:
-        return jsonify({"error": "Search failed"}), 500
-    
-    return jsonify(cards)
+
+    name = data['name']
+    nation = data['nation']
+    grade = data.get('grade', None)  # Get the grade parameter if provided
+    unitType = data.get('unitType', None)  # Get the unitType parameter if provided
+    format = data.get('format', None) 
+    clan = data.get('clan', None)  # Get the clan parameter if provided
+    set = data.get('selectedSet', None)  # Get the selectedSets parameter if provided
+
+    result = search_card(name, nation, grade, unitType, format, clan, set)  # Pass grade to the search_card function
+    if result:
+        # Convert sqlite3.Row objects to dictionaries
+        result = [dict(row) for row in result]
+
+        # Add images to each row in the result
+        for row in result:
+            if 'image_data' in row and row['image_data']:  # Check if 'image_data' exists and is not None
+                row['image'] = base64.b64encode(row['image_data']).decode('utf-8')  # Encode to Base64
+                del row['image_data']  # Remove the raw binary data from the response
+        return jsonify(result), 200
+    else:
+        return jsonify({"error": "No results found"}), 404
+
 
 
 @card_bp.route('/sets', methods=['GET'])

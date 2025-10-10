@@ -8,6 +8,7 @@
   flex-direction: column; /* Stack elements vertically */
   align-items: center; /* Center elements horizontally */
   gap: 20px; /* Add spacing between elements */
+  position: relative; /* Add this for absolute positioning of delete button */
 }
 
 /* Header section */
@@ -255,4 +256,25 @@
 
 .decklog-link:hover {
   color: #0056b3; /* Change color on hover */
+}
+
+.delete-tournament-button {
+  position: absolute;
+  top: 100px; /* Position below the banner */
+  left: 20px; /* Position on the left side */
+  background-color: #f44336; /* Red background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-tournament-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
 }

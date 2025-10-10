@@ -500,3 +500,28 @@ def delete_deck_by_id(deck_id):
     except Exception as e:
         print(f"[ERROR] Failed to delete deck: {e}")
         return False
+
+def delete_tournament_by_id(tournament_id):
+    """
+    Delete a tournament and all its associated match details from the database.
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        
+        # Delete associated tournament details first (foreign key constraint)
+        cursor.execute("DELETE FROM tournament_details WHERE tournament_id = ?", (tournament_id,))
+        
+        # Delete the tournament itself
+        cursor.execute("DELETE FROM tournaments WHERE id = ?", (tournament_id,))
+        
+        conn.commit()
+        
+        # Check if the tournament was actually deleted
+        deleted_rows = cursor.rowcount
+        conn.close()
+        
+        return deleted_rows > 0
+    except Exception as e:
+        print(f"[ERROR] Failed to delete tournament: {e}")
+        return False

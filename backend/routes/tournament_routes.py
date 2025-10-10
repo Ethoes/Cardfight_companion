@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from DatabaseService import (
     save_tournament, get_tournaments_by_username,
-    save_tournament_details, get_tournament_details_with_deck
+    save_tournament_details, get_tournament_details_with_deck,
+    delete_tournament_by_id
 )
 
 tournament_bp = Blueprint('tournament', __name__)
@@ -85,3 +86,16 @@ def get_tournament_details():
     except Exception as e:
         print(f"[ERROR] Failed to fetch tournament details: {e}")
         return jsonify({"error": "Failed to fetch tournament details"}), 500
+
+
+@tournament_bp.route('/tournaments/<int:tournament_id>', methods=['DELETE'])
+def delete_tournament(tournament_id):
+    try:
+        success = delete_tournament_by_id(tournament_id)
+        if success:
+            return jsonify({"message": "Tournament deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Failed to delete tournament"}), 500
+    except Exception as e:
+        print(f"[ERROR] Failed to delete tournament ID {tournament_id}: {e}")
+        return jsonify({"error": "Failed to delete tournament"}), 500

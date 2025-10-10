@@ -103,8 +103,37 @@ function TournamentDetails() {
     navigate('/deck-details', { state: { deck } }); // Navigate to DeckDetails and pass the deck
   };
 
+  const handleDeleteTournament = async () => {
+    if (!tournament) return;
+    
+    const confirmDelete = window.confirm(`Are you sure you want to delete the tournament "${tournament.name}"? This action cannot be undone.`);
+    
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/tournaments/${tournament.id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          alert(`Tournament "${tournament.name}" has been deleted successfully.`);
+          navigate('/tournament-notes'); // Navigate back to the tournament list
+        } else {
+          const errorData = await response.json();
+          alert(`Failed to delete tournament: ${errorData.error || 'Unknown error'}`);
+        }
+      } catch (error) {
+        console.error('Error deleting tournament:', error);
+        alert('An error occurred while deleting the tournament. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="TournamentDetails-container">
+      <button className="delete-tournament-button" onClick={handleDeleteTournament}>
+        Delete Tournament
+      </button>
+      
       <div className="TournamentDetails-header">
         <h1>{tournament.name}</h1>
         <p>{tournament.description}</p>

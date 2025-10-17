@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from DatabaseService import create_user, validate_user
+from database.DatabaseService import create_user, validate_user
 
 auth_bp = Blueprint('auth', __name__)
 

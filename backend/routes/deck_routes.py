@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from DatabaseService import (
+from database.DatabaseService import (
     save_deck, save_ride_deck, save_deck_cards, get_decks_by_username,
     get_cards_by_deck_id, get_ride_deck_by_deck_id, delete_deck_by_id
 )

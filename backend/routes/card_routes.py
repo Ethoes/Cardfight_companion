@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from DatabaseService import get_data_from_db, search_card, get_sets_by_format
+from database.DatabaseService import get_data_from_db, search_card, get_sets_by_format
 import base64
 
 card_bp = Blueprint('card', __name__)

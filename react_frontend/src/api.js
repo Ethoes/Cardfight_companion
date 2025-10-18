@@ -1,7 +1,9 @@
+const API_BASE_URL = 'https://your-app-railway.app';
+
 export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan, selectedSet) {
     try {
       console.log(selectedSet)
-      const response = await fetch('http://127.0.0.1:5000/search', {
+      const response = await fetch(`${API_BASE_URL}/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +26,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
 
   export async function postNewDeck(Deckname, CurrentDeck, User, description, format, rideDeck = null) {
     try {
-      const response = await fetch('http://127.0.0.1:5000/createDeck', {
+      const response = await fetch(`${API_BASE_URL}/createDeck`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +47,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
     }
   }  export async function fetchUserDecks(username) {
     try {
-      const response = await fetch('http://127.0.0.1:5000/decks', {
+      const response = await fetch(`${API_BASE_URL}/decks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
   
   export async function createTournament(tournamentData) {
     try {
-      const response = await fetch('http://127.0.0.1:5000/createTournament', {
+      const response = await fetch(`${API_BASE_URL}/createTournament`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +90,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
 
   export async function fetchUserTournaments(username) {
     try {
-      const response = await fetch('http://127.0.0.1:5000/tournaments', {
+      const response = await fetch(`${API_BASE_URL}/tournaments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +112,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
 
   export async function saveTournamentDetails(tournamentDetails) {
   try {
-    const response = await fetch('http://127.0.0.1:5000/saveTournamentDetails', {
+    const response = await fetch(`${API_BASE_URL}/saveTournamentDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -131,7 +133,7 @@ export async function SearchCard(CardSearch, selectedOption, selectedGrade, sele
 
 export async function fetchTournamentDetails(tournamentId) {
   try {
-    const response = await fetch('http://127.0.0.1:5000/tournamentDetails', {
+    const response = await fetch(`${API_BASE_URL}/tournamentDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

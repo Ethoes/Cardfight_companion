@@ -17,6 +17,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          cd C:\Users\calvi\projects\Cardfight_companion
+          cd "C:\Users\calvi\projects\Cardfight_companion"
           git pull origin main
           call update.bat

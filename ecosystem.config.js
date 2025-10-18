@@ -17,7 +17,7 @@ module.exports = {
     {
       name: 'cardfight-frontend',
       script: 'serve',
-      args: ['-s', 'build', '-l', '3000'],
+      args: ['-s', 'build', '-l', '3000'],  // localhost only
       cwd: './react_frontend',
       env: {
         PORT: 3000

@@ -16,7 +16,45 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
+        debug: true
         script: |
+          echo "=== Starting deployment ==="
+          echo "Current directory: %cd%"
+          echo "Current user: %username%"
+          echo "Current time: %date% %time%"
+          echo ""
+          echo "=== Navigating to project directory ==="
           cd "C:\Users\calss\GitHub\Cardfight_companion"
+          if %errorlevel% neq 0 (
+            echo "ERROR: Failed to navigate to project directory"
+            exit /b 1
+          )
+          echo "Successfully navigated to: %cd%"
+          echo ""
+          echo "=== Checking git status ==="
+          git status
+          echo ""
+          echo "=== Pulling latest changes ==="
           git pull origin main
-          call update.bat
+          if %errorlevel% neq 0 (
+            echo "ERROR: Git pull failed"
+            exit /b 1
+          )
+          echo "Git pull completed successfully"
+          echo ""
+          echo "=== Running update.bat ==="
+          if exist "update.bat" (
+            echo "update.bat found, executing..."
+            call update.bat
+            if %errorlevel% neq 0 (
+              echo "ERROR: update.bat failed with exit code %errorlevel%"
+              exit /b 1
+            )
+            echo "update.bat completed successfully"
+          ) else (
+            echo "ERROR: update.bat not found in current directory"
+            dir
+            exit /b 1
+          )
+          echo ""
+          echo "=== Deployment completed successfully ==="

@@ -18,43 +18,44 @@ jobs:
         port: 22
         debug: true
         script: |
-          echo "=== Starting deployment ==="
-          echo "Current directory: %cd%"
-          echo "Current user: %username%"
-          echo "Current time: %date% %time%"
-          echo ""
-          echo "=== Navigating to project directory ==="
-          cd "C:\Users\calss\GitHub\Cardfight_companion"
+          @echo off
+          echo === Starting deployment ===
+          echo Current directory: %cd%
+          echo Current user: %username%
+          echo Current time: %date% %time%
+          echo.
+          echo === Navigating to project directory ===
+          cd /d "C:\Users\calss\GitHub\Cardfight_companion"
           if %errorlevel% neq 0 (
-            echo "ERROR: Failed to navigate to project directory"
+            echo ERROR: Failed to navigate to project directory
             exit /b 1
           )
-          echo "Successfully navigated to: %cd%"
-          echo ""
-          echo "=== Checking git status ==="
+          echo Successfully navigated to: %cd%
+          echo.
+          echo === Checking git status ===
           git status
-          echo ""
-          echo "=== Pulling latest changes ==="
+          echo.
+          echo === Pulling latest changes ===
           git pull origin main
           if %errorlevel% neq 0 (
-            echo "ERROR: Git pull failed"
+            echo ERROR: Git pull failed with exit code %errorlevel%
             exit /b 1
           )
-          echo "Git pull completed successfully"
-          echo ""
-          echo "=== Running update.bat ==="
+          echo Git pull completed successfully
+          echo.
+          echo === Running update.bat ===
           if exist "update.bat" (
-            echo "update.bat found, executing..."
+            echo update.bat found, executing...
             call update.bat
             if %errorlevel% neq 0 (
-              echo "ERROR: update.bat failed with exit code %errorlevel%"
+              echo ERROR: update.bat failed with exit code %errorlevel%
               exit /b 1
             )
-            echo "update.bat completed successfully"
+            echo update.bat completed successfully
           ) else (
-            echo "ERROR: update.bat not found in current directory"
+            echo ERROR: update.bat not found in current directory
             dir
             exit /b 1
           )
-          echo ""
-          echo "=== Deployment completed successfully ==="
+          echo.
+          echo === Deployment completed successfully ===

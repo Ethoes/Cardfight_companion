@@ -1,0 +1,22 @@
+name: Auto-Deploy to Home Server
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Windows Server
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST_IP }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+          cd C:\Users\calvi\projects\Cardfight_companion
+          git pull origin main
+          call update.bat

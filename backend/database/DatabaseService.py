@@ -11,6 +11,7 @@ from .tournament_service import (
     save_tournament, get_tournaments_by_username, save_tournament_details,
     get_tournament_details_by_id, get_tournament_details_with_deck, delete_tournament_by_id
 )
+from database.db_config import get_database_connection, get_db_type
 
 # Re-export all functions for backward compatibility
 __all__ = [
@@ -28,3 +29,30 @@ __all__ = [
     'save_tournament', 'get_tournaments_by_username', 'save_tournament_details',
     'get_tournament_details_by_id', 'get_tournament_details_with_deck', 'delete_tournament_by_id'
 ]
+
+def save_deck(deck_name, username, description, deck_format):
+    """Save a deck to the database"""
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    
+    try:
+        if get_db_type() == 'mysql':
+            cursor.execute('''
+                INSERT INTO decks (deck_name, deck_type, username, description) 
+                VALUES (%s, %s, %s, %s)
+            ''', (deck_name, deck_format, username, description))
+            deck_id = cursor.lastrowid
+        else:  # SQLite
+            cursor.execute('''
+                INSERT INTO decks (deck_name, deck_type, username, description) 
+                VALUES (?, ?, ?, ?)
+            ''', (deck_name, deck_format, username, description))
+            deck_id = cursor.lastrowid
+        
+        conn.commit()
+        return deck_id
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()

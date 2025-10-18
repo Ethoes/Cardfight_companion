@@ -1,8 +1,12 @@
 import os
+import sqlite3
 
-# Use environment variable for production, local path for development
-if os.environ.get('RAILWAY_ENVIRONMENT'):
-    DB_PATH = '/app/database/second db/scraped_data_2.db'
-else:
+def get_database_connection():
+    """Get SQLite database connection"""
     current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    DB_PATH = os.path.join(current_dir, '..', 'database', 'second db', 'scraped_data_2.db')
+    db_path = os.path.join(current_dir, '..', 'database', 'second db', 'scraped_data_2.db')
+    return sqlite3.connect(db_path)
+
+def get_db_type():
+    """Return database type"""
+    return 'sqlite'

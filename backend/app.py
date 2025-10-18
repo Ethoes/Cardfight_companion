@@ -18,6 +18,7 @@ def create_app():
     app.register_blueprint(card_bp)
     app.register_blueprint(tournament_bp)
     app.register_blueprint(misc_bp)
+    # Remove admin_bp registration
     
     return app
 

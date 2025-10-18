@@ -1,4 +1,6 @@
-const API_BASE_URL = 'https://your-app-railway.app';
+// Replace all instances of 'http://127.0.0.1:5000' with your Railway backend URL
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
 
 export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan, selectedSet) {
     try {

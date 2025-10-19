@@ -21,13 +21,25 @@ jobs:
           echo "=== Starting deployment ==="
           echo "Current directory: $(pwd)"
           echo "Current user: $(whoami)"
-          echo "Current time: $(date)"
+          echo "Home directory: $HOME"
+          echo "Available directories:"
+          ls -la ~
           echo ""
-          echo "=== Navigating to project directory ==="
-          cd "C:\Users\calss\GitHub\Cardfight_companion" || {
-            echo "ERROR: Failed to navigate to project directory"
+          
+          # Try different path formats
+          if [ -d "/c/Users/calss/GitHub/Cardfight_companion" ]; then
+            cd "/c/Users/calss/GitHub/Cardfight_companion"
+          elif [ -d "/mnt/c/Users/calss/GitHub/Cardfight_companion" ]; then
+            cd "/mnt/c/Users/calss/GitHub/Cardfight_companion"
+          elif [ -d "~/GitHub/Cardfight_companion" ]; then
+            cd "~/GitHub/Cardfight_companion"
+          else
+            echo "ERROR: Could not find project directory"
+            echo "Searching for the project..."
+            find ~ -name "Cardfight_companion" -type d 2>/dev/null || echo "Project directory not found"
             exit 1
-          }
+          fi
+          
           echo "Successfully navigated to: $(pwd)"
           echo ""
           echo "=== Checking git status ==="
@@ -43,7 +55,7 @@ jobs:
           echo "=== Running update.bat ==="
           if [ -f "update.bat" ]; then
             echo "update.bat found, executing..."
-            ./update.bat || {
+            cmd.exe /c "update.bat" || {
               echo "ERROR: update.bat failed"
               exit 1
             }

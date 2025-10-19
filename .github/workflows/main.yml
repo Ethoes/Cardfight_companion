@@ -18,11 +18,42 @@ jobs:
         port: 22
         debug: true
         script: |
-          pwd
-          whoami
-          ls ~
-          find ~ -name "Cardfight_companion" -type d 2>/dev/null
-          find /c -name "Cardfight_companion" -type d 2>/dev/null  
-          find /mnt -name "Cardfight_companion" -type d 2>/dev/null
-          ls /c/Users 2>/dev/null
-          ls /mnt/c/Users 2>/dev/null
+          echo "=== Starting deployment ==="
+          echo "Current directory: $(pwd)"
+          echo "Current user: $(whoami)"
+          echo ""
+          echo "=== Navigating to project directory ==="
+          cd "/c/Users/calss/GitHub/Cardfight_companion"
+          if [ $? -ne 0 ]; then
+            echo "ERROR: Failed to navigate to project directory"
+            exit 1
+          fi
+          echo "Successfully navigated to: $(pwd)"
+          echo ""
+          echo "=== Checking git status ==="
+          git status
+          echo ""
+          echo "=== Pulling latest changes ==="
+          git pull origin main
+          if [ $? -ne 0 ]; then
+            echo "ERROR: Git pull failed"
+            exit 1
+          fi
+          echo "Git pull completed successfully"
+          echo ""
+          echo "=== Running update.bat ==="
+          if [ -f "update.bat" ]; then
+            echo "update.bat found, executing..."
+            cmd.exe //c "update.bat"
+            if [ $? -ne 0 ]; then
+              echo "ERROR: update.bat failed"
+              exit 1
+            fi
+            echo "update.bat completed successfully"
+          else
+            echo "ERROR: update.bat not found in current directory"
+            ls -la
+            exit 1
+          fi
+          echo ""
+          echo "=== Deployment completed successfully ==="

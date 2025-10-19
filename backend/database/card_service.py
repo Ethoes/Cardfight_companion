@@ -87,8 +87,8 @@ def search_card(name, nation=None, grade=None, unitType=None, format=None, clan=
             name ASC         
     """
 
-    # Add LIMIT 300 to restrict the number of rows
-    query += " LIMIT 300"
+    # Add LIMIT 50 to restrict the number of rows
+    query += " LIMIT 50"
 
     cursor.execute(query, params)
     rows = cursor.fetchall()

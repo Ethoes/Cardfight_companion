@@ -20,7 +20,12 @@ jobs:
         script: |
           pwd
           whoami
-          ls
-          cd GitHub/Cardfight_companion
+          echo "Listing current directory contents:"
+          ls -la
+          echo "Checking if GitHub directory exists:"
+          ls -la GitHub 2>&1 || echo "GitHub directory not found or not accessible"
+          echo "Attempting to change directory:"
+          cd GitHub/Cardfight_companion 2>&1 || echo "Failed to cd to GitHub/Cardfight_companion"
+          echo "After cd attempt, current directory is:"
           pwd
-          git pull origin main
+          echo "Script completed"

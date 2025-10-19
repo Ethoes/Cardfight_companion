@@ -18,19 +18,40 @@ jobs:
         port: 22
         debug: true
         script: |
-          powershell -Command "
-          Write-Host '=== Starting deployment ==='
-          Set-Location 'C:\Users\calss\GitHub\Cardfight_companion'
-          Write-Host 'Successfully navigated to:' (Get-Location)
-          Write-Host '=== Pulling latest changes ==='
-          git pull origin main
-          Write-Host '=== Running update.bat ==='
-          if (Test-Path 'update.bat') {
-            & .\update.bat
-            Write-Host 'update.bat completed successfully'
-          } else {
-            Write-Error 'update.bat not found'
+          echo "=== Starting deployment ==="
+          echo "Current directory: $(pwd)"
+          echo "Current user: $(whoami)"
+          echo "Current time: $(date)"
+          echo ""
+          echo "=== Navigating to project directory ==="
+          cd "C:\Users\calss\GitHub\Cardfight_companion" || {
+            echo "ERROR: Failed to navigate to project directory"
             exit 1
           }
-          Write-Host '=== Deployment completed successfully ==='
-          "
+          echo "Successfully navigated to: $(pwd)"
+          echo ""
+          echo "=== Checking git status ==="
+          git status
+          echo ""
+          echo "=== Pulling latest changes ==="
+          git pull origin main || {
+            echo "ERROR: Git pull failed"
+            exit 1
+          }
+          echo "Git pull completed successfully"
+          echo ""
+          echo "=== Running update.bat ==="
+          if [ -f "update.bat" ]; then
+            echo "update.bat found, executing..."
+            ./update.bat || {
+              echo "ERROR: update.bat failed"
+              exit 1
+            }
+            echo "update.bat completed successfully"
+          else
+            echo "ERROR: update.bat not found in current directory"
+            ls -la
+            exit 1
+          fi
+          echo ""
+          echo "=== Deployment completed successfully ==="

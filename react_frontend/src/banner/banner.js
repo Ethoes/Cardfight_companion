@@ -7,7 +7,7 @@ function Banner({ username, onLogout }) {
     <div className="Banner">
       <div className="Banner-content">
         <Link to="/" className="Banner-title">
-          Cardfight Companion!!
+          Cardfight Companion
         </Link>
         <div className="Banner-username">
           {username}

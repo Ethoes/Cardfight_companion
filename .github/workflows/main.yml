@@ -18,30 +18,11 @@ jobs:
         port: 22
         debug: true
         script: |
-          echo "=== Environment Diagnostic ==="
-          echo "Shell: $0"
-          echo "Current directory: $(pwd)"
-          echo "Current user: $(whoami)"
-          echo "Home directory: $HOME"
-          echo "PATH: $PATH"
-          echo ""
-          echo "=== Home directory contents ==="
-          ls -la ~
-          echo ""
-          echo "=== Searching for project directory ==="
-          find ~ -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in home"
-          find /c -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in /c"
-          find /mnt -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in /mnt"
-          echo ""
-          echo "=== Checking if Windows commands work ==="
-          which cmd.exe || echo "cmd.exe not found"
-          which powershell.exe || echo "powershell.exe not found"
-          which git || echo "git not found"
-          echo ""
-          echo "=== Testing Windows paths directly ==="
-          ls -la "/c/Users" 2>/dev/null || echo "Cannot access /c/Users"
-          ls -la "/mnt/c/Users" 2>/dev/null || echo "Cannot access /mnt/c/Users"
-          echo ""
-          echo "=== Checking available drives/mounts ==="
-          df -h || echo "df command failed"
-          mount || echo "mount command failed"
+          pwd
+          whoami
+          ls ~
+          find ~ -name "Cardfight_companion" -type d 2>/dev/null
+          find /c -name "Cardfight_companion" -type d 2>/dev/null  
+          find /mnt -name "Cardfight_companion" -type d 2>/dev/null
+          ls /c/Users 2>/dev/null
+          ls /mnt/c/Users 2>/dev/null

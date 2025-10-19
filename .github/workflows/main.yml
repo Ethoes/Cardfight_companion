@@ -18,15 +18,30 @@ jobs:
         port: 22
         debug: true
         script: |
-          powershell.exe -Command "
-          Write-Host '=== Starting deployment ==='
-          Set-Location 'C:\Users\calss\GitHub\Cardfight_companion'
-          if (-not $?) { Write-Error 'Failed to navigate to directory'; exit 1 }
-          Write-Host 'Current directory:' (Get-Location)
-          git status
-          git pull origin main
-          if (-not $?) { Write-Error 'Git pull failed'; exit 1 }
-          & '.\update.bat'
-          if (-not $?) { Write-Error 'update.bat failed'; exit 1 }
-          Write-Host '=== Deployment completed successfully ==='
-          "
+          echo "=== Environment Diagnostic ==="
+          echo "Shell: $0"
+          echo "Current directory: $(pwd)"
+          echo "Current user: $(whoami)"
+          echo "Home directory: $HOME"
+          echo "PATH: $PATH"
+          echo ""
+          echo "=== Home directory contents ==="
+          ls -la ~
+          echo ""
+          echo "=== Searching for project directory ==="
+          find ~ -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in home"
+          find /c -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in /c"
+          find /mnt -name "Cardfight_companion" -type d 2>/dev/null || echo "Project not found in /mnt"
+          echo ""
+          echo "=== Checking if Windows commands work ==="
+          which cmd.exe || echo "cmd.exe not found"
+          which powershell.exe || echo "powershell.exe not found"
+          which git || echo "git not found"
+          echo ""
+          echo "=== Testing Windows paths directly ==="
+          ls -la "/c/Users" 2>/dev/null || echo "Cannot access /c/Users"
+          ls -la "/mnt/c/Users" 2>/dev/null || echo "Cannot access /mnt/c/Users"
+          echo ""
+          echo "=== Checking available drives/mounts ==="
+          df -h || echo "df command failed"
+          mount || echo "mount command failed"

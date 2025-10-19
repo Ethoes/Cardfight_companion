@@ -20,7 +20,7 @@ function DeckDetails() {
         setLoading(true);
         try {
           // Fetch regular deck cards
-          const response = await fetch(`http://127.0.0.1:5000/decks/${deck.id}/cards`);
+          const response = await fetch(`/api/decks/${deck.id}/cards`);  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}/cards'
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -29,7 +29,7 @@ function DeckDetails() {
 
           // Fetch ride deck cards if it's a Standard deck
           if (deck.deck_type === 'Standard') {
-            const rideDeckResponse = await fetch(`http://127.0.0.1:5000/decks/${deck.id}/ride-deck`);
+            const rideDeckResponse = await fetch(`/api/decks/${deck.id}/ride-deck`);  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}/ride-deck'
             if (rideDeckResponse.ok) {
               const rideDeckData = await rideDeckResponse.json();
               setRideDeckCards(rideDeckData);
@@ -66,7 +66,7 @@ function DeckDetails() {
     
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/decks/${deck.id}`, {
+        const response = await fetch(`/api/decks/${deck.id}`, {  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}'
           method: 'DELETE',
         });
 

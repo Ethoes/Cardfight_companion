@@ -1,6 +1,5 @@
-// Replace all instances of 'http://127.0.0.1:5000' with your Railway backend URL
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+// When served through Flask, API calls use relative URLs with /api prefix
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan, selectedSet) {
     try {

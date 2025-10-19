@@ -7,7 +7,8 @@ module.exports = {
       cwd: './backend',
       env: {
         PORT: 5000,
-        PYTHONPATH: './backend'
+        PYTHONPATH: './backend',
+        HOST: '0.0.0.0'  // Add this
       },
       watch: false,
       autorestart: true,

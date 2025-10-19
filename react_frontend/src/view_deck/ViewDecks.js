@@ -10,12 +10,12 @@ function ViewDecks({ username }) {
     // Fetch the decks from the backend
     const fetchDecks = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/decks', {
-          method: 'POST', // Use POST to send data in the body
+        const response = await fetch('/api/decks', {  // Changed from 'http://127.0.0.1:5000/decks'
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username }), // Send username in the body
+          body: JSON.stringify({ username }),
         });
 
         if (!response.ok) {

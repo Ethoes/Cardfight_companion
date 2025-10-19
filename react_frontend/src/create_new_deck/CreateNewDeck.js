@@ -53,7 +53,7 @@ function CreateNewDeck({ username }) {
     // Fetch the list of sets from the backend
     const fetchSets = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/sets?format=${format || ''}`);
+        const response = await fetch(`/api/sets?format=${format || ''}`);  // Changed from 'http://127.0.0.1:5000/sets?format=${format || ''}'
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

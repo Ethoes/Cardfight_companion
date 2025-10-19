@@ -8,6 +8,7 @@ import Banner from './banner/banner.js';
 import DeckBuilder from './deckbuilder/deckbuilder.js';
 import CreateNewDeck from './create_new_deck/CreateNewDeck.js';
 import ViewDecks from './view_deck/ViewDecks.js';
+import UserDecks from './user_decks/UserDecks.js'; // Add this import
 import DeckDetails from './deck_details/DeckDetails.js';
 import TournamentNotes from './tournament_notes/TournamentNotes.js';
 import TournamentDetails from './tournament_notes/tournament_details/TournamentDetails.js';
@@ -76,6 +77,7 @@ function AnimatedRoutes({ username }) {
           <Routes location={location}>
             <Route path="/deck-builder" element={<DeckBuilder />} />
             <Route path="/view-decks" element={<ViewDecks username={username} />} />
+            <Route path="/view-user-decks" element={<UserDecks username={username} />} />
             <Route path="/deck-details" element={<DeckDetails />} />
             <Route path="/tournament-notes" element={<TournamentNotes username={username} />} />
             <Route path="/tournament-details" element={<TournamentDetails />} />
@@ -87,6 +89,9 @@ function AnimatedRoutes({ username }) {
                   <div className="App-buttons-container">
                     <Link to="/deck-builder">
                       <button>Go to Deck Builder</button>
+                    </Link>
+                    <Link to="/view-user-decks">
+                      <button>View My Decks</button>
                     </Link>
                     <Link to="/tournament-notes">
                       <button>Go to Tournament Notes</button>

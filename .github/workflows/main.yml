@@ -18,6 +18,19 @@ jobs:
         port: 22
         debug: true
         script: |
-          cd "C:\Users\calss\GitHub\Cardfight_companion"
+          powershell -Command "
+          Write-Host '=== Starting deployment ==='
+          Set-Location 'C:\Users\calss\GitHub\Cardfight_companion'
+          Write-Host 'Successfully navigated to:' (Get-Location)
+          Write-Host '=== Pulling latest changes ==='
           git pull origin main
-          ./update.bat
+          Write-Host '=== Running update.bat ==='
+          if (Test-Path 'update.bat') {
+            & .\update.bat
+            Write-Host 'update.bat completed successfully'
+          } else {
+            Write-Error 'update.bat not found'
+            exit 1
+          }
+          Write-Host '=== Deployment completed successfully ==='
+          "

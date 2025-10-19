@@ -18,52 +18,20 @@ jobs:
         port: 22
         debug: true
         script: |
-          echo "=== Starting deployment ==="
-          echo "Current directory: $(pwd)"
-          echo "Current user: $(whoami)"
-          echo "Home directory: $HOME"
-          echo "Available directories:"
-          ls -la ~
-          echo ""
-          
-          # Try different path formats
-          if [ -d "/c/Users/calss/GitHub/Cardfight_companion" ]; then
-            cd "/c/Users/calss/GitHub/Cardfight_companion"
-          elif [ -d "/mnt/c/Users/calss/GitHub/Cardfight_companion" ]; then
-            cd "/mnt/c/Users/calss/GitHub/Cardfight_companion"
-          elif [ -d "~/GitHub/Cardfight_companion" ]; then
-            cd "~/GitHub/Cardfight_companion"
-          else
-            echo "ERROR: Could not find project directory"
-            echo "Searching for the project..."
-            find ~ -name "Cardfight_companion" -type d 2>/dev/null || echo "Project directory not found"
-            exit 1
-          fi
-          
-          echo "Successfully navigated to: $(pwd)"
-          echo ""
-          echo "=== Checking git status ==="
+          cmd.exe /c "
+          echo === Starting deployment ===
+          echo Current directory: %cd%
+          cd /d C:\Users\calss\GitHub\Cardfight_companion
+          if %errorlevel% neq 0 (
+            echo ERROR: Failed to navigate to project directory
+            exit /b 1
+          )
+          echo Successfully navigated to: %cd%
           git status
-          echo ""
-          echo "=== Pulling latest changes ==="
-          git pull origin main || {
-            echo "ERROR: Git pull failed"
-            exit 1
-          }
-          echo "Git pull completed successfully"
-          echo ""
-          echo "=== Running update.bat ==="
-          if [ -f "update.bat" ]; then
-            echo "update.bat found, executing..."
-            cmd.exe /c "update.bat" || {
-              echo "ERROR: update.bat failed"
-              exit 1
-            }
-            echo "update.bat completed successfully"
-          else
-            echo "ERROR: update.bat not found in current directory"
-            ls -la
-            exit 1
-          fi
-          echo ""
-          echo "=== Deployment completed successfully ==="
+          git pull origin main
+          if %errorlevel% neq 0 (
+            echo ERROR: Git pull failed
+            exit /b 1
+          )
+          update.bat
+          "

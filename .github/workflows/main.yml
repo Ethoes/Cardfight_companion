@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Test Relative Path Navigation
+    - name: Test Basic Commands
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.HOST_IP }}
@@ -18,49 +18,9 @@ jobs:
         port: 22
         debug: true
         script: |
-          echo "Starting directory: $(pwd)"
-          echo "Contents of current directory:"
-          ls -la
-          echo "Attempting relative path navigation..."
+          pwd
+          whoami
+          ls
           cd GitHub/Cardfight_companion
-          echo "Success! Now in: $(pwd)"
-          echo "Contents:"
-          ls -la
-          echo "GitHub directory listed successfully"
-          echo "=== Navigating to project directory ==="
-          TARGET_DIR="/c/Users/calss/GitHub/Cardfight_companion"
-          echo "Attempting to access: $TARGET_DIR"
-          if [ -d "$TARGET_DIR" ]; then
-            echo "Directory exists, changing to it..."
-            cd "$TARGET_DIR"
-            echo "Successfully navigated to: $(pwd)"
-            echo "=== Directory contents ==="
-            ls -la
-            echo "=== Git status ==="
-            git status
-            echo "=== Git pull ==="
-            git pull origin main
-            echo "Git pull completed"
-            echo "=== Running update.bat ==="
-            if [ -f "update.bat" ]; then
-              echo "update.bat found, executing..."
-              script: |
-          echo "Starting in: $(pwd)"
-          echo "Navigating to project using relative path..."
-          cd GitHub/Cardfight_companion
-          echo "Now in: $(pwd)"
-          echo "Running git pull..."
+          pwd
           git pull origin main
-          echo "Running update.bat..."
-          cmd.exe //c "update.bat"
-          echo "Deployment complete!"
-              echo "update.bat completed"
-            else
-              echo "update.bat not found"
-            fi
-          else
-            echo "ERROR: Directory $TARGET_DIR does not exist"
-            echo "Looking for alternative paths..."
-            find /c -name "Cardfight_companion" -type d 2>/dev/null
-          fi
-          echo "=== Script completed ==="

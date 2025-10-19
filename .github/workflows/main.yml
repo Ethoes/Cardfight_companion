@@ -17,4 +17,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         debug: true
-        script: pwd && cd GitHub/Cardfight_companion && pwd && ls && git pull origin main
+        script: pwd && cd GitHub/Cardfight_companion && pwd && ls && cmd.exe /c "update.bat"

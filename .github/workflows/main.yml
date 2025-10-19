@@ -18,42 +18,4 @@ jobs:
         port: 22
         debug: true
         script: |
-          echo "=== Starting deployment ==="
-          echo "Current directory: $(pwd)"
-          echo "Current user: $(whoami)"
-          echo ""
-          echo "=== Testing path access ==="
-          ls -la /c/Users/
-          echo "Users directory listed successfully"
-          ls -la "/c/Users/calss"
-          echo "calss directory listed successfully"
-          ls -la "/c/Users/calss/GitHub"
-          echo "GitHub directory listed successfully"
-          echo "=== Navigating to project directory ==="
-          TARGET_DIR="/c/Users/calss/GitHub/Cardfight_companion"
-          echo "Attempting to access: $TARGET_DIR"
-          if [ -d "$TARGET_DIR" ]; then
-            echo "Directory exists, changing to it..."
-            cd "$TARGET_DIR"
-            echo "Successfully navigated to: $(pwd)"
-            echo "=== Directory contents ==="
-            ls -la
-            echo "=== Git status ==="
-            git status
-            echo "=== Git pull ==="
-            git pull origin main
-            echo "Git pull completed"
-            echo "=== Running update.bat ==="
-            if [ -f "update.bat" ]; then
-              echo "update.bat found, executing..."
-              cmd.exe //c "update.bat"
-              echo "update.bat completed"
-            else
-              echo "update.bat not found"
-            fi
-          else
-            echo "ERROR: Directory $TARGET_DIR does not exist"
-            echo "Looking for alternative paths..."
-            find /c -name "Cardfight_companion" -type d 2>/dev/null
-          fi
-          echo "=== Script completed ==="
+          powershell -Command "Set-Location 'C:\Users\calss\GitHub\Cardfight_companion'; git pull origin main; .\update.bat"

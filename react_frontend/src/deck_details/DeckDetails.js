@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './DeckDetails.css';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 function DeckDetails() {
   const location = useLocation();
@@ -19,8 +21,8 @@ function DeckDetails() {
       const fetchCards = async () => {
         setLoading(true);
         try {
-          // Fetch regular deck cards
-          const response = await fetch(`/api/decks/${deck.id}/cards`);  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}/cards'
+          // Use API_BASE_URL instead of hardcoded /api
+          const response = await fetch(`${API_BASE_URL}/decks/${deck.id}/cards`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -29,7 +31,8 @@ function DeckDetails() {
 
           // Fetch ride deck cards if it's a Standard deck
           if (deck.deck_type === 'Standard') {
-            const rideDeckResponse = await fetch(`/api/decks/${deck.id}/ride-deck`);  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}/ride-deck'
+            // Use API_BASE_URL here too
+            const rideDeckResponse = await fetch(`${API_BASE_URL}/decks/${deck.id}/ride-deck`);
             if (rideDeckResponse.ok) {
               const rideDeckData = await rideDeckResponse.json();
               setRideDeckCards(rideDeckData);
@@ -66,7 +69,8 @@ function DeckDetails() {
     
     if (confirmDelete) {
       try {
-        const response = await fetch(`/api/decks/${deck.id}`, {  // Changed from 'http://127.0.0.1:5000/decks/${deck.id}'
+        // Use API_BASE_URL here too
+        const response = await fetch(`${API_BASE_URL}/decks/${deck.id}`, {
           method: 'DELETE',
         });
 

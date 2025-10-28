@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from database.DatabaseService import (
     save_deck, save_ride_deck, save_deck_cards, get_decks_by_username,
-    get_cards_by_deck_id, get_ride_deck_by_deck_id, delete_deck_by_id
+    get_cards_by_deck_id, get_ride_deck_by_deck_id, delete_deck_by_id, get_all_user_decks_paginated
 )
 from cardmarketApi import calculate_deck_cost
 import base64
@@ -130,3 +130,38 @@ def get_deck_cost(deck_id):
     except Exception as e:
         print(f"[ERROR] Failed to calculate deck cost: {e}")
         return jsonify({"error": "Failed to calculate deck cost"}), 500
+
+
+@deck_bp.route('/all-decks', methods=['GET'])
+def get_all_decks():
+    """Get paginated decks from all users for the UserDecks page"""
+    try:
+        # Get query parameters
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 10))
+        search = request.args.get('search', '')
+        sort_field = request.args.get('sort_field', 'deck_id')
+        sort_direction = request.args.get('sort_direction', 'desc')
+        
+        # Validate parameters
+        if page < 1:
+            page = 1
+        if per_page < 1 or per_page > 100:  # Limit max per_page to prevent abuse
+            per_page = 10
+            
+        # Valid sort fields to prevent SQL injection
+        valid_sort_fields = ['deck_id', 'deck_name', 'username', 'deck_type', 'created_at']
+        if sort_field not in valid_sort_fields:
+            sort_field = 'deck_id'
+            
+        if sort_direction not in ['asc', 'desc']:
+            sort_direction = 'desc'
+        
+        result = get_all_user_decks_paginated(page, per_page, search, sort_field, sort_direction)
+        return jsonify(result), 200
+        
+    except ValueError:
+        return jsonify({"error": "Invalid pagination parameters"}), 400
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch all decks: {e}")
+        return jsonify({"error": "Failed to fetch decks"}), 500

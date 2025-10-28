@@ -152,3 +152,32 @@ export async function fetchTournamentDetails(tournamentId) {
     throw error;
   }
 }
+
+export async function fetchAllUserDecks(page = 1, perPage = 10, search = '', sortField = 'deck_id', sortDirection = 'desc') {
+  try {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      per_page: perPage.toString(),
+      search: search,
+      sort_field: sortField,
+      sort_direction: sortDirection
+    });
+
+    const response = await fetch(`${API_BASE_URL}/all-decks?${params}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching all user decks:', error);
+    throw error;
+  }
+}

@@ -163,7 +163,7 @@ export async function fetchAllUserDecks(page = 1, perPage = 10, search = '', sor
       sort_direction: sortDirection
     });
 
-    const response = await fetch(`${API_BASE_URL}/all-decks?${params}`, {
+    const response = await fetch(`${API_BASE_URL}/api/all-decks?${params}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

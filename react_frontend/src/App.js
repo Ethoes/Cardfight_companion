@@ -91,7 +91,7 @@ function AnimatedRoutes({ username }) {
                       <button>Go to Deck Builder</button>
                     </Link>
                     <Link to="/view-user-decks">
-                      <button>View My Decks</button>
+                      <button>View all Decks</button>
                     </Link>
                     <Link to="/tournament-notes">
                       <button>Go to Tournament Notes</button>

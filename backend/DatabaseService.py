@@ -1,6 +1,10 @@
 import sqlite3
 import os
 import base64  # Make sure this import exists
+from .deck_service import (
+    save_deck, save_ride_deck, get_ride_deck_by_deck_id, save_deck_cards,
+    get_decks_by_username, get_cards_by_deck_id, delete_deck_by_id, get_all_user_decks_paginated
+)
 
 # Get the directory of the current script (backend folder)
 current_dir = os.path.dirname(os.path.abspath(__file__))

@@ -1,6 +1,10 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Import route blueprints
 from routes.auth_routes import auth_bp
@@ -8,6 +12,7 @@ from routes.deck_routes import deck_bp
 from routes.card_routes import card_bp
 from routes.tournament_routes import tournament_bp
 from routes.misc_routes import misc_bp
+from routes.rules_routes import rules_bp
 
 def create_app():
     # Point Flask to the React build directory
@@ -23,6 +28,7 @@ def create_app():
     app.register_blueprint(card_bp, url_prefix='/api')
     app.register_blueprint(tournament_bp, url_prefix='/api')
     app.register_blueprint(misc_bp, url_prefix='/api')
+    app.register_blueprint(rules_bp, url_prefix='/api')
     
     # Serve React frontend
     @app.route('/')

@@ -56,14 +56,29 @@ class VanguardRulesService:
         """Generate embedding for a query"""
         return np.array(self.embedding_model.encode(query), dtype=np.float32)
     
-    def search_rules(self, query, k=3):
+    def search_rules(self, query, k=3, min_similarity_threshold=0.3):
         """Search for relevant rules based on the query"""
         if not self.index or not self.metadata:
             raise RuntimeError("Rules service not properly initialized")
         
         emb = self.get_embedding(query)
         D, I = self.index.search(np.array([emb]), k)
-        return [self.metadata[i] for i in I[0]]
+        
+        # Filter results by similarity threshold
+        # D contains squared L2 distances - convert to similarities
+        # Lower distances = higher similarity
+        relevant_results = []
+        for i, (distance, idx) in enumerate(zip(D[0], I[0])):
+            # Convert distance to similarity (rough approximation)
+            # You may need to adjust this threshold based on your data
+            similarity = 1 / (1 + distance)  # Simple distance-to-similarity conversion
+            
+            if similarity >= min_similarity_threshold:
+                result = self.metadata[idx].copy()
+                result['similarity'] = similarity
+                relevant_results.append(result)
+        
+        return relevant_results
     
     def ask_openai_chatbot(self, prompt):
         """Send prompt to OpenAI API and get response"""
@@ -103,11 +118,20 @@ class VanguardRulesService:
     
     def build_prompt(self, context_chunks, user_question):
         """Build the prompt for the AI with context and question"""
+        if not context_chunks:
+            return None
+            
         context = "\n\n".join(
             [f"[{c['section']}] {c['text']}" for c in context_chunks]
         )
         
-        return f"""You are a Cardfight!! Vanguard rules assistant. Use the rule excerpts below to answer the user's question. Be clear and cite the rule numbers in your answer.
+        return f"""You are a Cardfight!! Vanguard rules assistant. Use ONLY the rule excerpts below to answer the user's question. 
+
+IMPORTANT INSTRUCTIONS:
+- If the provided rule excerpts do not contain information relevant to answering the question, respond with: "I don't have sufficient information in the rulebook to answer this question accurately."
+- Only answer if you can find a clear, direct answer in the provided rules.
+- Be precise and cite the rule numbers in your answer.
+- Do not make assumptions or provide general knowledge that isn't explicitly stated in the rules below.
 
 Rulebook Excerpts:
 {context}
@@ -117,22 +141,71 @@ User Question:
 
 Answer:"""
     
-    def answer_question(self, question):
+    def answer_question(self, question, min_similarity_threshold=0.3, min_context_chunks=1):
         """Main method to answer a rules question"""
         try:
             # Search for relevant rules
-            top_chunks = self.search_rules(question)
+            top_chunks = self.search_rules(question, min_similarity_threshold=min_similarity_threshold)
+            
+            # Check if we have enough relevant context
+            if len(top_chunks) < min_context_chunks:
+                return {
+                    "success": True,
+                    "answer": "I don't have sufficient information in the rulebook to answer this question accurately. The question might be too specific, unclear, or about content not covered in the available rules.",
+                    "context_sources": [],
+                    "relevance_info": {
+                        "found_chunks": len(top_chunks),
+                        "min_required": min_context_chunks,
+                        "similarity_threshold": min_similarity_threshold
+                    }
+                }
+            
+            # Log the similarity scores for debugging
+            similarities = [chunk.get('similarity', 0) for chunk in top_chunks]
+            print(f"[DEBUG] Found {len(top_chunks)} relevant chunks with similarities: {similarities}")
             
             # Build prompt with context
             prompt = self.build_prompt(top_chunks, question)
+            if not prompt:
+                return {
+                    "success": True,
+                    "answer": "I don't have sufficient information in the rulebook to answer this question accurately.",
+                    "context_sources": []
+                }
             
             # Get answer from AI
             answer = self.ask_openai_chatbot(prompt)
             
+            # Check if AI says it doesn't have enough info
+            insufficient_info_phrases = [
+                "i don't have sufficient information",
+                "don't have sufficient information", 
+                "not enough information",
+                "insufficient information",
+                "cannot answer",
+                "can't answer"
+            ]
+            
+            if any(phrase in answer.lower() for phrase in insufficient_info_phrases):
+                return {
+                    "success": True,
+                    "answer": "I don't have sufficient information in the rulebook to answer this question accurately. You might want to consult the full rulebook or contact a judge for clarification.",
+                    "context_sources": [chunk['section'] for chunk in top_chunks],
+                    "relevance_info": {
+                        "ai_indicated_insufficient": True,
+                        "found_chunks": len(top_chunks),
+                        "similarity_scores": similarities
+                    }
+                }
+            
             return {
                 "success": True,
                 "answer": answer,
-                "context_sources": [chunk['section'] for chunk in top_chunks]
+                "context_sources": [chunk['section'] for chunk in top_chunks],
+                "relevance_info": {
+                    "found_chunks": len(top_chunks),
+                    "similarity_scores": similarities
+                }
             }
             
         except Exception as e:

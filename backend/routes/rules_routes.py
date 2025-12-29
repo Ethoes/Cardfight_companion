@@ -3,7 +3,7 @@ from services.rules_service import get_rules_service
 
 rules_bp = Blueprint('rules', __name__)
 
-@rules_bp.route('/rules/ask', methods=['POST'])
+@rules_bp.route('/rules/ask', methods=['POST', 'GET'])
 def ask_rules_question():
     """
     Ask a Cardfight!! Vanguard rules question
@@ -21,6 +21,13 @@ def ask_rules_question():
     }
     """
     try:
+        # Handle GET requests for testing
+        if request.method == 'GET':
+            return jsonify({
+                "message": "Rules endpoint is working. Use POST with JSON body containing 'question' field.",
+                "example": {"question": "What happens when I ride a grade 3 unit?"}
+            })
+        
         # Validate request
         if not request.is_json:
             return jsonify({
@@ -31,6 +38,10 @@ def ask_rules_question():
         data = request.get_json()
         question = data.get('question', '').strip()
         
+        # Optional configuration parameters
+        min_similarity = data.get('min_similarity_threshold', 0.3)
+        min_chunks = data.get('min_context_chunks', 1)
+        
         if not question:
             return jsonify({
                 "success": False,
@@ -39,7 +50,11 @@ def ask_rules_question():
         
         # Get rules service and answer question
         service = get_rules_service()
-        result = service.answer_question(question)
+        result = service.answer_question(
+            question, 
+            min_similarity_threshold=min_similarity,
+            min_context_chunks=min_chunks
+        )
         
         if result['success']:
             return jsonify(result), 200

@@ -23,12 +23,26 @@ def create_app():
     CORS(app)
     
     # Register API blueprints with /api prefix
+    print("Registering blueprints...")
     app.register_blueprint(auth_bp, url_prefix='/api')
     app.register_blueprint(deck_bp, url_prefix='/api')
     app.register_blueprint(card_bp, url_prefix='/api')
     app.register_blueprint(tournament_bp, url_prefix='/api')
     app.register_blueprint(misc_bp, url_prefix='/api')
     app.register_blueprint(rules_bp, url_prefix='/api')
+    print("All blueprints registered successfully")
+    
+    # Debug route to see all registered routes
+    @app.route('/api/debug/routes')
+    def list_routes():
+        routes = []
+        for rule in app.url_map.iter_rules():
+            routes.append({
+                'endpoint': rule.endpoint,
+                'methods': list(rule.methods),
+                'rule': rule.rule
+            })
+        return {'routes': routes}
     
     # Serve React frontend
     @app.route('/')
@@ -51,4 +65,9 @@ def create_app():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app = create_app()
+    
+    print("Registered routes:")
+    for rule in app.url_map.iter_rules():
+        print(f"  {rule.rule} -> {rule.endpoint} {list(rule.methods)}")
+    
     app.run(host='0.0.0.0', port=port, debug=False)

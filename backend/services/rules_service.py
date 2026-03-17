@@ -56,7 +56,7 @@ class VanguardRulesService:
         """Generate embedding for a query"""
         return np.array(self.embedding_model.encode(query), dtype=np.float32)
     
-    def search_rules(self, query, k=3, min_similarity_threshold=0.3):
+    def search_rules(self, query, k=20, min_similarity_threshold=0.3):  # Increased from k=3
         """Search for relevant rules based on the query"""
         if not self.index or not self.metadata:
             raise RuntimeError("Rules service not properly initialized")
@@ -68,17 +68,74 @@ class VanguardRulesService:
         # D contains squared L2 distances - convert to similarities
         # Lower distances = higher similarity
         relevant_results = []
+        found_sections = set()
+        
         for i, (distance, idx) in enumerate(zip(D[0], I[0])):
             # Convert distance to similarity (rough approximation)
-            # You may need to adjust this threshold based on your data
             similarity = 1 / (1 + distance)  # Simple distance-to-similarity conversion
             
             if similarity >= min_similarity_threshold:
                 result = self.metadata[idx].copy()
                 result['similarity'] = similarity
                 relevant_results.append(result)
+                found_sections.add(result['section'])
         
-        return relevant_results
+        # Add context expansion: include adjacent numbered sections
+        expanded_results = relevant_results.copy()
+        for result in relevant_results:
+            section = result['section']
+            # Find related sections (adjacent numbered rules)
+            related_sections = self._find_related_sections(section, found_sections)
+            for related_section in related_sections:
+                # Find this section in metadata
+                for metadata_item in self.metadata:
+                    if metadata_item['section'] == related_section and related_section not in found_sections:
+                        expanded_result = metadata_item.copy()
+                        expanded_result['similarity'] = 0.25  # Lower similarity for related sections
+                        expanded_results.append(expanded_result)
+                        found_sections.add(related_section)
+                        break
+        
+        # Sort by similarity and limit results
+        expanded_results.sort(key=lambda x: x['similarity'], reverse=True)
+        return expanded_results[:15]  # Return top 15 results including context
+    
+    def _find_related_sections(self, section, already_found):
+        """Find adjacent numbered sections for better context"""
+        related = []
+        try:
+            # Parse section number (e.g., "9.7.2" -> base="9.7", subsection="2")
+            if section.count('.') >= 2:
+                parts = section.split('.')
+                if len(parts) >= 3:
+                    base = f"{parts[0]}.{parts[1]}"
+                    subsection_num = int(parts[2]) if parts[2].isdigit() else 0
+                    
+                    # Add adjacent subsections
+                    for offset in [-1, 1]:
+                        new_subsection = subsection_num + offset
+                        if new_subsection > 0:
+                            candidate = f"{base}.{new_subsection}."
+                            if candidate not in already_found:
+                                related.append(candidate)
+                    
+                    # Also add the parent section
+                    parent = f"{base}."
+                    if parent not in already_found:
+                        related.append(parent)
+            
+            elif section.count('.') == 1:
+                # For sections like "9.7.", add subsections 9.7.1., 9.7.2., etc.
+                base = section.rstrip('.')
+                for i in range(1, 4):  # Add first 3 subsections
+                    candidate = f"{base}.{i}."
+                    if candidate not in already_found:
+                        related.append(candidate)
+        
+        except (ValueError, IndexError):
+            pass  # Skip if section format is unexpected
+            
+        return related
     
     def ask_openai_chatbot(self, prompt):
         """Send prompt to OpenAI API and get response"""
@@ -125,21 +182,24 @@ class VanguardRulesService:
             [f"[{c['section']}] {c['text']}" for c in context_chunks]
         )
         
-        return f"""You are a Cardfight!! Vanguard rules assistant. Use ONLY the rule excerpts below to answer the user's question. 
+        prompt = """You are a Cardfight!! Vanguard rules assistant. Answer the user's question using the rule excerpts provided below.
 
 IMPORTANT INSTRUCTIONS:
-- If the provided rule excerpts do not contain information relevant to answering the question, respond with: "I don't have sufficient information in the rulebook to answer this question accurately."
-- Only answer if you can find a clear, direct answer in the provided rules.
-- Be precise and cite the rule numbers in your answer.
-- Do not make assumptions or provide general knowledge that isn't explicitly stated in the rules below.
+- Use the provided rule excerpts to answer the question as best you can
+- If the excerpts contain relevant information, provide a helpful answer even if not 100% complete
+- Cite the relevant rule sections in your answer (e.g., "According to Rule 7.1.2...")
+- Only respond with "I don't have sufficient information in the rulebook to answer this question accurately" if the excerpts are completely unrelated to the question
+- Be helpful and provide useful guidance based on the available rules
 
 Rulebook Excerpts:
-{context}
+{}
 
 User Question:
-{user_question}
+{}
 
-Answer:"""
+Provide a helpful answer based on the rule excerpts above:""".format(context, user_question)
+        
+        return prompt
     
     def answer_question(self, question, min_similarity_threshold=0.3, min_context_chunks=1):
         """Main method to answer a rules question"""
@@ -161,7 +221,7 @@ Answer:"""
                 }
             
             # Log the similarity scores for debugging
-            similarities = [chunk.get('similarity', 0) for chunk in top_chunks]
+            similarities = [float(chunk.get('similarity', 0)) for chunk in top_chunks]  # Convert numpy float32 to Python float
             print(f"[DEBUG] Found {len(top_chunks)} relevant chunks with similarities: {similarities}")
             
             # Build prompt with context
@@ -175,17 +235,17 @@ Answer:"""
             
             # Get answer from AI
             answer = self.ask_openai_chatbot(prompt)
+            print(f"[DEBUG] AI Response: {answer[:200]}...")  # Log first 200 chars of response
             
-            # Check if AI says it doesn't have enough info
+            # Check if AI says it doesn't have enough info (be more specific)
             insufficient_info_phrases = [
-                "i don't have sufficient information",
-                "don't have sufficient information", 
-                "not enough information",
-                "insufficient information",
-                "cannot answer",
-                "can't answer"
+                "i don't have sufficient information in the rulebook",
+                "don't have sufficient information in the rulebook",
+                "not enough information in the provided rules",
+                "insufficient information in the rulebook"
             ]
             
+            # Only trigger fallback if AI explicitly says the rulebook lacks info
             if any(phrase in answer.lower() for phrase in insufficient_info_phrases):
                 return {
                     "success": True,

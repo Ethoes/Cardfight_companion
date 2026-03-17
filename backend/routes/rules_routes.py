@@ -39,7 +39,7 @@ def ask_rules_question():
         question = data.get('question', '').strip()
         
         # Optional configuration parameters
-        min_similarity = data.get('min_similarity_threshold', 0.3)
+        min_similarity = data.get('min_similarity_threshold', 0.2)  # Reduced from 0.3 to 0.2
         min_chunks = data.get('min_context_chunks', 1)
         
         if not question:

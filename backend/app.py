@@ -1,7 +1,20 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request, g
 from flask_cors import CORS
 import os
+import logging
+from datetime import datetime
 from dotenv import load_dotenv
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('backend.log')
+    ]
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,15 +35,70 @@ def create_app():
     app = Flask(__name__, static_folder=static_folder, static_url_path='')
     CORS(app)
     
+    # Request logging middleware
+    @app.before_request
+    def log_request_info():
+        logger.info('=== NEW REQUEST ===')
+        logger.info(f'Request URL: {request.url}')
+        logger.info(f'Request Path: {request.path}')
+        logger.info(f'Request Method: {request.method}')
+        logger.info(f'Request Headers: {dict(request.headers)}')
+        logger.info(f'Request Args: {dict(request.args)}')
+        if request.is_json:
+            logger.info(f'Request JSON: {request.get_json()}')
+        elif request.form:
+            logger.info(f'Request Form: {dict(request.form)}')
+        g.start_time = datetime.utcnow()
+    
+    @app.after_request
+    def log_response_info(response):
+        if hasattr(g, 'start_time'):
+            duration = datetime.utcnow() - g.start_time
+            logger.info(f'Response Status: {response.status_code}')
+            logger.info(f'Response Duration: {duration.total_seconds():.3f}s')
+        logger.info('=== REQUEST COMPLETE ===')
+        return response
+    
+    # Error handler
+    @app.errorhandler(404)
+    def not_found_error(error):
+        logger.error(f'404 Error - Path not found: {request.path}')
+        logger.error(f'Available routes:')
+        for rule in app.url_map.iter_rules():
+            logger.error(f'  {rule.rule} -> {rule.endpoint} {list(rule.methods)}')
+        return {'error': 'Endpoint not found', 'path': request.path}, 404
+    
+    @app.errorhandler(405)
+    def method_not_allowed_error(error):
+        logger.error(f'405 Error - Method not allowed: {request.method} {request.path}')
+        # Find matching routes for this path
+        matching_routes = []
+        for rule in app.url_map.iter_rules():
+            if rule.rule == request.path or (hasattr(rule, 'match') and rule.match(request.path)):
+                matching_routes.append(f'{rule.rule} -> {list(rule.methods)}')
+        logger.error(f'Matching routes for {request.path}: {matching_routes}')
+        return {'error': 'Method not allowed', 'path': request.path, 'method': request.method, 'matching_routes': matching_routes}, 405
+    
+    @app.errorhandler(500)
+    def internal_error(error):
+        logger.error(f'500 Error - Internal server error: {str(error)}')
+        return {'error': 'Internal server error', 'details': str(error)}, 500
+    
     # Register API blueprints with /api prefix
-    print("Registering blueprints...")
+    logger.info("Registering blueprints...")
     app.register_blueprint(auth_bp, url_prefix='/api')
+    logger.info("Auth blueprint registered")
     app.register_blueprint(deck_bp, url_prefix='/api')
+    logger.info("Deck blueprint registered")
     app.register_blueprint(card_bp, url_prefix='/api')
+    logger.info("Card blueprint registered")
     app.register_blueprint(tournament_bp, url_prefix='/api')
+    logger.info("Tournament blueprint registered")
     app.register_blueprint(misc_bp, url_prefix='/api')
+    logger.info("Misc blueprint registered")
     app.register_blueprint(rules_bp, url_prefix='/api')
-    print("All blueprints registered successfully")
+    logger.info("Rules blueprint registered")
+    logger.info("All blueprints registered successfully")
     
     # Debug route to see all registered routes
     @app.route('/api/debug/routes')

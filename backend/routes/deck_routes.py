@@ -134,6 +134,7 @@ def get_deck_cost(deck_id):
 
 @deck_bp.route('/all-decks', methods=['GET'])
 def get_all_decks():
+    print("got here")
     """Get paginated decks from all users for the UserDecks page"""
     try:
         # Get query parameters

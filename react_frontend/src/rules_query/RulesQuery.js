@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CardSearch from '../components/CardSearch';
 import './RulesQuery.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
@@ -8,9 +9,49 @@ function RulesQuery() {
   const [answer, setAnswer] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [showCardSearch, setShowCardSearch] = useState(false);
+  const [modalCard, setModalCard] = useState(null);
+
+  const handleCardSelect = (card) => {
+    if (!selectedCards.some(c => c.id === card.id)) {
+      setSelectedCards(prev => [...prev, card]);
+    }
+  };
+
+  const handleCardRemove = (cardId) => {
+    setSelectedCards(prev => prev.filter(c => c.id !== cardId));
+  };
+
+  const handleCardInfo = (card) => {
+    setModalCard(card);
+  };
+
+  const closeModal = () => {
+    setModalCard(null);
+  };
+
+  const buildQuestionWithContext = () => {
+    if (selectedCards.length === 0) {
+      return question.trim();
+    }
+
+    const cardContext = selectedCards.map(card => {
+      return `Card: ${card.name}\n` +
+             `Effect: ${card.effect || 'N/A'}\n` +
+             `Type: ${card.type || 'N/A'}\n` +
+             `Grade: ${card.grade || 'N/A'}\n` +
+             `Power: ${card.power || 'N/A'}\n` +
+             `Nation/Clan: ${card.nation || card.clan || 'N/A'}`;
+    }).join('\n\n');
+
+    return `Context Cards:\n${cardContext}\n\nQuestion: ${question.trim()}`;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const questionWithContext = buildQuestionWithContext();
     
     if (!question.trim()) {
       setError('Please enter a question');
@@ -22,12 +63,12 @@ function RulesQuery() {
     setAnswer(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/rules/ask`, {
+      const response = await fetch(`${API_BASE_URL}/api/rules/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ question: question.trim() }),
+        body: JSON.stringify({ question: questionWithContext }),
       });
 
       if (!response.ok) {
@@ -53,6 +94,8 @@ function RulesQuery() {
     setQuestion('');
     setAnswer(null);
     setError(null);
+    setSelectedCards([]);
+    setShowCardSearch(false);
   };
 
   return (
@@ -63,6 +106,60 @@ function RulesQuery() {
       </div>
 
       <div className="rules-query-content">
+        {/* Selected Cards Display */}
+        {selectedCards.length > 0 && (
+          <div className="selected-cards-section">
+            <h3>Selected Cards for Context ({selectedCards.length})</h3>
+            <div className="selected-cards-grid">
+              {selectedCards.map((card, index) => (
+                <div key={index} className="selected-card">
+                  <img 
+                    src={`data:image/png;base64,${card.image}`} 
+                    alt={card.name} 
+                    className="selected-card-image"
+                  />
+                  <div className="selected-card-info">
+                    <p className="selected-card-name">{card.name}</p>
+                    <p className="selected-card-type">{card.type} - {card.grade}</p>
+                  </div>
+                  <button 
+                    className="remove-card-button"
+                    onClick={() => handleCardRemove(card.id)}
+                    title="Remove card from context"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Card Search Toggle */}
+        <div className="card-search-section">
+          <button 
+            className="toggle-card-search"
+            onClick={() => setShowCardSearch(!showCardSearch)}
+          >
+            {showCardSearch ? 'Hide Card Search' : 'Add Cards for Context'}
+          </button>
+          
+          {showCardSearch && (
+            <div className="card-search-wrapper">
+              <p className="card-search-description">
+                Search for cards to add context to your question. Selected cards' effects and details will be included with your question.
+              </p>
+              <CardSearch
+                onCardSelect={handleCardSelect}
+                onCardInfo={handleCardInfo}
+                showCardCounts={false}
+                showAddButton={true}
+                compact={true}
+              />
+            </div>
+          )}
+        </div>
+
         <form onSubmit={handleSubmit} className="question-form">
           <div className="question-input-container">
             <label htmlFor="question">Your Question:</label>
@@ -175,6 +272,43 @@ function RulesQuery() {
           </div>
         )}
       </div>
+
+      {/* Card Info Modal */}
+      {modalCard && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal}>×</button>
+            <div className="modal-scrollable-content">
+              <img
+                src={`data:image/png;base64,${modalCard.image}`}
+                alt={modalCard.name || 'Card Image'}
+                className="modal-image"
+              />
+              <h3>{modalCard.name}</h3>
+              <p><strong>Effect:</strong> {modalCard.effect}</p>
+              <p><strong>Type:</strong> {modalCard.type}</p>
+              <p><strong>Grade:</strong> {modalCard.grade}</p>
+              <p><strong>Power:</strong> {modalCard.power}</p>
+              <p><strong>Critical:</strong> {modalCard.critical}</p>
+              <p><strong>Shield:</strong> {modalCard.shield}</p>
+              <p><strong>Nation:</strong> {modalCard.nation}</p>
+              <p><strong>Race:</strong> {modalCard.race}</p>
+              <p><strong>Format:</strong> {modalCard.regulation}</p>
+              <p><strong>Illustrator:</strong> {modalCard.illustrator}</p>
+              <p><strong>Clan:</strong> {modalCard.clan}</p>
+              <p><strong>Flavor:</strong> {modalCard.flavor}</p>
+              {modalCard.url && (
+                <p><strong>URL:</strong> <a href={modalCard.url} target="_blank" rel="noopener noreferrer">{modalCard.url}</a></p>
+              )}
+              <p><strong>Set Name:</strong> {modalCard.set_name}</p>
+              <p><strong>Rarity:</strong> {modalCard.rarity}</p>
+              <p><strong>Skill:</strong> {modalCard.skill}</p>
+              <p><strong>Gift:</strong> {modalCard.gift}</p>
+              <p><strong>Card Number:</strong> {modalCard.number}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

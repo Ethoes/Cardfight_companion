@@ -12,6 +12,7 @@ function RulesQuery() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [showCardSearch, setShowCardSearch] = useState(false);
   const [modalCard, setModalCard] = useState(null);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
   const handleCardSelect = (card) => {
     if (!selectedCards.some(c => c.id === card.id)) {
@@ -61,6 +62,7 @@ function RulesQuery() {
     setLoading(true);
     setError(null);
     setAnswer(null);
+    setFeedbackSubmitted(false);
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/rules/ask`, {
@@ -90,12 +92,46 @@ function RulesQuery() {
     }
   };
 
+  const handleFeedback = async (feedbackType, userComment = null) => {
+    if (!answer) return;
+
+    try {
+      const feedbackData = {
+        question: buildQuestionWithContext(),
+        answer: answer.answer,
+        feedback_type: feedbackType,
+        context_cards: selectedCards.length > 0 ? selectedCards : null,
+        context_sources: answer.context_sources || null,
+        similarity_scores: answer.relevance_info?.similarity_scores || null,
+        user_comment: userComment
+      };
+
+      const response = await fetch(`${API_BASE_URL}/api/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      if (response.ok) {
+        setFeedbackSubmitted(true);
+        console.log(`Feedback submitted: ${feedbackType}`);
+      } else {
+        console.error('Failed to submit feedback');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
+  };
+
   const handleClear = () => {
     setQuestion('');
     setAnswer(null);
     setError(null);
     setSelectedCards([]);
     setShowCardSearch(false);
+    setFeedbackSubmitted(false);
   };
 
   return (
@@ -253,6 +289,35 @@ function RulesQuery() {
             </div>
 
             <div className="answer-footer">
+              {/* Feedback Section */}
+              {!feedbackSubmitted ? (
+                <div className="feedback-section">
+                  <p className="feedback-prompt">
+                    <strong>Was this answer helpful?</strong>
+                  </p>
+                  <div className="feedback-buttons">
+                    <button 
+                      onClick={() => handleFeedback('good')} 
+                      className="feedback-button good"
+                      title="This answer was helpful and accurate"
+                    >
+                      👍 Yes, helpful
+                    </button>
+                    <button 
+                      onClick={() => handleFeedback('bad')} 
+                      className="feedback-button bad"
+                      title="This answer was not helpful or inaccurate"
+                    >
+                      👎 No, not helpful
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="feedback-submitted">
+                  <p>✅ Thank you for your feedback! This helps improve future answers.</p>
+                </div>
+              )}
+
               {answer.answer.toLowerCase().includes("don't have sufficient information") ? (
                 <p className="disclaimer">
                   <strong>Suggestion:</strong> Try rephrasing your question more specifically, or consult the full Cardfight!! Vanguard comprehensive rules document or contact a certified judge for clarification.

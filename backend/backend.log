@@ -1505,3 +1505,982 @@
 2026-03-17 22:42:56,496 - __main__ - INFO - Response Duration: 0.000s
 2026-03-17 22:42:56,499 - __main__ - INFO - === REQUEST COMPLETE ===
 2026-03-17 22:42:56,501 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 22:42:56] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-17 22:58:40,746 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-17 22:58:40,786 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-17 22:58:52,921 - __main__ - INFO - Registering blueprints...
+2026-03-17 22:58:52,923 - __main__ - INFO - Auth blueprint registered
+2026-03-17 22:58:52,930 - __main__ - INFO - Deck blueprint registered
+2026-03-17 22:58:52,934 - __main__ - INFO - Card blueprint registered
+2026-03-17 22:58:52,938 - __main__ - INFO - Tournament blueprint registered
+2026-03-17 22:58:52,941 - __main__ - INFO - Misc blueprint registered
+2026-03-17 22:58:52,943 - __main__ - INFO - Rules blueprint registered
+2026-03-17 22:58:52,944 - __main__ - INFO - All blueprints registered successfully
+2026-03-17 22:58:52,976 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-17 22:58:52,977 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-17 23:00:22,402 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:00:22,404 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:00:22,405 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:00:22,405 - __main__ - INFO - Request Method: POST
+2026-03-17 23:00:22,407 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '278'}
+2026-03-17 23:00:22,408 - __main__ - INFO - Request Args: {}
+2026-03-17 23:00:22,411 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\\nCard: Blaster Blade\\nEffect: AUTO VC When this unit attacks a vanguard, this unit gets Power +2000 until end of battle\\nType: Normal Unit\\nGrade: 2\\nPower: 6000\\nNation/Clan: United Sanctuary\\n\\nQuestion: Can this card attack rear-guards?'}
+2026-03-17 23:00:22,449 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-17 23:00:22,450 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-17 23:00:31,517 - __main__ - INFO - Response Status: 200
+2026-03-17 23:00:31,518 - __main__ - INFO - Response Duration: 9.103s
+2026-03-17 23:00:31,519 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:00:31,524 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:00:31] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:00:56,128 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:00:56,133 - __main__ - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-17 23:00:56,135 - __main__ - INFO - Request Path: /api/sets
+2026-03-17 23:00:56,136 - __main__ - INFO - Request Method: GET
+2026-03-17 23:00:56,138 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:00:56,141 - __main__ - INFO - Request Args: {'format': ''}
+2026-03-17 23:00:56,143 - __main__ - INFO - Response Status: 400
+2026-03-17 23:00:56,144 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:00:56,154 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:00:56,157 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:00:56] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-17 23:00:56,391 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:00:56,392 - __main__ - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-17 23:00:56,394 - __main__ - INFO - Request Path: /api/sets
+2026-03-17 23:00:56,396 - __main__ - INFO - Request Method: GET
+2026-03-17 23:00:56,404 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:00:56,405 - __main__ - INFO - Request Args: {'format': ''}
+2026-03-17 23:00:56,407 - __main__ - INFO - Response Status: 400
+2026-03-17 23:00:56,409 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:00:56,411 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:00:56,414 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:00:56] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-17 23:01:02,755 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:01:02,756 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:01:02,759 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:01:02,760 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:01:02,761 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:01:02,762 - __main__ - INFO - Request Args: {}
+2026-03-17 23:01:02,764 - __main__ - INFO - Response Status: 200
+2026-03-17 23:01:02,770 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:01:02,772 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:01:02,774 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:01:02] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-17 23:01:03,094 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:01:03,097 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:01:03,099 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:01:03,106 - __main__ - INFO - Request Method: POST
+2026-03-17 23:01:03,109 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '102', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:01:03,111 - __main__ - INFO - Request Args: {}
+2026-03-17 23:01:03,115 - __main__ - INFO - Request JSON: {'name': 'blaster blade', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:01:03,124 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-17 23:01:03,126 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-17 23:01:03,131 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-17 23:01:03,132 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-17 23:01:03,142 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'blaster blade', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:01:03,144 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: blaster blade, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-17 23:01:14,986 - routes.card_routes - INFO - [CARD_ROUTES] Found 36 results
+2026-03-17 23:01:15,157 - routes.card_routes - INFO - [CARD_ROUTES] Returning 36 processed results
+2026-03-17 23:01:15,514 - __main__ - INFO - Response Status: 200
+2026-03-17 23:01:15,515 - __main__ - INFO - Response Duration: 12.390s
+2026-03-17 23:01:15,516 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:01:15,520 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:01:15] "POST /api/search HTTP/1.1" 200 -
+2026-03-17 23:02:12,827 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:02:12,828 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:02:12,831 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:02:12,836 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:02:12,839 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:02:12,841 - __main__ - INFO - Request Args: {}
+2026-03-17 23:02:12,843 - __main__ - INFO - Response Status: 200
+2026-03-17 23:02:12,844 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:02:12,851 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:02:12,857 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:02:12] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:02:13,095 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:02:13,098 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:02:13,102 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:02:13,103 - __main__ - INFO - Request Method: POST
+2026-03-17 23:02:13,105 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '608', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:02:13,108 - __main__ - INFO - Request Args: {}
+2026-03-17 23:02:13,109 - __main__ - INFO - Request JSON: {'question': "Context Cards:\nCard: Blaster Blade\nEffect: [AUTO]:[Counter-Blast 2] When this unit is placed on (VC), you may pay the cost. If you do, choose an opponent's rear-guard, and retire it.[AUTO]:[Counter-Blast 2] When this unit is placed on (RC), if you have a <<Royal Paladin>> vanguard, you may pay the cost. If you do, choose an opponent's grade 2 or greater rear-guard, and retire it.\nType: Normal Unit\nGrade: Grade 2\nPower: Power 9000\nNation/Clan: United Sanctuary\n\nQuestion: so for this unit blaster blade do i have to pay the counterblast to use his ability when placed on rear guard?"}
+2026-03-17 23:02:22,108 - __main__ - INFO - Response Status: 200
+2026-03-17 23:02:22,110 - __main__ - INFO - Response Duration: 8.997s
+2026-03-17 23:02:22,111 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:02:22,129 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:02:22] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:03:15,193 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:03:15,195 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:03:15,196 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:03:15,197 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:03:15,198 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:03:15,200 - __main__ - INFO - Request Args: {}
+2026-03-17 23:03:15,202 - __main__ - INFO - Response Status: 200
+2026-03-17 23:03:15,212 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:03:15,212 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:03:15,214 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:03:15] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-17 23:03:15,461 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:03:15,463 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:03:15,464 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:03:15,465 - __main__ - INFO - Request Method: POST
+2026-03-17 23:03:15,466 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '98', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:03:15,470 - __main__ - INFO - Request Args: {}
+2026-03-17 23:03:15,475 - __main__ - INFO - Request JSON: {'name': 'devestate', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:03:15,480 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-17 23:03:15,481 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-17 23:03:15,484 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-17 23:03:15,485 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-17 23:03:15,486 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'devestate', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:03:15,488 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: devestate, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-17 23:03:15,851 - routes.card_routes - WARNING - [CARD_ROUTES] No results found
+2026-03-17 23:03:15,855 - __main__ - INFO - Response Status: 404
+2026-03-17 23:03:15,857 - __main__ - INFO - Response Duration: 0.376s
+2026-03-17 23:03:15,859 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:03:15,865 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:03:15] "[33mPOST /api/search HTTP/1.1[0m" 404 -
+2026-03-17 23:03:18,415 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:03:18,416 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:03:18,417 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:03:18,418 - __main__ - INFO - Request Method: POST
+2026-03-17 23:03:18,420 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '93', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:03:18,420 - __main__ - INFO - Request Args: {}
+2026-03-17 23:03:18,424 - __main__ - INFO - Request JSON: {'name': 'gaia', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:03:18,428 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-17 23:03:18,429 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-17 23:03:18,430 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-17 23:03:18,431 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-17 23:03:18,432 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'gaia', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:03:18,433 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: gaia, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-17 23:03:19,152 - routes.card_routes - INFO - [CARD_ROUTES] Found 21 results
+2026-03-17 23:03:19,270 - routes.card_routes - INFO - [CARD_ROUTES] Returning 21 processed results
+2026-03-17 23:03:19,521 - __main__ - INFO - Response Status: 200
+2026-03-17 23:03:19,532 - __main__ - INFO - Response Duration: 1.093s
+2026-03-17 23:03:19,538 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:03:19,550 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:03:19] "POST /api/search HTTP/1.1" 200 -
+2026-03-17 23:04:43,770 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:04:43,772 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:04:43,774 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:04:43,776 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:04:43,786 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:04:43,792 - __main__ - INFO - Request Args: {}
+2026-03-17 23:04:43,797 - __main__ - INFO - Response Status: 200
+2026-03-17 23:04:43,798 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:04:43,801 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:04:43,812 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:04:43] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:04:44,039 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:04:44,042 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:04:44,050 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:04:44,052 - __main__ - INFO - Request Method: POST
+2026-03-17 23:04:44,054 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '994', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:04:44,056 - __main__ - INFO - Request Args: {}
+2026-03-17 23:04:44,058 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: when using gaia devestates effect on the vanguard circle, do cards in the equipment guage coiunt towards the 3 removed from field for its effect?'}
+2026-03-17 23:04:49,876 - __main__ - INFO - Response Status: 200
+2026-03-17 23:04:49,878 - __main__ - INFO - Response Duration: 5.817s
+2026-03-17 23:04:49,886 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:04:49,907 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:04:49] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:09:38,946 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-17 23:09:39,011 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-17 23:09:49,491 - __main__ - INFO - Registering blueprints...
+2026-03-17 23:09:49,494 - __main__ - INFO - Auth blueprint registered
+2026-03-17 23:09:49,501 - __main__ - INFO - Deck blueprint registered
+2026-03-17 23:09:49,504 - __main__ - INFO - Card blueprint registered
+2026-03-17 23:09:49,509 - __main__ - INFO - Tournament blueprint registered
+2026-03-17 23:09:49,511 - __main__ - INFO - Misc blueprint registered
+2026-03-17 23:09:49,514 - __main__ - INFO - Rules blueprint registered
+2026-03-17 23:09:49,515 - __main__ - INFO - All blueprints registered successfully
+2026-03-17 23:09:49,560 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-17 23:09:49,560 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-17 23:10:53,227 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:10:53,229 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:10:53,236 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:10:53,238 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:10:53,239 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:10:53,244 - __main__ - INFO - Request Args: {}
+2026-03-17 23:10:53,255 - __main__ - INFO - Response Status: 200
+2026-03-17 23:10:53,258 - __main__ - INFO - Response Duration: 0.002s
+2026-03-17 23:10:53,259 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:10:53,268 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:10:53] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:10:53,492 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:10:53,493 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:10:53,494 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:10:53,495 - __main__ - INFO - Request Method: POST
+2026-03-17 23:10:53,504 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '993', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:10:53,506 - __main__ - INFO - Request Args: {}
+2026-03-17 23:10:53,508 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: when using gaia devestates effect on the vanguard circle, do cards in the equipment guage count towards the 3 removed from field for its effect?'}
+2026-03-17 23:10:53,560 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-17 23:10:53,560 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-17 23:11:07,943 - __main__ - INFO - Response Status: 200
+2026-03-17 23:11:07,945 - __main__ - INFO - Response Duration: 14.434s
+2026-03-17 23:11:07,965 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:11:07,976 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:11:07] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:16:16,216 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-17 23:16:16,254 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-17 23:16:27,235 - __main__ - INFO - Registering blueprints...
+2026-03-17 23:16:27,238 - __main__ - INFO - Auth blueprint registered
+2026-03-17 23:16:27,246 - __main__ - INFO - Deck blueprint registered
+2026-03-17 23:16:27,252 - __main__ - INFO - Card blueprint registered
+2026-03-17 23:16:27,261 - __main__ - INFO - Tournament blueprint registered
+2026-03-17 23:16:27,266 - __main__ - INFO - Misc blueprint registered
+2026-03-17 23:16:27,271 - __main__ - INFO - Rules blueprint registered
+2026-03-17 23:16:27,271 - __main__ - INFO - All blueprints registered successfully
+2026-03-17 23:16:27,328 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-17 23:16:27,329 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-17 23:17:52,941 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:17:52,974 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:17:53,011 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:17:53,047 - __main__ - INFO - Request Method: POST
+2026-03-17 23:17:53,059 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '456'}
+2026-03-17 23:17:53,095 - __main__ - INFO - Request Args: {}
+2026-03-17 23:17:53,096 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\\nCard: Gaia Devastate\\nEffect: [AUTO](VC):When this unit attacks, you may remove three of your units from field. If you do, this unit gets [Power] +15000/[Critical] +1 until end of battle.\\nType: Normal Unit\\nGrade: 3\\nPower: 13000\\nNation/Clan: Dragon Empire\\n\\nQuestion: when using gaia devastates effect on the vanguard circle, do cards in the equipment gauge count towards the 3 removed from field for its effect?'}
+2026-03-17 23:17:53,108 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-17 23:17:53,108 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-17 23:18:00,398 - __main__ - INFO - Response Status: 200
+2026-03-17 23:18:00,400 - __main__ - INFO - Response Duration: 7.300s
+2026-03-17 23:18:00,402 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:18:00,412 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:18:00] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:19:29,051 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:19:29,053 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:19:29,056 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:19:29,065 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:19:29,070 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:19:29,075 - __main__ - INFO - Request Args: {}
+2026-03-17 23:19:29,093 - __main__ - INFO - Response Status: 200
+2026-03-17 23:19:29,095 - __main__ - INFO - Response Duration: 0.010s
+2026-03-17 23:19:29,099 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:19:29,102 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:19:29] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:19:29,312 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:19:29,325 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:19:29,329 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:19:29,341 - __main__ - INFO - Request Method: POST
+2026-03-17 23:19:29,346 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '993', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:19:29,359 - __main__ - INFO - Request Args: {}
+2026-03-17 23:19:29,370 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: when using gaia devestates effect on the vanguard circle, do cards in the equipment guage count towards the 3 removed from field for its effect?'}
+2026-03-17 23:19:35,827 - __main__ - INFO - Response Status: 200
+2026-03-17 23:19:35,829 - __main__ - INFO - Response Duration: 6.440s
+2026-03-17 23:19:35,830 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:19:35,834 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:19:35] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:22:42,850 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:22:42,851 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:22:42,852 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:22:42,854 - __main__ - INFO - Request Method: POST
+2026-03-17 23:22:42,855 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '456'}
+2026-03-17 23:22:42,857 - __main__ - INFO - Request Args: {}
+2026-03-17 23:22:42,861 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\\nCard: Gaia Devastate\\nEffect: [AUTO](VC):When this unit attacks, you may remove three of your units from field. If you do, this unit gets [Power] +15000/[Critical] +1 until end of battle.\\nType: Normal Unit\\nGrade: 3\\nPower: 13000\\nNation/Clan: Dragon Empire\\n\\nQuestion: when using gaia devastates effect on the vanguard circle, do cards in the equipment gauge count towards the 3 removed from field for its effect?'}
+2026-03-17 23:22:48,096 - __main__ - INFO - Response Status: 200
+2026-03-17 23:22:48,097 - __main__ - INFO - Response Duration: 5.233s
+2026-03-17 23:22:48,098 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:22:48,100 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:22:48] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:23:34,692 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:23:34,698 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:23:34,700 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:23:34,704 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:23:34,709 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:23:34,711 - __main__ - INFO - Request Args: {}
+2026-03-17 23:23:34,717 - __main__ - INFO - Response Status: 200
+2026-03-17 23:23:34,725 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:23:34,728 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:23:34,736 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:23:34] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:23:34,961 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:23:34,966 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:23:34,969 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:23:34,972 - __main__ - INFO - Request Method: POST
+2026-03-17 23:23:34,974 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '960', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:23:34,976 - __main__ - INFO - Request Args: {}
+2026-03-17 23:23:34,977 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: What zones are considered "field" in Cardfight Vanguard? Does the equipment gauge count as part of the field?'}
+2026-03-17 23:23:42,927 - __main__ - INFO - Response Status: 200
+2026-03-17 23:23:42,928 - __main__ - INFO - Response Duration: 7.941s
+2026-03-17 23:23:42,930 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:23:42,943 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:23:42] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:25:11,130 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:25:11,132 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:25:11,133 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:25:11,134 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:25:11,135 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:25:11,136 - __main__ - INFO - Request Args: {}
+2026-03-17 23:25:11,140 - __main__ - INFO - Response Status: 200
+2026-03-17 23:25:11,141 - __main__ - INFO - Response Duration: 0.002s
+2026-03-17 23:25:11,142 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:25:11,150 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:25:11] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:25:11,374 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:25:11,375 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:25:11,382 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:25:11,384 - __main__ - INFO - Request Method: POST
+2026-03-17 23:25:11,386 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '1026', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:25:11,387 - __main__ - INFO - Request Args: {}
+2026-03-17 23:25:11,389 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: What zones are considered "field" in Cardfight Vanguard? Does the equipment gauge count as part of the field? so would cards from the equipment guage count for gaia devastate?'}
+2026-03-17 23:25:17,746 - __main__ - INFO - Response Status: 200
+2026-03-17 23:25:17,752 - __main__ - INFO - Response Duration: 6.355s
+2026-03-17 23:25:17,757 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:25:17,763 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:25:17] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:25:29,116 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:25:29,119 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:25:29,120 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:25:29,121 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:25:29,122 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:25:29,129 - __main__ - INFO - Request Args: {}
+2026-03-17 23:25:29,137 - __main__ - INFO - Response Status: 200
+2026-03-17 23:25:29,140 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:25:29,141 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:25:29,143 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:25:29] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:25:29,452 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:25:29,463 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:25:29,464 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:25:29,468 - __main__ - INFO - Request Method: POST
+2026-03-17 23:25:29,469 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '1017', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:25:29,471 - __main__ - INFO - Request Args: {}
+2026-03-17 23:25:29,483 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: What zones are considered "field" in Cardfight Vanguard? Does the equipment gauge count as part of the field? so would cards from the equipment guage count this card?'}
+2026-03-17 23:25:37,125 - __main__ - INFO - Response Status: 200
+2026-03-17 23:25:37,126 - __main__ - INFO - Response Duration: 7.640s
+2026-03-17 23:25:37,129 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:25:37,134 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:25:37] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:32:11,227 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-17 23:32:11,265 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-17 23:32:21,433 - __main__ - INFO - Registering blueprints...
+2026-03-17 23:32:21,435 - __main__ - INFO - Auth blueprint registered
+2026-03-17 23:32:21,442 - __main__ - INFO - Deck blueprint registered
+2026-03-17 23:32:21,446 - __main__ - INFO - Card blueprint registered
+2026-03-17 23:32:21,450 - __main__ - INFO - Tournament blueprint registered
+2026-03-17 23:32:21,453 - __main__ - INFO - Misc blueprint registered
+2026-03-17 23:32:21,457 - __main__ - INFO - Rules blueprint registered
+2026-03-17 23:32:21,458 - __main__ - INFO - All blueprints registered successfully
+2026-03-17 23:32:21,496 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-17 23:32:21,496 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-17 23:33:53,804 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:33:53,805 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:33:53,807 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:33:53,808 - __main__ - INFO - Request Method: POST
+2026-03-17 23:33:53,809 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '123'}
+2026-03-17 23:33:53,812 - __main__ - INFO - Request Args: {}
+2026-03-17 23:33:53,816 - __main__ - INFO - Request JSON: {'question': 'What zones are considered field in Cardfight Vanguard? Does the equipment gauge count as part of the field?'}
+2026-03-17 23:33:53,871 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-17 23:33:53,872 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-17 23:34:02,580 - __main__ - INFO - Response Status: 200
+2026-03-17 23:34:02,581 - __main__ - INFO - Response Duration: 8.759s
+2026-03-17 23:34:02,582 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:34:02,588 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:34:02] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:34:33,497 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:34:33,498 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:34:33,499 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:34:33,500 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:34:33,502 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:34:33,507 - __main__ - INFO - Request Args: {}
+2026-03-17 23:34:33,514 - __main__ - INFO - Response Status: 200
+2026-03-17 23:34:33,515 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:34:33,516 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:34:33,529 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:34:33] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:34:33,748 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:34:33,749 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:34:33,750 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:34:33,751 - __main__ - INFO - Request Method: POST
+2026-03-17 23:34:33,753 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '1017', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:34:33,763 - __main__ - INFO - Request Args: {}
+2026-03-17 23:34:33,764 - __main__ - INFO - Request JSON: {'question': 'Context Cards:\nCard: New Destruction Emperor, Gaia Devastate\nEffect: [Stride]-Stride Step-[Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[AUTO](VC):Engorge[AUTO](VC):[Counter-Blast 1 & Choose a face down card with the same card name as this unit from your G zone, and turn it face up] When this unit becomes engorged, you may pay the cost. If you do, draw a card, choose up to any two circles other than (VC) for each face up card in your G zone, and put all of the cards on those circles into the drop zone. If the number of your cards put into the drop zone is three or more, this unit gets [Power] +10000/[Critical] +1/drive +1.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Dragon Empire\n\nQuestion: What zones are considered "field" in Cardfight Vanguard? Does the equipment gauge count as part of the field? so would cards from the equipment guage count this card?'}
+2026-03-17 23:34:45,551 - __main__ - INFO - Response Status: 200
+2026-03-17 23:34:45,552 - __main__ - INFO - Response Duration: 11.785s
+2026-03-17 23:34:45,554 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:34:45,560 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:34:45] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:37:10,356 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:37:10,357 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:37:10,358 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:37:10,368 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:37:10,375 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:37:10,388 - __main__ - INFO - Request Args: {}
+2026-03-17 23:37:10,390 - __main__ - INFO - Response Status: 200
+2026-03-17 23:37:10,391 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:37:10,391 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:37:10,400 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:37:10] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:37:10,639 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:37:10,651 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:37:10,653 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:37:10,654 - __main__ - INFO - Request Method: POST
+2026-03-17 23:37:10,655 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '91', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:37:10,656 - __main__ - INFO - Request Args: {}
+2026-03-17 23:37:10,657 - __main__ - INFO - Request JSON: {'question': 'if i stride a card on a rested vanguard, does it stride as rest or as stand?'}
+2026-03-17 23:37:16,693 - __main__ - INFO - Response Status: 200
+2026-03-17 23:37:16,694 - __main__ - INFO - Response Duration: 6.035s
+2026-03-17 23:37:16,694 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:37:16,705 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:37:16] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:38:48,903 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:38:48,904 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:38:48,905 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:38:48,911 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:38:48,915 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:38:48,918 - __main__ - INFO - Request Args: {}
+2026-03-17 23:38:48,927 - __main__ - INFO - Response Status: 200
+2026-03-17 23:38:48,933 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:38:48,934 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:38:48,938 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:38:48] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:38:49,187 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:38:49,199 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:38:49,201 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:38:49,204 - __main__ - INFO - Request Method: POST
+2026-03-17 23:38:49,212 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '101', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:38:49,213 - __main__ - INFO - Request Args: {}
+2026-03-17 23:38:49,215 - __main__ - INFO - Request JSON: {'question': 'if i stride a card on to a vanguard, does it match its state? (so rested or standing)?'}
+2026-03-17 23:38:56,539 - __main__ - INFO - Response Status: 200
+2026-03-17 23:38:56,540 - __main__ - INFO - Response Duration: 7.322s
+2026-03-17 23:38:56,549 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:38:56,552 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:38:56] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:40:54,879 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:40:54,895 - __main__ - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-17 23:40:54,903 - __main__ - INFO - Request Path: /api/sets
+2026-03-17 23:40:54,907 - __main__ - INFO - Request Method: GET
+2026-03-17 23:40:54,909 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:40:54,913 - __main__ - INFO - Request Args: {'format': ''}
+2026-03-17 23:40:54,916 - __main__ - INFO - Response Status: 400
+2026-03-17 23:40:54,919 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:40:54,921 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:40:54,923 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:40:54] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-17 23:40:55,108 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:40:55,111 - __main__ - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-17 23:40:55,111 - __main__ - INFO - Request Path: /api/sets
+2026-03-17 23:40:55,112 - __main__ - INFO - Request Method: GET
+2026-03-17 23:40:55,113 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:40:55,114 - __main__ - INFO - Request Args: {'format': ''}
+2026-03-17 23:40:55,121 - __main__ - INFO - Response Status: 400
+2026-03-17 23:40:55,126 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:40:55,127 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:40:55,129 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:40:55] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-17 23:40:58,899 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:40:58,908 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:40:58,910 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:40:58,912 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:40:58,914 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:40:58,916 - __main__ - INFO - Request Args: {}
+2026-03-17 23:40:58,929 - __main__ - INFO - Response Status: 200
+2026-03-17 23:40:58,930 - __main__ - INFO - Response Duration: 0.001s
+2026-03-17 23:40:58,931 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:40:58,938 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:40:58] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-17 23:40:59,257 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:40:59,265 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-17 23:40:59,267 - __main__ - INFO - Request Path: /api/search
+2026-03-17 23:40:59,281 - __main__ - INFO - Request Method: POST
+2026-03-17 23:40:59,292 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '96', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:40:59,293 - __main__ - INFO - Request Args: {}
+2026-03-17 23:40:59,295 - __main__ - INFO - Request JSON: {'name': 'gredora', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:40:59,296 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-17 23:40:59,297 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-17 23:40:59,298 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-17 23:40:59,300 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-17 23:40:59,306 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'gredora', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-17 23:40:59,308 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: gredora, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-17 23:40:59,871 - routes.card_routes - INFO - [CARD_ROUTES] Found 7 results
+2026-03-17 23:40:59,889 - routes.card_routes - INFO - [CARD_ROUTES] Returning 7 processed results
+2026-03-17 23:40:59,925 - __main__ - INFO - Response Status: 200
+2026-03-17 23:40:59,926 - __main__ - INFO - Response Duration: 0.629s
+2026-03-17 23:40:59,928 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:40:59,933 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:40:59] "POST /api/search HTTP/1.1" 200 -
+2026-03-17 23:42:35,175 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:42:35,178 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:42:35,179 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:42:35,180 - __main__ - INFO - Request Method: OPTIONS
+2026-03-17 23:42:35,181 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-17 23:42:35,197 - __main__ - INFO - Request Args: {}
+2026-03-17 23:42:35,209 - __main__ - INFO - Response Status: 200
+2026-03-17 23:42:35,212 - __main__ - INFO - Response Duration: 0.000s
+2026-03-17 23:42:35,214 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:42:35,224 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:42:35] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-17 23:42:35,426 - __main__ - INFO - === NEW REQUEST ===
+2026-03-17 23:42:35,428 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-17 23:42:35,429 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-17 23:42:35,429 - __main__ - INFO - Request Method: POST
+2026-03-17 23:42:35,430 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '862', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-17 23:42:35,431 - __main__ - INFO - Request Args: {}
+2026-03-17 23:42:35,436 - __main__ - INFO - Request JSON: {'question': "Context Cards:\nCard: Guilty Empress, Darkface Gredora\nEffect: [Stride]-Stride Step-[COST][Choose one or more cards with the sum of their grades being 3 or greater from your hand, and discard them] [Stride] this card on your (VC) from face down.[ACT](VC)[1/turn]:[COST][Counter-Blast 1 & Turn a card from your G zone face up], until the end of your opponent's next turn, your opponent's units cannot [Stand] in the stand phase, and your opponent cannot call units other than from hand.[AUTO](VC):When it attacks, [COST][Soul-Blast 1], search your deck for up to one grade 3, call it to (RC), and it gets [Power] +10000 until end of turn. Shuffle your deck.\nType: G Unit\nGrade: Grade 4\nPower: Power 15000+\nNation/Clan: Zoo\n\nQuestion: when a vanguard is unable to be stood, does it stand when i stride on it? like with this card for instance."}
+2026-03-17 23:42:43,565 - __main__ - INFO - Response Status: 200
+2026-03-17 23:42:43,567 - __main__ - INFO - Response Duration: 8.126s
+2026-03-17 23:42:43,569 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-17 23:42:43,577 - werkzeug - INFO - 127.0.0.1 - - [17/Mar/2026 23:42:43] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 00:50:38,912 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 00:50:38,951 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-18 00:50:38,967 - __main__ - INFO - Request Path: /api/search
+2026-03-18 00:50:38,997 - __main__ - INFO - Request Method: OPTIONS
+2026-03-18 00:50:39,016 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 00:50:39,047 - __main__ - INFO - Request Args: {}
+2026-03-18 00:50:39,163 - __main__ - INFO - Response Status: 200
+2026-03-18 00:50:39,202 - __main__ - INFO - Response Duration: 0.048s
+2026-03-18 00:50:39,235 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 00:50:39,299 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 00:50:39] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-18 00:50:39,481 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 00:50:39,494 - __main__ - INFO - Request URL: http://localhost:5000/api/search
+2026-03-18 00:50:39,518 - __main__ - INFO - Request Path: /api/search
+2026-03-18 00:50:39,554 - __main__ - INFO - Request Method: POST
+2026-03-18 00:50:39,577 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '103', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 00:50:39,650 - __main__ - INFO - Request Args: {}
+2026-03-18 00:50:39,694 - __main__ - INFO - Request JSON: {'name': 'savage whacker', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-18 00:50:39,734 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-18 00:50:39,784 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-18 00:50:39,806 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-18 00:50:39,840 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-18 00:50:39,866 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'savage whacker', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-18 00:50:39,894 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: savage whacker, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-18 00:50:53,444 - routes.card_routes - INFO - [CARD_ROUTES] Found 1 results
+2026-03-18 00:50:53,448 - routes.card_routes - INFO - [CARD_ROUTES] Returning 1 processed results
+2026-03-18 00:50:53,458 - __main__ - INFO - Response Status: 200
+2026-03-18 00:50:53,459 - __main__ - INFO - Response Duration: 13.725s
+2026-03-18 00:50:53,460 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 00:50:53,462 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 00:50:53] "POST /api/search HTTP/1.1" 200 -
+2026-03-18 00:51:34,665 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 00:51:34,674 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 00:51:34,738 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 00:51:34,784 - __main__ - INFO - Request Method: OPTIONS
+2026-03-18 00:51:34,820 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 00:51:34,839 - __main__ - INFO - Request Args: {}
+2026-03-18 00:51:34,857 - __main__ - INFO - Response Status: 200
+2026-03-18 00:51:34,870 - __main__ - INFO - Response Duration: 0.005s
+2026-03-18 00:51:34,882 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 00:51:34,901 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 00:51:34] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 00:51:34,950 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 00:51:34,968 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 00:51:34,977 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 00:51:34,988 - __main__ - INFO - Request Method: POST
+2026-03-18 00:51:35,012 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '810', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 00:51:35,024 - __main__ - INFO - Request Args: {}
+2026-03-18 00:51:35,053 - __main__ - INFO - Request JSON: {'question': "Context Cards:\nCard: Savage Whacker\nEffect: [AUTO](VC/RC)[1/turn]:When this unit attacks while boosted, [COST][Soul-Blast 1], choose one of your rear-guards, and put the top card of your deck face down as its equip gauge. Then, that unit gets [Power] +5000 until end of turn for each of that unit's equip gauge.\n[AUTO](Hand):At the beginning of your ride phase, if your vanguard is grade 1 or less, [COST][discard this card], look at the top five cards of your deck, choose up to one grade 2 or less card from among them, reveal it and put it into your hand, and shuffle your deck.\nType: Normal Unit\nGrade: Grade 2\nPower: Power 9000\nNation/Clan: Dragon Empire\n\nQuestion: when i pop the effect to discard this card during my ride phase, can i still g-assist after activating this effect?"}
+2026-03-18 00:51:44,936 - __main__ - INFO - Response Status: 200
+2026-03-18 00:51:44,937 - __main__ - INFO - Response Duration: 9.860s
+2026-03-18 00:51:44,939 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 00:51:44,947 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 00:51:44] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 11:19:51,766 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-18 11:19:52,278 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-18 11:21:27,074 - __main__ - INFO - Registering blueprints...
+2026-03-18 11:21:27,076 - __main__ - INFO - Auth blueprint registered
+2026-03-18 11:21:27,082 - __main__ - INFO - Deck blueprint registered
+2026-03-18 11:21:27,085 - __main__ - INFO - Card blueprint registered
+2026-03-18 11:21:27,091 - __main__ - INFO - Tournament blueprint registered
+2026-03-18 11:21:27,095 - __main__ - INFO - Misc blueprint registered
+2026-03-18 11:21:27,097 - __main__ - INFO - Rules blueprint registered
+2026-03-18 11:21:27,102 - __main__ - INFO - Feedback blueprint registered
+2026-03-18 11:21:27,102 - __main__ - INFO - All blueprints registered successfully
+2026-03-18 11:21:27,218 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-18 11:21:27,219 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-18 11:22:40,375 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:22:40,376 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:22:40,377 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:22:40,378 - __main__ - INFO - Request Method: POST
+2026-03-18 11:22:40,379 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'}
+2026-03-18 11:22:40,380 - __main__ - INFO - Request Args: {}
+2026-03-18 11:22:40,382 - __main__ - INFO - Request JSON: {'question': 'Test question for feedback'}
+2026-03-18 11:22:40,472 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-18 11:22:40,473 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-18 11:22:44,205 - __main__ - INFO - Response Status: 500
+2026-03-18 11:22:44,206 - __main__ - INFO - Response Duration: 3.822s
+2026-03-18 11:22:44,206 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:22:44,208 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:22:44] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:29:00,962 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:29:00,968 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:29:00,969 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:29:00,971 - __main__ - INFO - Request Method: POST
+2026-03-18 11:29:00,972 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '42'}
+2026-03-18 11:29:00,973 - __main__ - INFO - Request Args: {}
+2026-03-18 11:29:00,976 - __main__ - INFO - Request JSON: {'question': 'Test question for feedback'}
+2026-03-18 11:29:01,074 - __main__ - INFO - Response Status: 500
+2026-03-18 11:29:01,074 - __main__ - INFO - Response Duration: 0.097s
+2026-03-18 11:29:01,075 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:29:01,077 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:29:01] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:34:07,115 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:34:07,117 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:34:07,118 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:34:07,119 - __main__ - INFO - Request Method: POST
+2026-03-18 11:34:07,121 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '51'}
+2026-03-18 11:34:07,122 - __main__ - INFO - Request Args: {}
+2026-03-18 11:34:07,126 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3?'}
+2026-03-18 11:34:07,291 - __main__ - INFO - Response Status: 500
+2026-03-18 11:34:07,291 - __main__ - INFO - Response Duration: 0.164s
+2026-03-18 11:34:07,292 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:34:07,292 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:34:07] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:36:02,003 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:36:02,005 - __main__ - INFO - Request URL: http://localhost:5000/api/feedback
+2026-03-18 11:36:02,007 - __main__ - INFO - Request Path: /api/feedback
+2026-03-18 11:36:02,008 - __main__ - INFO - Request Method: POST
+2026-03-18 11:36:02,010 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '79'}
+2026-03-18 11:36:02,017 - __main__ - INFO - Request Args: {}
+2026-03-18 11:36:02,018 - __main__ - INFO - Request JSON: {'question': 'Test question', 'answer': 'Test answer', 'feedback_type': 'good'}
+2026-03-18 11:36:02,053 - __main__ - INFO - Response Status: 200
+2026-03-18 11:36:02,055 - __main__ - INFO - Response Duration: 0.033s
+2026-03-18 11:36:02,056 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:36:02,059 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:36:02] "POST /api/feedback HTTP/1.1" 200 -
+2026-03-18 11:36:50,887 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:36:50,890 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:36:50,892 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:36:50,894 - __main__ - INFO - Request Method: POST
+2026-03-18 11:36:50,896 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '51'}
+2026-03-18 11:36:50,900 - __main__ - INFO - Request Args: {}
+2026-03-18 11:36:50,902 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3?'}
+2026-03-18 11:36:51,117 - __main__ - INFO - Response Status: 500
+2026-03-18 11:36:51,117 - __main__ - INFO - Response Duration: 0.213s
+2026-03-18 11:36:51,118 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:36:51,119 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:36:51] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:38:27,050 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:38:27,052 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:38:27,053 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:38:27,054 - __main__ - INFO - Request Method: POST
+2026-03-18 11:38:27,055 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'}
+2026-03-18 11:38:27,057 - __main__ - INFO - Request Args: {}
+2026-03-18 11:38:27,059 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3 unit?'}
+2026-03-18 11:38:27,241 - __main__ - INFO - Response Status: 500
+2026-03-18 11:38:27,243 - __main__ - INFO - Response Duration: 0.181s
+2026-03-18 11:38:27,244 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:38:27,246 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:38:27] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:40:19,640 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:40:19,641 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:40:19,642 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:40:19,643 - __main__ - INFO - Request Method: POST
+2026-03-18 11:40:19,644 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '51'}
+2026-03-18 11:40:19,645 - __main__ - INFO - Request Args: {}
+2026-03-18 11:40:19,647 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3?'}
+2026-03-18 11:40:19,853 - __main__ - INFO - Response Status: 500
+2026-03-18 11:40:19,853 - __main__ - INFO - Response Duration: 0.204s
+2026-03-18 11:40:19,857 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:40:19,858 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:40:19] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:40:53,252 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:40:53,254 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 11:40:53,255 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 11:40:53,257 - __main__ - INFO - Request Method: POST
+2026-03-18 11:40:53,258 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '29'}
+2026-03-18 11:40:53,259 - __main__ - INFO - Request Args: {}
+2026-03-18 11:40:53,262 - __main__ - INFO - Request JSON: {'question': 'Test question'}
+2026-03-18 11:40:53,386 - __main__ - INFO - Response Status: 500
+2026-03-18 11:40:53,389 - __main__ - INFO - Response Duration: 0.121s
+2026-03-18 11:40:53,390 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:40:53,392 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:40:53] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 11:41:15,898 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:41:15,899 - __main__ - INFO - Request URL: http://localhost:5000/api/feedback
+2026-03-18 11:41:15,900 - __main__ - INFO - Request Path: /api/feedback
+2026-03-18 11:41:15,902 - __main__ - INFO - Request Method: POST
+2026-03-18 11:41:15,904 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '150'}
+2026-03-18 11:41:15,908 - __main__ - INFO - Request Args: {}
+2026-03-18 11:41:15,909 - __main__ - INFO - Request JSON: {'question': 'When I ride a grade 3, what happens?', 'answer': 'When you ride a grade 3 unit, you gain an Imaginary Gift...', 'feedback_type': 'good'}
+2026-03-18 11:41:15,927 - __main__ - INFO - Response Status: 200
+2026-03-18 11:41:15,928 - __main__ - INFO - Response Duration: 0.016s
+2026-03-18 11:41:15,929 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:41:15,932 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:41:15] "POST /api/feedback HTTP/1.1" 200 -
+2026-03-18 11:41:17,992 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 11:41:17,994 - __main__ - INFO - Request URL: http://localhost:5000/api/feedback/stats
+2026-03-18 11:41:17,994 - __main__ - INFO - Request Path: /api/feedback/stats
+2026-03-18 11:41:17,995 - __main__ - INFO - Request Method: GET
+2026-03-18 11:41:17,996 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'}
+2026-03-18 11:41:17,997 - __main__ - INFO - Request Args: {}
+2026-03-18 11:41:18,014 - __main__ - INFO - Response Status: 200
+2026-03-18 11:41:18,016 - __main__ - INFO - Response Duration: 0.009s
+2026-03-18 11:41:18,017 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 11:41:18,018 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 11:41:18] "GET /api/feedback/stats HTTP/1.1" 200 -
+2026-03-18 17:41:02,720 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 17:41:02,722 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:41:02,722 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 17:41:02,723 - __main__ - INFO - Request Method: OPTIONS
+2026-03-18 17:41:02,724 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 17:41:02,725 - __main__ - INFO - Request Args: {}
+2026-03-18 17:41:02,741 - __main__ - INFO - Response Status: 200
+2026-03-18 17:41:02,744 - __main__ - INFO - Response Duration: 0.014s
+2026-03-18 17:41:02,745 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:41:02,753 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:41:02] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:41:02,976 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 17:41:02,978 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:41:02,979 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 17:41:02,980 - __main__ - INFO - Request Method: POST
+2026-03-18 17:41:02,982 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '96', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 17:41:02,988 - __main__ - INFO - Request Args: {}
+2026-03-18 17:41:02,990 - __main__ - INFO - Request JSON: {'question': 'can i ride a card before i stride a card during my ride phase? is there an order?'}
+2026-03-18 17:41:03,524 - __main__ - INFO - Response Status: 500
+2026-03-18 17:41:03,526 - __main__ - INFO - Response Duration: 0.532s
+2026-03-18 17:41:03,527 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:41:03,530 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:41:03] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 17:43:10,628 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 17:43:10,629 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:43:10,630 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 17:43:10,631 - __main__ - INFO - Request Method: POST
+2026-03-18 17:43:10,632 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'}
+2026-03-18 17:43:10,633 - __main__ - INFO - Request Args: {}
+2026-03-18 17:43:10,634 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3 unit?'}
+2026-03-18 17:43:10,814 - __main__ - INFO - Response Status: 500
+2026-03-18 17:43:10,814 - __main__ - INFO - Response Duration: 0.179s
+2026-03-18 17:43:10,815 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:43:10,816 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:43:10] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 17:43:44,241 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-18 17:43:44,390 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-18 17:44:05,265 - __main__ - INFO - Registering blueprints...
+2026-03-18 17:44:05,267 - __main__ - INFO - Auth blueprint registered
+2026-03-18 17:44:05,285 - __main__ - INFO - Deck blueprint registered
+2026-03-18 17:44:05,292 - __main__ - INFO - Card blueprint registered
+2026-03-18 17:44:05,305 - __main__ - INFO - Tournament blueprint registered
+2026-03-18 17:44:05,308 - __main__ - INFO - Misc blueprint registered
+2026-03-18 17:44:05,314 - __main__ - INFO - Rules blueprint registered
+2026-03-18 17:44:05,320 - __main__ - INFO - Feedback blueprint registered
+2026-03-18 17:44:05,321 - __main__ - INFO - All blueprints registered successfully
+2026-03-18 17:44:05,388 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-18 17:44:05,389 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-18 17:44:46,512 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 17:44:46,515 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:44:46,516 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 17:44:46,519 - __main__ - INFO - Request Method: POST
+2026-03-18 17:44:46,522 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'}
+2026-03-18 17:44:46,528 - __main__ - INFO - Request Args: {}
+2026-03-18 17:44:46,529 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3 unit?'}
+2026-03-18 17:44:47,126 - __main__ - INFO - Response Status: 500
+2026-03-18 17:44:47,127 - __main__ - INFO - Response Duration: 0.597s
+2026-03-18 17:44:47,127 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:44:47,128 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:44:47] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 17:47:00,694 - __main__ - INFO - === NEW REQUEST ===
+2026-03-18 17:47:00,695 - __main__ - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:47:00,699 - __main__ - INFO - Request Path: /api/rules/ask
+2026-03-18 17:47:00,700 - __main__ - INFO - Request Method: POST
+2026-03-18 17:47:00,702 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'}
+2026-03-18 17:47:00,704 - __main__ - INFO - Request Args: {}
+2026-03-18 17:47:00,706 - __main__ - INFO - Request JSON: {'question': 'What happens when I ride a grade 3 unit?'}
+2026-03-18 17:47:00,899 - __main__ - INFO - Response Status: 500
+2026-03-18 17:47:00,899 - __main__ - INFO - Response Duration: 0.191s
+2026-03-18 17:47:00,900 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:47:00,901 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:47:00] "[35m[1mPOST /api/rules/ask HTTP/1.1[0m" 500 -
+2026-03-18 17:48:03,342 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-18 17:48:03,403 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-18 17:48:15,217 - app - INFO - Registering blueprints...
+2026-03-18 17:48:15,218 - app - INFO - Auth blueprint registered
+2026-03-18 17:48:15,225 - app - INFO - Deck blueprint registered
+2026-03-18 17:48:15,228 - app - INFO - Card blueprint registered
+2026-03-18 17:48:15,235 - app - INFO - Tournament blueprint registered
+2026-03-18 17:48:15,240 - app - INFO - Misc blueprint registered
+2026-03-18 17:48:15,243 - app - INFO - Rules blueprint registered
+2026-03-18 17:48:15,248 - app - INFO - Feedback blueprint registered
+2026-03-18 17:48:15,249 - app - INFO - All blueprints registered successfully
+2026-03-18 17:48:15,590 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.109:5000
+2026-03-18 17:48:15,591 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-18 17:48:15,608 - werkzeug - INFO -  * Restarting with stat
+2026-03-18 17:48:16,724 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-03-18 17:48:16,759 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-03-18 17:48:28,170 - app - INFO - Registering blueprints...
+2026-03-18 17:48:28,175 - app - INFO - Auth blueprint registered
+2026-03-18 17:48:28,187 - app - INFO - Deck blueprint registered
+2026-03-18 17:48:28,193 - app - INFO - Card blueprint registered
+2026-03-18 17:48:28,201 - app - INFO - Tournament blueprint registered
+2026-03-18 17:48:28,206 - app - INFO - Misc blueprint registered
+2026-03-18 17:48:28,211 - app - INFO - Rules blueprint registered
+2026-03-18 17:48:28,216 - app - INFO - Feedback blueprint registered
+2026-03-18 17:48:28,217 - app - INFO - All blueprints registered successfully
+2026-03-18 17:48:28,242 - werkzeug - WARNING -  * Debugger is active!
+2026-03-18 17:48:28,262 - werkzeug - INFO -  * Debugger PIN: 844-947-289
+2026-03-18 17:49:01,245 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:49:01,249 - app - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:49:01,251 - app - INFO - Request Path: /api/rules/ask
+2026-03-18 17:49:01,252 - app - INFO - Request Method: POST
+2026-03-18 17:49:01,253 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '29'}
+2026-03-18 17:49:01,254 - app - INFO - Request Args: {}
+2026-03-18 17:49:01,255 - app - INFO - Request JSON: {'question': 'test question'}
+2026-03-18 17:49:01,354 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-03-18 17:49:01,355 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-03-18 17:49:08,061 - app - INFO - Response Status: 200
+2026-03-18 17:49:08,062 - app - INFO - Response Duration: 6.805s
+2026-03-18 17:49:08,062 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:49:08,065 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:49:08] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:49:29,021 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:49:29,022 - app - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:49:29,022 - app - INFO - Request Path: /api/rules/ask
+2026-03-18 17:49:29,023 - app - INFO - Request Method: OPTIONS
+2026-03-18 17:49:29,024 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 17:49:29,026 - app - INFO - Request Args: {}
+2026-03-18 17:49:29,073 - app - INFO - Response Status: 200
+2026-03-18 17:49:29,074 - app - INFO - Response Duration: 0.001s
+2026-03-18 17:49:29,074 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:49:29,076 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:49:29] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:49:29,291 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:49:29,292 - app - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:49:29,293 - app - INFO - Request Path: /api/rules/ask
+2026-03-18 17:49:29,293 - app - INFO - Request Method: POST
+2026-03-18 17:49:29,295 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '96', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 17:49:29,296 - app - INFO - Request Args: {}
+2026-03-18 17:49:29,297 - app - INFO - Request JSON: {'question': 'can i ride a card before i stride a card during my ride phase? is there an order?'}
+2026-03-18 17:49:36,252 - app - INFO - Response Status: 200
+2026-03-18 17:49:36,258 - app - INFO - Response Duration: 6.955s
+2026-03-18 17:49:36,259 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:49:36,260 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:49:36] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:49:42,567 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:49:42,567 - app - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:49:42,568 - app - INFO - Request Path: /api/rules/ask
+2026-03-18 17:49:42,569 - app - INFO - Request Method: OPTIONS
+2026-03-18 17:49:42,569 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 17:49:42,573 - app - INFO - Request Args: {}
+2026-03-18 17:49:42,577 - app - INFO - Response Status: 200
+2026-03-18 17:49:42,578 - app - INFO - Response Duration: 0.003s
+2026-03-18 17:49:42,579 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:49:42,583 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:49:42] "OPTIONS /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:49:42,903 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:49:42,905 - app - INFO - Request URL: http://localhost:5000/api/rules/ask
+2026-03-18 17:49:42,906 - app - INFO - Request Path: /api/rules/ask
+2026-03-18 17:49:42,915 - app - INFO - Request Method: POST
+2026-03-18 17:49:42,916 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '96', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 17:49:42,917 - app - INFO - Request Args: {}
+2026-03-18 17:49:42,920 - app - INFO - Request JSON: {'question': 'can i ride a card before i stride a card during my ride phase? is there an order?'}
+2026-03-18 17:49:49,461 - app - INFO - Response Status: 200
+2026-03-18 17:49:49,470 - app - INFO - Response Duration: 6.541s
+2026-03-18 17:49:49,475 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:49:49,477 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:49:49] "POST /api/rules/ask HTTP/1.1" 200 -
+2026-03-18 17:50:35,932 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:50:35,932 - app - INFO - Request URL: http://localhost:5000/api/feedback
+2026-03-18 17:50:35,933 - app - INFO - Request Path: /api/feedback
+2026-03-18 17:50:35,934 - app - INFO - Request Method: OPTIONS
+2026-03-18 17:50:35,934 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-18 17:50:35,935 - app - INFO - Request Args: {}
+2026-03-18 17:50:35,938 - app - INFO - Response Status: 200
+2026-03-18 17:50:35,939 - app - INFO - Response Duration: 0.001s
+2026-03-18 17:50:35,939 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:50:35,942 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:50:35] "OPTIONS /api/feedback HTTP/1.1" 200 -
+2026-03-18 17:50:36,257 - app - INFO - === NEW REQUEST ===
+2026-03-18 17:50:36,258 - app - INFO - Request URL: http://localhost:5000/api/feedback
+2026-03-18 17:50:36,259 - app - INFO - Request Path: /api/feedback
+2026-03-18 17:50:36,260 - app - INFO - Request Method: POST
+2026-03-18 17:50:36,265 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '1187', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-18 17:50:36,270 - app - INFO - Request Args: {}
+2026-03-18 17:50:36,270 - app - INFO - Request JSON: {'question': 'can i ride a card before i stride a card during my ride phase? is there an order?', 'answer': 'According to Rule 9.6.1, the ride step and stride step are performed in a specific order during the ride phase. This implies that there is a set sequence you must follow. Therefore, yes, you can ride a card before you stride a card during your ride phase, as these steps are part of a structured order. The ride step would logically come before the stride step, given that both actions are part of the same phase and listed in sequence.', 'feedback_type': 'good', 'context_cards': None, 'context_sources': ['6.3.', '9.8.', '14.12.', '14.13.', '13.11.', '9.7.', '6.6.', '6.5.', '18.6.1.', '14.12.1.', '9.6.', '9.6.1.', '6.3.3.', '6.3.3.2.', '4.17.', '4.16.', '17.4.', '7.44.1.2.', '2.17.', '14.12.2.'], 'similarity_scores': [1, 0.8346856236457825, 0.7656394243240356, 0.6952082514762878, 0.6668953895568848, 0.6605207324028015, 0.6337636113166809, 0.6326531171798706, 0.6279897689819336, 0.6112580299377441, 0.6015655398368835, 0.5771453380584717, 0.5759862661361694, 0.5664942860603333, 0.5653452277183533, 0.5568032264709473, 0.5472477078437805, 0.5455144047737122, 0.5398458242416382, 0.5333989858627319], 'user_comment': None}
+2026-03-18 17:50:36,293 - app - INFO - Response Status: 200
+2026-03-18 17:50:36,294 - app - INFO - Response Duration: 0.021s
+2026-03-18 17:50:36,299 - app - INFO - === REQUEST COMPLETE ===
+2026-03-18 17:50:36,300 - werkzeug - INFO - 127.0.0.1 - - [18/Mar/2026 17:50:36] "POST /api/feedback HTTP/1.1" 200 -
+2026-03-20 17:10:00,933 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:00,940 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:00,940 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:00,943 - app - INFO - Request Method: GET
+2026-03-20 17:10:00,943 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:00,944 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:01,026 - app - INFO - Response Status: 200
+2026-03-20 17:10:01,027 - app - INFO - Response Duration: 0.082s
+2026-03-20 17:10:01,027 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:01,033 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:01] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:01,226 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:01,227 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:01,227 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:01,228 - app - INFO - Request Method: GET
+2026-03-20 17:10:01,228 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:01,229 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:01,300 - app - INFO - Response Status: 200
+2026-03-20 17:10:01,323 - app - INFO - Response Duration: 0.055s
+2026-03-20 17:10:01,324 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:01,339 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:01] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:01,415 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:01,415 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:01,416 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:01,416 - app - INFO - Request Method: GET
+2026-03-20 17:10:01,416 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:01,417 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:01,443 - app - INFO - Response Status: 200
+2026-03-20 17:10:01,444 - app - INFO - Response Duration: 0.023s
+2026-03-20 17:10:01,444 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:01,445 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:01] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:08,408 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:08,414 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:08,417 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:08,419 - app - INFO - Request Method: GET
+2026-03-20 17:10:08,419 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:08,421 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:08,436 - app - INFO - Response Status: 200
+2026-03-20 17:10:08,448 - app - INFO - Response Duration: 0.014s
+2026-03-20 17:10:08,448 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:08,449 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:08] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:08,669 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:08,670 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:08,670 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:08,677 - app - INFO - Request Method: GET
+2026-03-20 17:10:08,677 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:08,678 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:08,688 - app - INFO - Response Status: 200
+2026-03-20 17:10:08,693 - app - INFO - Response Duration: 0.007s
+2026-03-20 17:10:08,694 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:08,695 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:08] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:08,799 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:08,804 - app - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-03-20 17:10:08,804 - app - INFO - Request Path: /api/all-decks
+2026-03-20 17:10:08,804 - app - INFO - Request Method: GET
+2026-03-20 17:10:08,805 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:08,805 - app - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-03-20 17:10:08,839 - app - INFO - Response Status: 200
+2026-03-20 17:10:08,839 - app - INFO - Response Duration: 0.033s
+2026-03-20 17:10:08,849 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:08,852 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:08] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-03-20 17:10:14,370 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:14,371 - app - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-20 17:10:14,371 - app - INFO - Request Path: /api/sets
+2026-03-20 17:10:14,372 - app - INFO - Request Method: GET
+2026-03-20 17:10:14,372 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:14,372 - app - INFO - Request Args: {'format': ''}
+2026-03-20 17:10:14,375 - app - INFO - Response Status: 400
+2026-03-20 17:10:14,375 - app - INFO - Response Duration: 0.000s
+2026-03-20 17:10:14,376 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:14,381 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:14] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-20 17:10:14,725 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:14,726 - app - INFO - Request URL: http://localhost:5000/api/sets?format=
+2026-03-20 17:10:14,726 - app - INFO - Request Path: /api/sets
+2026-03-20 17:10:14,726 - app - INFO - Request Method: GET
+2026-03-20 17:10:14,738 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:14,739 - app - INFO - Request Args: {'format': ''}
+2026-03-20 17:10:14,776 - app - INFO - Response Status: 400
+2026-03-20 17:10:14,808 - app - INFO - Response Duration: 0.036s
+2026-03-20 17:10:14,808 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:14,810 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:14] "[31m[1mGET /api/sets?format= HTTP/1.1[0m" 400 -
+2026-03-20 17:10:21,597 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:21,598 - app - INFO - Request URL: http://localhost:5000/api/search
+2026-03-20 17:10:21,598 - app - INFO - Request Path: /api/search
+2026-03-20 17:10:21,602 - app - INFO - Request Method: OPTIONS
+2026-03-20 17:10:21,603 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-20 17:10:21,603 - app - INFO - Request Args: {}
+2026-03-20 17:10:21,604 - app - INFO - Response Status: 200
+2026-03-20 17:10:21,607 - app - INFO - Response Duration: 0.000s
+2026-03-20 17:10:21,607 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:21,608 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:21] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-20 17:10:21,932 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:10:21,937 - app - INFO - Request URL: http://localhost:5000/api/search
+2026-03-20 17:10:21,937 - app - INFO - Request Path: /api/search
+2026-03-20 17:10:21,938 - app - INFO - Request Method: POST
+2026-03-20 17:10:21,938 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '94', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:10:21,939 - app - INFO - Request Args: {}
+2026-03-20 17:10:21,940 - app - INFO - Request JSON: {'name': 'daiyu', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-20 17:10:21,943 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-20 17:10:21,944 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-20 17:10:21,944 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-20 17:10:21,945 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-20 17:10:21,945 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'daiyu', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-20 17:10:21,946 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: daiyu, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-20 17:10:29,747 - routes.card_routes - INFO - [CARD_ROUTES] Found 18 results
+2026-03-20 17:10:29,819 - routes.card_routes - INFO - [CARD_ROUTES] Returning 18 processed results
+2026-03-20 17:10:30,009 - app - INFO - Response Status: 200
+2026-03-20 17:10:30,011 - app - INFO - Response Duration: 8.066s
+2026-03-20 17:10:30,011 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:10:30,012 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:10:30] "POST /api/search HTTP/1.1" 200 -
+2026-03-20 17:11:11,198 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:11:11,206 - app - INFO - Request URL: http://localhost:5000/api/search
+2026-03-20 17:11:11,211 - app - INFO - Request Path: /api/search
+2026-03-20 17:11:11,211 - app - INFO - Request Method: OPTIONS
+2026-03-20 17:11:11,212 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Accept': '*/*', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Origin': 'http://localhost:3000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7'}
+2026-03-20 17:11:11,213 - app - INFO - Request Args: {}
+2026-03-20 17:11:11,215 - app - INFO - Response Status: 200
+2026-03-20 17:11:11,215 - app - INFO - Response Duration: 0.001s
+2026-03-20 17:11:11,217 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:11:11,218 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:11:11] "OPTIONS /api/search HTTP/1.1" 200 -
+2026-03-20 17:11:11,544 - app - INFO - === NEW REQUEST ===
+2026-03-20 17:11:11,546 - app - INFO - Request URL: http://localhost:5000/api/search
+2026-03-20 17:11:11,547 - app - INFO - Request Path: /api/search
+2026-03-20 17:11:11,547 - app - INFO - Request Method: POST
+2026-03-20 17:11:11,548 - app - INFO - Request Headers: {'Host': 'localhost:5000', 'Connection': 'keep-alive', 'Content-Length': '98', 'Sec-Ch-Ua-Platform': '"Windows"', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"', 'Content-Type': 'application/json', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Sec-Gpc': '1', 'Accept-Language': 'nl-NL,nl;q=0.7', 'Origin': 'http://localhost:3000', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://localhost:3000/', 'Accept-Encoding': 'gzip, deflate, br, zstd'}
+2026-03-20 17:11:11,551 - app - INFO - Request Args: {}
+2026-03-20 17:11:11,554 - app - INFO - Request JSON: {'name': 'daikaiser', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-20 17:11:11,557 - routes.card_routes - INFO - [CARD_ROUTES] Search endpoint called
+2026-03-20 17:11:11,558 - routes.card_routes - INFO - [CARD_ROUTES] Request method: POST
+2026-03-20 17:11:11,561 - routes.card_routes - INFO - [CARD_ROUTES] Request path: /api/search
+2026-03-20 17:11:11,561 - routes.card_routes - INFO - [CARD_ROUTES] Request URL: http://localhost:5000/api/search
+2026-03-20 17:11:11,561 - routes.card_routes - INFO - [CARD_ROUTES] Request data: {'name': 'daikaiser', 'nation': '', 'grade': '', 'unitType': '', 'format': None, 'clan': '', 'selectedSet': ''}
+2026-03-20 17:11:11,562 - routes.card_routes - INFO - [CARD_ROUTES] Search parameters - name: daikaiser, nation: , grade: , unitType: , format: None, clan: , set: 
+2026-03-20 17:11:12,689 - routes.card_routes - INFO - [CARD_ROUTES] Found 8 results
+2026-03-20 17:11:12,745 - routes.card_routes - INFO - [CARD_ROUTES] Returning 8 processed results
+2026-03-20 17:11:12,841 - app - INFO - Response Status: 200
+2026-03-20 17:11:12,846 - app - INFO - Response Duration: 1.283s
+2026-03-20 17:11:12,847 - app - INFO - === REQUEST COMPLETE ===
+2026-03-20 17:11:12,847 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:11:12] "POST /api/search HTTP/1.1" 200 -

@@ -176,14 +176,23 @@ class VanguardRulesService:
         except (KeyError, IndexError) as e:
             raise Exception(f"Unexpected API response format: {str(e)}")
     
-    def build_prompt(self, context_chunks, user_question):
-        """Build the prompt for the AI with context and question"""
+    def build_prompt(self, context_chunks, user_question, good_feedback=None):
+        """Build the prompt for the AI with context, question, and good feedback examples"""
         if not context_chunks:
             return None
             
         context = "\n\n".join(
             [f"[{c['section']}] {c['text']}" for c in context_chunks]
         )
+        
+        # Add good feedback examples if available
+        feedback_section = ""
+        if good_feedback and len(good_feedback) > 0:
+            feedback_examples = "\n\n".join([
+                f"Example Q: {fb['question']}\nExample A: {fb['answer']}"
+                for fb in good_feedback[:3]  # Limit to 3 examples to avoid prompt bloat
+            ])
+            feedback_section = f"\n\nRelevant Previous Questions & Verified Answers:\n{feedback_examples}\n"
         
         prompt = f"""You are a Cardfight!! Vanguard rules assistant. Answer the user's question using the rule excerpts provided below.
 
@@ -195,15 +204,15 @@ IMPORTANT INSTRUCTIONS:
 - In Cardfight Vanguard, "field" typically refers to circles where units are placed (vanguard circle, rear-guard circles)
 - Cite the relevant rule sections in your answer (e.g., "According to Rule 7.1.2...")
 - Only respond with "I don't have sufficient information in the rulebook to answer this question accurately" if the excerpts are completely unrelated to the question
-- Be helpful and provide useful guidance based on the available rules and standard game mechanics
+- Be helpful and provide useful guidance based on the available rules and standard game mechanics{0}
 
 Key Logic: If rules mention zones being distinct/separate or having specific purposes, they are usually not part of the general "field"
 
 Rulebook Excerpts:
-{context}
+{}
 
 User Question:
-{user_question}
+{}
 
 Provide a helpful answer based on the rule excerpts above:"""
         
@@ -258,13 +267,13 @@ Provide a helpful answer based on the rule excerpts above:"""
         all_results = []
         seen_sections = set()
         
-        # TODO: Temporarily disabled good feedback search to isolate 500 error
-        # good_feedback = []
-        # try:
-        #     good_feedback = search_similar_good_feedback(user_question, limit=3)
-        #     print(f"[DEBUG] Found {len(good_feedback)} similar good feedback examples")
-        # except Exception as e:
-        #     print(f"[DEBUG] Error searching good feedback: {e}")
+        # Search for similar good feedback examples
+        good_feedback = []
+        try:
+            good_feedback = search_similar_good_feedback(user_question, limit=3)
+            print(f"[DEBUG] Found {len(good_feedback)} similar good feedback examples")
+        except Exception as e:
+            print(f"[DEBUG] Error searching good feedback: {e}")
         
         # Search with user question
         user_results = self.search_rules(user_question, min_similarity_threshold=min_similarity_threshold)
@@ -413,15 +422,15 @@ Provide a helpful answer based on the rule excerpts above:"""
             # Use enhanced search that includes card context and feedback
             top_chunks = self.search_with_card_context(question, min_similarity_threshold=min_similarity_threshold)
             
-            # TODO: Temporarily disabled good feedback search to isolate 500 error
-            # good_feedback = []
-            # try:
-            #     cards, user_question = self.extract_card_context(question)
-            #     good_feedback = search_similar_good_feedback(user_question, limit=3)
-            #     if good_feedback:
-            #         print(f"[DEBUG] Using {len(good_feedback)} good feedback examples for better context")
-            # except Exception as e:
-            #     print(f"[DEBUG] Could not fetch good feedback examples: {e}")
+            # Get good feedback examples for context
+            good_feedback = []
+            try:
+                cards, user_question = self.extract_card_context(question)
+                good_feedback = search_similar_good_feedback(user_question, limit=3)
+                if good_feedback:
+                    print(f"[DEBUG] Using {len(good_feedback)} good feedback examples for better context")
+            except Exception as e:
+                print(f"[DEBUG] Could not fetch good feedback examples: {e}")
             
             # Check if we have enough relevant context
             if len(top_chunks) < min_context_chunks:
@@ -451,8 +460,8 @@ Provide a helpful answer based on the rule excerpts above:"""
                 sources[source] = sources.get(source, 0) + 1
             print(f"[DEBUG] Rule sources: {sources}")
             
-            # Build prompt with context
-            prompt = self.build_prompt(top_chunks, question)
+            # Build prompt with context and good feedback
+            prompt = self.build_prompt(top_chunks, question, good_feedback)
             if not prompt:
                 return {
                     "success": True,
@@ -512,7 +521,6 @@ def get_rules_service():
     if rules_service is None:
         rules_service = VanguardRulesService()
     return rules_service
-
 
 
 

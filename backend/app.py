@@ -26,6 +26,7 @@ from routes.card_routes import card_bp
 from routes.tournament_routes import tournament_bp
 from routes.misc_routes import misc_bp
 from routes.rules_routes import rules_bp
+from routes.feedback_routes import feedback_bp
 
 def create_app():
     # Point Flask to the React build directory
@@ -98,6 +99,8 @@ def create_app():
     logger.info("Misc blueprint registered")
     app.register_blueprint(rules_bp, url_prefix='/api')
     logger.info("Rules blueprint registered")
+    app.register_blueprint(feedback_bp, url_prefix='/api')
+    logger.info("Feedback blueprint registered")
     logger.info("All blueprints registered successfully")
     
     # Debug route to see all registered routes

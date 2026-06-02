@@ -2,3 +2,8 @@ flask
 flask-cors
 requests
 requests-oauthlib
+faiss-cpu
+faiss-cpu
+sentence-transformers
+numpy
+python-dotenv

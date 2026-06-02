@@ -12,8 +12,7 @@ import UserDecks from './user_decks/UserDecks.js'; // Add this import
 import DeckDetails from './deck_details/DeckDetails.js';
 import TournamentNotes from './tournament_notes/TournamentNotes.js';
 import TournamentDetails from './tournament_notes/tournament_details/TournamentDetails.js';
-import TestHand from './deck_details/test_hand/TestHand.js';
-
+import TestHand from './deck_details/test_hand/TestHand.js';import RulesQuery from './rules_query/RulesQuery.js';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -82,6 +81,7 @@ function AnimatedRoutes({ username }) {
             <Route path="/tournament-notes" element={<TournamentNotes username={username} />} />
             <Route path="/tournament-details" element={<TournamentDetails />} />
             <Route path="/test-hand" element={<TestHand />} />
+            <Route path="/rules-query" element={<RulesQuery />} />
             <Route
               path="/"
               element={
@@ -95,8 +95,9 @@ function AnimatedRoutes({ username }) {
                     </Link>
                     <Link to="/tournament-notes">
                       <button>Go to Tournament Notes</button>
-                    </Link>
-                  </div>
+                    </Link>                    <Link to="/rules-query">
+                      <button>Ask Rules Questions</button>
+                    </Link>                  </div>
                 </div>
               }
             />

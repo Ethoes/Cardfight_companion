@@ -1,26 +1,47 @@
 // When served through Flask, API calls use relative URLs with /api prefix
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+console.log(`[API] Using API_BASE_URL: "${API_BASE_URL}"`);
+console.log(`[API] REACT_APP_API_URL environment variable: "${process.env.REACT_APP_API_URL}"`);
 
 export async function SearchCard(CardSearch, selectedOption, selectedGrade, selectedUnitType, format, selectedClan, selectedSet) {
     try {
-      console.log(selectedSet)
-      const response = await fetch(`${API_BASE_URL}/api/search`, {
+      console.log(`[API] SearchCard called with selectedSet: ${selectedSet}`);
+      const url = `${API_BASE_URL}/api/search`;
+      console.log(`[API] Making request to: ${url}`);
+      
+      const requestBody = { 
+        name: CardSearch, 
+        nation: selectedOption, 
+        grade: selectedGrade, 
+        unitType: selectedUnitType, 
+        format: format, 
+        clan: selectedClan, 
+        selectedSet: selectedSet 
+      };
+      console.log(`[API] Request body:`, requestBody);
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: CardSearch, nation: selectedOption, grade: selectedGrade, unitType: selectedUnitType, format: format, clan: selectedClan, selectedSet: selectedSet }),
+        body: JSON.stringify(requestBody),
       });
+      
+      console.log(`[API] Response status: ${response.status}`);
+      console.log(`[API] Response headers:`, response.headers);
   
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error(`[API] Error response: ${errorText}`);
+        throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
       }
   
       const data = await response.json();
-      console.log('Searched succesfully:', data);
+      console.log('[API] Searched successfully:', data);
       return data;
     } catch (error) {
-      console.error('Error searching:', error);
+      console.error('[API] Error searching:', error);
       throw error;
     }
   }
@@ -165,9 +186,6 @@ export async function fetchAllUserDecks(page = 1, perPage = 10, search = '', sor
 
     const response = await fetch(`${API_BASE_URL}/api/all-decks?${params}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     if (!response.ok) {

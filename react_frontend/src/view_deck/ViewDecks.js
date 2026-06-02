@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ViewDecks.css'; // Add a CSS file for styling
 
+// Import API base URL configuration
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function ViewDecks({ username }) {
   const [decks, setDecks] = useState([]);
   const navigate = useNavigate();
@@ -10,7 +13,7 @@ function ViewDecks({ username }) {
     // Fetch the decks from the backend
     const fetchDecks = async () => {
       try {
-        const response = await fetch('/api/decks', {  // Changed from 'http://127.0.0.1:5000/decks'
+        const response = await fetch(`${API_BASE_URL}/api/decks`, {  // Changed from 'http://127.0.0.1:5000/decks'
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request
 from database.DatabaseService import get_data_from_db, search_card, get_sets_by_format
 import base64
+import logging
 
+logger = logging.getLogger(__name__)
 card_bp = Blueprint('card', __name__)
 
 
@@ -17,32 +19,54 @@ def get_data():
 
 @card_bp.route('/search', methods=['POST'])
 def search():
-    print("[INFO] Search endpoint called")
-    data = request.get_json()
-    if not data or 'name' not in data or 'nation' not in data:
-        return jsonify({"error": "Invalid input"}), 400
+    logger.info("[CARD_ROUTES] Search endpoint called")
+    logger.info(f"[CARD_ROUTES] Request method: {request.method}")
+    logger.info(f"[CARD_ROUTES] Request path: {request.path}")
+    logger.info(f"[CARD_ROUTES] Request URL: {request.url}")
+    
+    try:
+        data = request.get_json()
+        logger.info(f"[CARD_ROUTES] Request data: {data}")
+        
+        if not data or 'name' not in data or 'nation' not in data:
+            logger.error("[CARD_ROUTES] Invalid input - missing name or nation")
+            return jsonify({"error": "Invalid input"}), 400
 
-    name = data['name']
-    nation = data['nation']
-    grade = data.get('grade', None)  # Get the grade parameter if provided
-    unitType = data.get('unitType', None)  # Get the unitType parameter if provided
-    format = data.get('format', None) 
-    clan = data.get('clan', None)  # Get the clan parameter if provided
-    set = data.get('selectedSet', None)  # Get the selectedSets parameter if provided
+        name = data['name']
+        nation = data['nation']
+        grade = data.get('grade', None)  # Get the grade parameter if provided
+        unitType = data.get('unitType', None)  # Get the unitType parameter if provided
+        format = data.get('format', None) 
+        clan = data.get('clan', None)  # Get the clan parameter if provided
+        set = data.get('selectedSet', None)  # Get the selectedSets parameter if provided
 
-    result = search_card(name, nation, grade, unitType, format, clan, set)  # Pass grade to the search_card function
-    if result:
-        # Convert sqlite3.Row objects to dictionaries
-        result = [dict(row) for row in result]
+        logger.info(f"[CARD_ROUTES] Search parameters - name: {name}, nation: {nation}, grade: {grade}, unitType: {unitType}, format: {format}, clan: {clan}, set: {set}")
 
-        # Add images to each row in the result
-        for row in result:
-            if 'image_data' in row and row['image_data']:  # Check if 'image_data' exists and is not None
-                row['image'] = base64.b64encode(row['image_data']).decode('utf-8')  # Encode to Base64
-                del row['image_data']  # Remove the raw binary data from the response
-        return jsonify(result), 200
-    else:
-        return jsonify({"error": "No results found"}), 404
+        result = search_card(name, nation, grade, unitType, format, clan, set)  # Pass grade to the search_card function
+        
+        if result:
+            logger.info(f"[CARD_ROUTES] Found {len(result)} results")
+            # Convert sqlite3.Row objects to dictionaries
+            result = [dict(row) for row in result]
+
+            # Add images to each row in the result
+            for row in result:
+                if 'image_data' in row and row['image_data']:  # Check if 'image_data' exists and is not None
+                    row['image'] = base64.b64encode(row['image_data']).decode('utf-8')  # Encode to Base64
+                    del row['image_data']  # Remove the raw binary data from the response
+            
+            logger.info(f"[CARD_ROUTES] Returning {len(result)} processed results")
+            return jsonify(result), 200
+        else:
+            logger.warning("[CARD_ROUTES] No results found")
+            return jsonify({"error": "No results found"}), 404
+            
+    except Exception as e:
+        logger.error(f"[CARD_ROUTES] Exception in search endpoint: {str(e)}")
+        logger.error(f"[CARD_ROUTES] Exception type: {type(e)}")
+        import traceback
+        logger.error(f"[CARD_ROUTES] Traceback: {traceback.format_exc()}")
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
 
 

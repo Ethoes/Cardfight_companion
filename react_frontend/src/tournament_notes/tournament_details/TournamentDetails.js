@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import useNaviga
 import './TournamentDetails.css';
 import { saveTournamentDetails, fetchTournamentDetails } from '../../api';
 
+// Import API base URL configuration
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function TournamentDetails() {
   const location = useLocation();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -110,7 +113,7 @@ function TournamentDetails() {
     
     if (confirmDelete) {
       try {
-        const response = await fetch(`/api/tournaments/${tournament.id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/tournaments/${tournament.id}`, {
           method: 'DELETE',
         });
 

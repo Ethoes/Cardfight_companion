@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// Import API base URL configuration
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -7,7 +10,7 @@ function Login({ onLogin }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('/api/login', {  // Changed from 'http://127.0.0.1:5000/login'
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

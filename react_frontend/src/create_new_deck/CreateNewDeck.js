@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SearchCard, postNewDeck } from '../api';
+import { postNewDeck } from '../api';
+import CardSearch from '../components/CardSearch';
 import './CreateNewDeck.css';
 
 function CreateNewDeck({ username }) {
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedClan, setSelectedClan] = useState('');
-  const [selectedSet, setSelectedSet] = useState(''); // State for selected set
-  const [sets, setSets] = useState([]); // State for fetched sets
-  const [CardSearch, setCardSearch] = useState('');
-  const [SearchResult, setSearchResult] = useState([]);
   const [CurrentDeck, setCurrentDeck] = useState([]);
   const [DeckName, setDeckName] = useState('');
   const [DeckDescription, setDeckDescription] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [selectedGrade, setSelectedGrade] = useState('');
-  const [selectedUnitType, setSelectedUnitType] = useState('');
   const [modalCard, setModalCard] = useState(null);
   const [format, setFormat] = useState(null); // State for selected format
   const [showFormatModal, setShowFormatModal] = useState(true); // State to control format selection modal
@@ -24,77 +16,9 @@ function CreateNewDeck({ username }) {
 
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleGradeChange = (event) => {
-    setSelectedGrade(event.target.value); // Update selected grade
-  };
-
   const handleFormatSelection = (selectedFormat) => {
     setFormat(selectedFormat); // Set the selected format
     setShowFormatModal(false); // Close the format selection modal
-  };
-
-  const getOutlineColor = () => {
-    switch (selectedOption) {
-      case 'Keter Sanctuary': return 'gold';
-      case 'Brandt Gate': return 'white';
-      case 'Stoicheia': return 'green';
-      case 'Dark States': return 'blue';
-      case 'Dragon Empire': return 'red';
-      case 'Lyrical monestario': return 'pink';
-      default: return 'purple';
-    }
-  };
-
-  useEffect(() => {
-    // Fetch the list of sets from the backend
-    const fetchSets = async () => {
-      try {
-        const response = await fetch(`/api/sets?format=${format || ''}`);  // Changed from 'http://127.0.0.1:5000/sets?format=${format || ''}'
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setSets(data); // Update the sets state with the fetched data
-      } catch (error) {
-        console.error('Error fetching sets:', error);
-      }
-    };
-  
-    fetchSets();
-  }, [format]); 
-
-  const handleSetChange = (event) => {
-    setSelectedSet(event.target.value); // Update selected set
-  };
-
-  const handleKeyPress = async (event) => {
-    if (event.key === 'Enter') {
-      // Clear previous search results and show loading icon
-      setSearchResult([]);
-      setLoading(true);
-  
-      try {
-        // Include the format in the request only if it's "Standard"
-        const result = await SearchCard(
-          CardSearch,
-          selectedOption,
-          selectedGrade,
-          selectedUnitType,
-          format === 'Standard' ? format : null,
-          selectedClan,
-          selectedSet
-        );
-        setSearchResult(result); // Update with new search results
-      } catch (error) {
-        console.error('Failed to search', error);
-      } finally {
-        setLoading(false); // Hide loading icon after search completes
-      }
-    }
   };
 
   const handleCardClick = (card) => {
@@ -138,8 +62,7 @@ function CreateNewDeck({ username }) {
     });
   };
 
-  const handleMiddleClick = (event, card) => {
-    event.preventDefault(); // Prevent default middle-click behavior
+  const handleCardInfo = (card) => {
     setModalCard(card); // Set the selected card for the modal
   };
 
@@ -242,222 +165,15 @@ function CreateNewDeck({ username }) {
           <p><strong>Format:</strong> {format}</p>
       </div>
 
-      <div className="CreateNewDeck-selectors-container">
-        {/* Conditional rendering for Nation or Clan selector */}
-        <div className="CreateNewDeck-selector">
-        {format === 'Premium' ? (
-          <>
-            <label className="CreateNewDeck-label" htmlFor="clan-select">Clan</label>
-            <select
-              id="clan-select"
-              value={selectedClan} // Use selectedClan for the clan selector
-              onChange={(event) => setSelectedClan(event.target.value)} // Update selectedClan
-              className="CreateNewDeck-dropdown"
-              style={{ outline: `2px solid ${getOutlineColor()}` }}
-            >
-              <option value="">None</option> {/* Allow no selection */}
-              <option value="Royal Paladin">Royal Paladin</option>
-              <option value="Kagero">Kagero</option>
-              <option value="Oracle Think Tank">Oracle Think Tank</option>
-              <option value="Shadow Paladin">Shadow Paladin</option>
-              <option value="Gold Paladin">Gold Paladin</option>
-              <option value="Narukami">Narukami</option>
-              <option value="Aqua Force">Aqua Force</option>
-              <option value="Genesis">Genesis</option>
-              <option value="Great Nature">Great Nature</option>
-              <option value="Neo Nectar">Neo Nectar</option>
-              <option value="Spike Brothers">Spike Brothers</option>
-              <option value="Dark Irregulars">Dark Irregulars</option>
-              <option value="Pale Moon">Pale Moon</option>
-              <option value="Gear Chronicle">Gear Chronicle</option>
-              <option value="Link Joker">Link Joker</option>
-              <option value="Granblue">Granblue</option>
-              <option value="Bermuda Triangle">Bermuda Triangle</option>
-              <option value="Tachikaze">Tachikaze</option>
-              <option value="Murakumo">Murakumo</option>
-              <option value="Nubatama">Nubatama</option>
-              <option value="Nova Grappler">Nova Grappler</option>
-              <option value="Dimension Police">Dimension Police</option>
-              <option value="Megacolony">Megacolony</option>
-            </select>
-          </>
-        ) : (
-          <>
-            <label className="CreateNewDeck-label" htmlFor="nation-select">Nation</label>
-            <select
-              id="nation-select"
-              value={selectedOption} // Use selectedOption for the nation selector
-              onChange={(event) => setSelectedOption(event.target.value)} // Update selectedOption
-              className="CreateNewDeck-dropdown"
-              style={{ outline: `2px solid ${getOutlineColor()}` }}
-            >
-              <option value="">None</option> {/* Allow no selection */}
-              <option value="Keter Sanctuary">Keter Sanctuary</option>
-              <option value="Brandt Gate">Brandt Gate</option>
-              <option value="Stoicheia">Stoicheia</option>
-              <option value="Dark States">Dark States</option>
-              <option value="Dragon Empire">Dragon Empire</option>
-              <option value="Lyrical Monestario">Lyrical Monestario</option>
-            </select>
-          </>
-        )}
-        </div>
-
-        <div className="CreateNewDeck-selector">
-          <label className="CreateNewDeck-label" htmlFor="grade-select">Grade</label>
-          <select
-            id="grade-select"
-            value={selectedGrade}
-            onChange={handleGradeChange}
-            className="CreateNewDeck-dropdown"
-            style={{ outline: `2px solid ${getOutlineColor()}` }}
-          >
-            <option value="">None</option> {/* Allow no selection */}
-            <option value="Grade 0">Grade 0</option>
-            <option value="Grade 1">Grade 1</option>
-            <option value="Grade 2">Grade 2</option>
-            <option value="Grade 3">Grade 3</option>
-            <option value="Grade 4">Grade 4</option>
-          </select>
-        </div>
-
-        <div className="CreateNewDeck-selector">
-              <label className="CreateNewDeck-label" htmlFor="set-select">Set</label>
-              <select
-                id="set-select"
-                value={selectedSet}
-                onChange={handleSetChange}
-                className="CreateNewDeck-dropdown"
-                style={{ outline: `2px solid ${getOutlineColor()}` }}
-              >
-                <option value="">None</option>
-                {sets.map((set, index) => (
-                  <option key={index} value={set}>{set}</option>
-                ))}
-              </select>
-          </div>
-
-        <div className="CreateNewDeck-selector">
-          <label className="CreateNewDeck-label" htmlFor="unit-type-select">Card Type</label>
-          <select
-            id="unit-type-select"
-            value={selectedUnitType}
-            onChange={(e) => setSelectedUnitType(e.target.value)}
-            className="CreateNewDeck-dropdown"
-            style={{ outline: `2px solid ${getOutlineColor()}` }}
-          >
-              <option value="">None</option> {/* Allow no selection */}
-              <option value="Normal Unit">Normal Unit</option>
-              <option value="Trigger Unit">Trigger Unit</option>
-              <option value="G Unit">G Unit</option>
-              <option value="Others">Others</option>
-              <option value="Normal Order">Normal Order</option>
-              <option value="Set Order">Set Order</option>
-              <option value="Blitz Order">Blitz Order</option>
-              <option value="Trigger Order">Trigger Order</option>
-              <option value="Ride Deck Crest">Ride Deck Crest</option>
-          </select>
-        </div>
-
-        <div className="CreateNewDeck-input-container">
-          <input
-            type="text"
-            value={CardSearch}
-            onChange={(e) => setCardSearch(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleKeyPress(e);
-              }
-            }}
-            placeholder="Search for a card and press Enter"
-            className="CreateNewDeck-input"
-          />
-          <button
-            onClick={() => handleKeyPress({ key: 'Enter' })}
-            className="CreateNewDeck-button"
-            style={{ backgroundColor: `${getOutlineColor()}` }}
-          >
-            Search
-          </button>
-        </div>
-      </div>
-
-      {loading && <div className="loading-spinner"></div>} {/* Show loading spinner */}
-
-      <div className="CreateNewDeck-grid">
-        {SearchResult && SearchResult.map((card, index) => {
-          const cardCount = CurrentDeck.filter((deckCard) => deckCard.name === card.name).length;
-          const gradeNum = card.grade && card.grade.startsWith('Grade ') ? Number(card.grade.replace('Grade ', '')) : null;
-          const isRideDeckEligible = format === 'Standard' && [0, 1, 2, 3].includes(gradeNum);
-
-          return (
-            <div
-              key={index}
-              className="CreateNewDeck-card"
-              onClick={() => handleCardClick(card)}
-              onContextMenu={(e) => {
-                e.preventDefault();
-                handleCardRemove(card);
-              }}
-              style={{
-                position: 'relative',
-                cursor: 'pointer',
-                display: 'inline-block',
-              }}
-            >
-              {/* Ride Deck Button (top-left) */}
-              {isRideDeckEligible && (
-                <button
-                  className="CreateNewDeck-ride-button"
-                  style={{
-                    position: 'absolute',
-                    top: 5,
-                    left: 5,
-                    zIndex: 2,
-                    background: rideDeck[gradeNum]?.id === card.id ? '#1976d2' : '#fff',
-                    color: rideDeck[gradeNum]?.id === card.id ? '#fff' : '#1976d2',
-                    border: '1px solid #1976d2',
-                    borderRadius: '50%',
-                    width: 24,
-                    height: 24,
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    fontSize: 16,
-                    lineHeight: '20px',
-                    padding: 0,
-                  }}
-                  title={`Set as Grade ${gradeNum} Ride Deck card`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    handleSelectRideDeck(gradeNum, card);
-                  }}
-                  disabled={rideDeck[gradeNum]?.id === card.id}
-                >
-                  {rideDeck[gradeNum]?.id === card.id ? '✓' : '+'}
-                </button>
-              )}
-              {/* Info Button (top-right) */}
-              <button
-                className="CreateNewDeck-info-button"
-                onClick={e => {
-                  e.stopPropagation();
-                  handleMiddleClick(e, card);
-                }}
-              >
-                ℹ️
-              </button>
-              <img
-                src={`data:image/png;base64,${card.image}`}
-                alt={card.name || 'Card Image'}
-              />
-              <p>{card.name}</p>
-              <div className="CreateNewDeck-card-counter">
-                {cardCount}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <CardSearch
+        format={format}
+        onCardSelect={handleCardClick}
+        onCardInfo={handleCardInfo}
+        showCardCounts={true}
+        currentDeck={CurrentDeck}
+        showAddButton={false}
+        compact={false}
+      />
 
       <div className="CreateNewDeck-deckname-container" style={{ marginTop: '20px', textAlign: 'center' }}>
         <input

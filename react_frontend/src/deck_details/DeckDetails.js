@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './DeckDetails.css';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 function DeckDetails() {
   const location = useLocation();
@@ -22,7 +22,7 @@ function DeckDetails() {
         setLoading(true);
         try {
           // Use API_BASE_URL instead of hardcoded /api
-          const response = await fetch(`${API_BASE_URL}/decks/${deck.id}/cards`);
+          const response = await fetch(`${API_BASE_URL}/api/decks/${deck.id}/cards`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -32,7 +32,7 @@ function DeckDetails() {
           // Fetch ride deck cards if it's a Standard deck
           if (deck.deck_type === 'Standard') {
             // Use API_BASE_URL here too
-            const rideDeckResponse = await fetch(`${API_BASE_URL}/decks/${deck.id}/ride-deck`);
+            const rideDeckResponse = await fetch(`${API_BASE_URL}/api/decks/${deck.id}/ride-deck`);
             if (rideDeckResponse.ok) {
               const rideDeckData = await rideDeckResponse.json();
               setRideDeckCards(rideDeckData);
@@ -70,7 +70,7 @@ function DeckDetails() {
     if (confirmDelete) {
       try {
         // Use API_BASE_URL here too
-        const response = await fetch(`${API_BASE_URL}/decks/${deck.id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/decks/${deck.id}`, {
           method: 'DELETE',
         });
 

@@ -52,9 +52,9 @@ export default function DropTarget({
       title={title}
       onClick={handleClick}
       onContextMenu={onContextMenu}
-      onDragOver={interactive ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (!over) setOver(true); } : undefined}
+      onDragOver={interactive ? (e) => { e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = 'move'; if (!over) setOver(true); } : undefined}
       onDragLeave={interactive ? (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOver(false); } : undefined}
-      onDrop={interactive ? (e) => { e.preventDefault(); setOver(false); ctx.placeInto(playerId, zone, { position }); } : undefined}
+      onDrop={interactive ? (e) => { e.preventDefault(); e.stopPropagation(); setOver(false); ctx.placeInto(playerId, zone, { position }); } : undefined}
     >
       {children}
     </Tag>

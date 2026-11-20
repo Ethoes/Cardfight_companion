@@ -36,6 +36,11 @@ export default function useBoardInteraction({
     [interactivePlayers],
   );
 
+  /** Dispatch any player action, but only for boards this client controls. */
+  const act = useCallback((playerId, action) => {
+    if (interactivePlayers.includes(playerId)) dispatchFor(playerId)(action);
+  }, [dispatchFor, interactivePlayers]);
+
   const moveSource = useCallback((source, playerId, zone, options) => {
     if (!source || source.playerId !== playerId) return false;
     dispatchFor(playerId)(actions.moveCard(source.uid, zone, options));
@@ -113,12 +118,13 @@ export default function useBoardInteraction({
     setSelection,
     clearSelection,
     isInteractive,
+    act,
     placeInto,
     onCardClick,
     onCardContextMenu,
     onCardDragStart,
     onDragEnd,
     onCardHover,
-  }), [selection, dragging, pending, previewCard, markedSet, clearSelection, isInteractive,
+  }), [selection, dragging, pending, previewCard, markedSet, clearSelection, isInteractive, act,
     placeInto, onCardClick, onCardContextMenu, onCardDragStart, onDragEnd, onCardHover]);
 }

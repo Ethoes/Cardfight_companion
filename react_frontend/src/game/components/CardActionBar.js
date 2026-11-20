@@ -1,6 +1,29 @@
-import React from 'react';
-import { ZONE, actions, findCard, isCircle, isOrder, zoneLabel } from '../engine';
+import React, { useEffect } from 'react';
+import { BOOST_TARGET, POWER_STEP, ZONE, actions, findCard, isCircle, isOrder, zoneLabel } from '../engine';
 import { useInteraction } from '../hooks/useBoardInteraction';
+
+const POWER_BUTTONS = [-2, -1, 1, 2].map((n) => n * POWER_STEP);
+const short = (n) => `${n > 0 ? '+' : '−'}${Math.abs(n) / 1000}k`;
+
+/** + / - keys change the selected unit's power by 5000 (shift: 10000). */
+function usePowerShortcuts(ctx, players) {
+  const selection = ctx?.selection;
+  useEffect(() => {
+    if (!selection || !isCircle(selection.zone)) return undefined;
+    const onKey = (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target?.tagName)) return;
+      let sign = 0;
+      if (['+', '='].includes(e.key) || e.code === 'NumpadAdd') sign = 1;
+      if (['-', '_'].includes(e.key) || e.code === 'NumpadSubtract') sign = -1;
+      if (!sign) return;
+      e.preventDefault();
+      ctx.act(selection.playerId, actions.adjustPower(selection.uid, sign * POWER_STEP * (e.shiftKey ? 2 : 1)));
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [ctx, selection, players]);
+}
 
 /**
  * Contextual actions for the selected card. This is what makes the board
@@ -8,6 +31,7 @@ import { useInteraction } from '../hooks/useBoardInteraction';
  */
 export default function CardActionBar({ players, dispatchFor, onShowInfo }) {
   const ctx = useInteraction();
+  usePowerShortcuts(ctx, players);
   const selection = ctx?.selection;
   if (!selection) return null;
 
@@ -76,6 +100,36 @@ export default function CardActionBar({ players, dispatchFor, onShowInfo }) {
             {d.label}
           </button>
         ))}
+        {isCircle(zone) && !instance.faceDown && (
+          <div className="vg-action-bar__power" role="group" aria-label="Power" title="Power (keys: + / −, shift for 10k)">
+            {POWER_BUTTONS.map((delta) => (
+              <button
+                key={delta}
+                type="button"
+                className={`vg-btn vg-btn--power ${delta > 0 ? 'is-up' : 'is-down'}`}
+                onClick={() => dispatch(actions.adjustPower(instance.uid, delta))}
+                aria-label={`${delta > 0 ? 'Increase' : 'Decrease'} power by ${Math.abs(delta)}`}
+              >
+                {short(delta)}
+              </button>
+            ))}
+            {instance.powerMod !== 0 && (
+              <button type="button" className="vg-btn vg-btn--ghost" onClick={() => dispatch(actions.resetPower(instance.uid))}>
+                Reset power
+              </button>
+            )}
+          </div>
+        )}
+        {BOOST_TARGET[zone] && !instance.faceDown && (instance.boosting || player.zones[BOOST_TARGET[zone]].length > 0) && (
+          <button
+            type="button"
+            className="vg-btn vg-btn--accent"
+            onClick={() => dispatch(actions.setBoost(instance.uid, !instance.boosting))}
+            title="Rest this unit and add its power to the unit in front of it"
+          >
+            {instance.boosting ? 'Stop boost' : 'Boost'}
+          </button>
+        )}
         {onShowInfo && (
           <button type="button" className="vg-btn vg-btn--ghost vg-only-compact" onClick={() => onShowInfo(card)}>
             Info

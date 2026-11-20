@@ -1,5 +1,5 @@
-import { ALL_ZONES, CIRCLES, ZONE } from './constants';
-import { shieldOf } from './cards';
+import { ALL_ZONES, BOOST_TARGET, CIRCLES, ZONE } from './constants';
+import { powerOf, shieldOf } from './cards';
 
 /** Locate a card instance anywhere on a player's board. */
 export function findCard(player, uid) {
@@ -35,3 +35,25 @@ export const unitsOnField = (player) =>
 
 /** Cards in the trigger zone that are waiting to be resolved, oldest first. */
 export const pendingChecks = (player) => player.zones[ZONE.TRIGGER].filter((c) => c.check);
+
+/** The back-row circle that boosts `zone`, if any. */
+export const boosterZoneFor = (zone) =>
+  Object.keys(BOOST_TARGET).find((back) => BOOST_TARGET[back] === zone) ?? null;
+
+/** A unit's own power: printed power plus its modifiers. */
+const ownPower = (instance) => powerOf(instance.card) + (instance.powerMod || 0);
+
+/**
+ * Power of the unit on a circle, or null when the circle is empty or the
+ * unit is face down. `boost` is the power added by a boosting back-row unit.
+ */
+export function unitPower(player, zone) {
+  const unit = topCard(player, zone);
+  if (!unit || unit.faceDown) return null;
+  const base = powerOf(unit.card);
+  const mod = unit.powerMod || 0;
+  const backZone = boosterZoneFor(zone);
+  const booster = backZone && topCard(player, backZone);
+  const boost = booster?.boosting && !booster.faceDown ? ownPower(booster) : 0;
+  return { base, mod, boost, total: base + mod + boost };
+}

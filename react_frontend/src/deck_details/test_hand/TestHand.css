@@ -89,12 +89,12 @@
   min-width: 0;
 }
 .TestHand-table-inner {
-  /* width budget: damage column (1.4w) + 4 columns (1.22w) + gaps.
+  /* width budget: damage column (1.4w) + 5 columns (1.22w) + gaps.
      height budget: board (~5.6 card widths) + hand (~1.4) + page chrome. */
   --card-w-base: clamp(
     48px,
     min(
-      calc((100cqi - 6 * var(--vg-gap) - 28px) / 6.3),
+      calc((100cqi - 7 * var(--vg-gap) - 28px) / 7.5),
       calc((100dvh - 290px) / 7)
     ),
     132px
@@ -208,7 +208,7 @@
     --card-w-base: clamp(
       48px,
       min(
-        calc((100cqi - 6 * var(--vg-gap) - 28px) / 6.3),
+        calc((100cqi - 7 * var(--vg-gap) - 28px) / 7.5),
         calc((100dvh - 380px) / 7)
       ),
       132px
@@ -250,7 +250,7 @@
   }
   .TestHand-table-inner {
     /* On phones the width is the limit; let the page scroll vertically. */
-    --card-w-base: clamp(40px, calc((100cqi - 6 * var(--vg-gap) - 24px) / 6.3), 132px);
+    --card-w-base: clamp(40px, calc((100cqi - 7 * var(--vg-gap) - 24px) / 7.5), 132px);
   }
   .TestHand .vg-board {
     padding: 6px;

@@ -12,6 +12,7 @@ import {
   withHistory,
   initHistory,
   undo,
+  unitPower,
 } from './index';
 
 const unit = (id, grade, extra = {}) => ({ id, name: `Card ${id}`, grade: `Grade ${grade}`, type: 'Normal Unit', ...extra });
@@ -107,6 +108,81 @@ describe('checks', () => {
     h = reducer(h, undo());
     expect(h.present.players.p1.zones[ZONE.TRIGGER]).toHaveLength(0);
     expect(h.present.players.p1.zones[ZONE.DECK]).toHaveLength(45);
+  });
+});
+
+describe('power and boost', () => {
+  const units = [
+    unit(900, 2, { power: '10000' }),
+    unit(901, 1, { power: '8000' }),
+  ];
+  const powered = () => {
+    let p = createPlayerState({ mainDeck: [...units, ...mainDeck], rideDeck, seed: 42, handSize: 0 });
+    const front = p.zones[ZONE.DECK].find((c) => c.card.id === 900);
+    const back = p.zones[ZONE.DECK].find((c) => c.card.id === 901);
+    p = playerReducer(p, actions.moveCard(front.uid, ZONE.RC_FRONT_LEFT));
+    p = playerReducer(p, actions.moveCard(back.uid, ZONE.RC_BACK_LEFT));
+    return { p, front, back };
+  };
+
+  it('shows base power and applies modifiers', () => {
+    let { p, front } = powered();
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT)).toMatchObject({ base: 10000, total: 10000 });
+    p = playerReducer(p, actions.adjustPower(front.uid, 5000));
+    p = playerReducer(p, actions.adjustPower(front.uid, 5000));
+    p = playerReducer(p, actions.adjustPower(front.uid, -2000));
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT).total).toBe(18000);
+    p = playerReducer(p, actions.resetPower(front.uid));
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT).total).toBe(10000);
+  });
+
+  it('boosting rests the back unit and adds its power (incl. modifiers) to the front', () => {
+    let { p, back } = powered();
+    p = playerReducer(p, actions.adjustPower(back.uid, 5000));
+    p = playerReducer(p, actions.setBoost(back.uid));
+    expect(p.zones[ZONE.RC_BACK_LEFT][0]).toMatchObject({ rested: true, boosting: true });
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT)).toMatchObject({ boost: 13000, total: 23000 });
+    // standing the booster ends the boost
+    p = playerReducer(p, actions.toggleRest(back.uid));
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT).total).toBe(10000);
+  });
+
+  it('cannot boost an empty circle, and the boost ends when the front unit leaves', () => {
+    let { p, front, back } = powered();
+    p = playerReducer(p, actions.setBoost(back.uid));
+    p = playerReducer(p, actions.moveCard(front.uid, ZONE.DROP));
+    expect(p.zones[ZONE.RC_BACK_LEFT][0].boosting).toBe(false);
+    expect(playerReducer(p, actions.setBoost(back.uid))).toBe(p);
+  });
+
+  it('moving a unit resets its power', () => {
+    let { p, front } = powered();
+    p = playerReducer(p, actions.adjustPower(front.uid, 5000));
+    p = playerReducer(p, actions.moveCard(front.uid, ZONE.RC_FRONT_RIGHT));
+    expect(unitPower(p, ZONE.RC_FRONT_RIGHT).total).toBe(10000);
+  });
+
+  it('ending the turn resets power and boosts', () => {
+    let g = createGameState([{ id: 'p1', mainDeck: [...units, ...mainDeck], rideDeck, seed: 5 }]);
+    const deck = g.players.p1.zones[ZONE.DECK].concat(g.players.p1.zones[ZONE.HAND]);
+    const front = deck.find((c) => c.card.id === 900);
+    const back = deck.find((c) => c.card.id === 901);
+    g = gameReducer(g, playerAction('p1', actions.moveCard(front.uid, ZONE.RC_FRONT_LEFT)));
+    g = gameReducer(g, playerAction('p1', actions.moveCard(back.uid, ZONE.RC_BACK_LEFT)));
+    g = gameReducer(g, playerAction('p1', actions.adjustPower(front.uid, 10000)));
+    g = gameReducer(g, playerAction('p1', actions.setBoost(back.uid)));
+    expect(unitPower(g.players.p1, ZONE.RC_FRONT_LEFT).total).toBe(28000);
+    for (let i = 0; i < 5; i += 1) g = gameReducer(g, nextPhase());
+    expect(unitPower(g.players.p1, ZONE.RC_FRONT_LEFT).total).toBe(28000); // still in end phase
+    g = gameReducer(g, nextPhase());
+    expect(g.turn.number).toBe(2);
+    expect(unitPower(g.players.p1, ZONE.RC_FRONT_LEFT).total).toBe(10000);
+  });
+
+  it('face-down and empty circles have no power', () => {
+    const p = setup();
+    expect(unitPower(p, ZONE.VC)).toBeNull();
+    expect(unitPower(p, ZONE.RC_FRONT_LEFT)).toBeNull();
   });
 });
 

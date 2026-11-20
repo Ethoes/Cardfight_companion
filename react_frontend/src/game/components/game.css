@@ -384,9 +384,10 @@
 }
 .App .vg-root .vg-soul-chip {
   position: absolute;
-  bottom: -9px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 3px;
+  right: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
   padding: 2px 9px;
   border-radius: 999px;
   font-size: 11px;
@@ -397,12 +398,171 @@
   z-index: 3;
   white-space: nowrap;
 }
-.App .vg-root .vg-soul-chip:is(:hover, :active, :focus) {
-  transform: translateX(-50%);
-}
 .App .vg-root .vg-soul-chip:hover {
   background: #e9dcff;
 }
+.App .vg-root .vg-soul-chip.is-empty {
+  color: #d9c4ff;
+  background: rgba(26, 13, 51, 0.75);
+  border-color: rgba(217, 196, 255, 0.4);
+}
+/* While a card is being moved the soul chip grows into a clear drop spot. */
+.App .vg-root .vg-soul-chip.is-target {
+  padding: 6px 12px;
+  color: #1a0d33;
+  background: #d9c4ff;
+  border: 2px dashed #6b3fd1;
+}
+.App .vg-root .vg-soul-chip.is-over {
+  background: #f4c75a;
+  border-style: solid;
+}
+
+/* Power on VC / RC ------------------------------------------------------- */
+.vg-power {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.App .vg-root .vg-power__value {
+  min-width: calc(var(--card-w) * 0.9);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: clamp(11px, calc(var(--card-w) * 0.19), 14px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  color: #06182d;
+  background: #e9f1fc;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+  cursor: text;
+}
+.App .vg-root .vg-power__value:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.App .vg-root .vg-power--up .vg-power__value {
+  background: #7ee2a8;
+  color: #04220f;
+}
+.App .vg-root .vg-power--down .vg-power__value {
+  background: #ff9a9a;
+  color: #2d0606;
+}
+.App .vg-root .vg-power.is-boosted .vg-power__value {
+  box-shadow: 0 0 0 2px var(--vg-gold), 0 2px 8px rgba(0, 0, 0, 0.55);
+}
+.vg-power__input {
+  width: 92px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 2px solid var(--vg-accent);
+  background: #06182d;
+  color: var(--vg-text);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+.vg-power__input:focus {
+  outline: none;
+}
+.App .vg-root .vg-power__btn {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--vg-text);
+  background: #1b3a63;
+  border: 1px solid var(--vg-border-strong);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.App .vg-root .vg-power__btn:hover {
+  background: var(--vg-accent);
+  color: #06182d;
+}
+/* the hovered / selected circle's controls sit above its neighbours */
+.vg-circle:is(:hover, :has(:focus-visible), :has(.vg-card.is-selected)) {
+  z-index: 6;
+}
+/* ± buttons appear while hovering the circle, or when its unit is selected (touch) */
+.vg-circle:is(:hover, :has(:focus-visible), :has(.vg-card.is-selected)) .vg-power__btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (hover: none) {
+  .App .vg-root .vg-power__btn { width: 28px; height: 28px; }
+}
+
+.App .vg-root .vg-boost-chip,
+.vg-boost-flag {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  z-index: 4;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.App .vg-root .vg-boost-chip {
+  color: var(--vg-gold);
+  background: rgba(10, 22, 40, 0.92);
+  border: 1px solid rgba(244, 199, 90, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+.App .vg-root .vg-boost-chip:hover {
+  background: var(--vg-gold);
+  color: #2a1d00;
+}
+.vg-circle:is(:hover, :has(:focus-visible), :has(.vg-card.is-selected)) .vg-boost-chip {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (hover: none) {
+  .App .vg-root .vg-boost-chip { opacity: 1; pointer-events: auto; }
+}
+.vg-boost-flag {
+  color: #2a1d00;
+  background: var(--vg-gold);
+  pointer-events: none;
+}
+
+/* Power controls in the selected-card action bar */
+.vg-action-bar__power {
+  display: inline-flex;
+  gap: 3px;
+  padding-right: 6px;
+  margin-right: 2px;
+  border-right: 1px solid var(--vg-border);
+}
+.App .vg-root .vg-btn--power {
+  min-width: 46px;
+  padding: 6px 8px;
+  font-variant-numeric: tabular-nums;
+}
+.App .vg-root .vg-btn--power.is-up { color: #7ee2a8; }
+.App .vg-root .vg-btn--power.is-down { color: #ff9a9a; }
 
 /* Piles (deck, drop, ride deck…) */
 .vg-pile {
@@ -465,7 +625,7 @@
   height: var(--card-h);
   border-radius: 6px;
 }
-.vg-pile--soul { border-color: rgba(181, 140, 255, 0.4); }
+.vg-pile--bind { border-color: rgba(150, 190, 245, 0.25); }
 
 /* Damage zone – cards lie sideways and overlap */
 .vg-damage {
@@ -552,17 +712,16 @@
   color: var(--vg-accent);
 }
 .vg-row--guardian {
-  flex: 1;
   border-color: rgba(78, 168, 255, 0.4);
-}
-.vg-row--side {
-  flex: 0 0 calc(var(--card-w) * 1.15);
 }
 .vg-row--side .vg-row__cards > .vg-card + .vg-card {
   margin-left: calc(var(--card-w) * -0.8);
 }
 .vg-row--trigger {
   border-color: rgba(244, 199, 90, 0.35);
+}
+.vg-row--order {
+  border-color: rgba(181, 140, 255, 0.3);
 }
 
 /* Hand */
@@ -610,54 +769,55 @@
 .vg-board {
   --rc-w: calc(var(--card-w) * 1.22);
   display: grid;
-  grid-template-columns: auto repeat(3, var(--rc-w)) var(--rc-w);
+  grid-template-columns: auto repeat(3, var(--rc-w)) var(--rc-w) var(--rc-w);
   grid-template-areas:
-    'damage top top top deck'
-    'damage fl  vc  fr  drop'
-    'extra  bl  bc  br  ride';
+    'order  gc  gc  gc  trigger gzone'
+    'damage fl  vc  fr  deck    ride'
+    'damage bl  bc  br  drop    bind';
   gap: var(--vg-gap);
   justify-content: center;
   align-items: stretch;
   padding: var(--vg-gap);
   border-radius: 18px;
   background:
-    radial-gradient(ellipse at 50% 45%, rgba(78, 168, 255, 0.16), transparent 65%),
+    radial-gradient(ellipse at 40% 50%, rgba(78, 168, 255, 0.16), transparent 65%),
     linear-gradient(180deg, rgba(20, 44, 78, 0.9), rgba(10, 24, 44, 0.9));
   border: 1px solid var(--vg-border);
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.35);
 }
+/* Rotated 180 degrees for the player across the table. */
 .vg-board--opponent {
+  grid-template-columns: var(--rc-w) var(--rc-w) repeat(3, var(--rc-w)) auto;
   grid-template-areas:
-    'ride br  bc  bl  extra'
-    'drop fr  vc  fl  damage'
-    'deck top top top damage';
+    'bind  drop    br  bc  bl  damage'
+    'ride  deck    fr  vc  fl  damage'
+    'gzone trigger gc  gc  gc  order';
 }
 
 .vg-area { display: flex; justify-content: center; align-items: center; min-width: 0; }
-.vg-area--damage { grid-area: damage; align-items: stretch; }
-.vg-area--top {
-  grid-area: top;
+.vg-area > .vg-row { flex: 1 1 auto; }
+/* The top row (order / guardian / trigger) uses slightly smaller cards. */
+.vg-area--order,
+.vg-area--gc,
+.vg-area--trigger {
   --card-w: calc(var(--card-w-base) * 0.78);
-  gap: calc(var(--vg-gap) * 0.75);
   align-items: stretch;
 }
-.vg-area--deck { grid-area: deck; }
+.vg-area--order { grid-area: order; }
+.vg-area--gc { grid-area: gc; }
+.vg-area--trigger { grid-area: trigger; }
+.vg-area--gzone { grid-area: gzone; --card-w: calc(var(--card-w-base) * 0.78); }
+.vg-area--damage { grid-area: damage; align-items: stretch; }
 .vg-area--fl { grid-area: fl; }
 .vg-area--vc { grid-area: vc; }
 .vg-area--fr { grid-area: fr; }
-.vg-area--drop { grid-area: drop; }
-.vg-area--extra {
-  grid-area: extra;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  align-content: center;
-  justify-content: center;
-  gap: 8px;
-}
+.vg-area--deck { grid-area: deck; }
+.vg-area--ride { grid-area: ride; }
 .vg-area--bl { grid-area: bl; }
 .vg-area--bc { grid-area: bc; }
 .vg-area--br { grid-area: br; }
-.vg-area--ride { grid-area: ride; }
+.vg-area--drop { grid-area: drop; }
+.vg-area--bind { grid-area: bind; }
 
 /* --------------------------------------------------------------------------
    Selected-card action bar

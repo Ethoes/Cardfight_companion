@@ -11,15 +11,19 @@ export function createCardInstance(card, ownerId = 'p1') {
     card,
     rested: false,
     faceDown: false,
+    powerMod: 0,
+    boosting: false,
   };
 }
 
-/** Reset per-zone flags when a card changes zone. */
+/** Reset per-zone flags (and power changes) when a card changes zone. */
 export const freshInstance = (instance, flags = {}) => ({
   ...instance,
   rested: false,
   faceDown: false,
   check: null,
+  powerMod: 0,
+  boosting: false,
   ...flags,
 });
 

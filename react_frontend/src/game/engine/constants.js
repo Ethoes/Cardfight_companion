@@ -30,6 +30,16 @@ export const REAR_GUARD_CIRCLES = [
   ZONE.RC_BACK_RIGHT,
 ];
 
+/** Back-row circle -> the circle in front of it that its boost goes to. */
+export const BOOST_TARGET = Object.freeze({
+  [ZONE.RC_BACK_LEFT]: ZONE.RC_FRONT_LEFT,
+  [ZONE.RC_BACK_CENTER]: ZONE.VC,
+  [ZONE.RC_BACK_RIGHT]: ZONE.RC_FRONT_RIGHT,
+});
+
+/** Power is almost always modified in steps of 5000. */
+export const POWER_STEP = 5000;
+
 /** Circles hold at most one unit. */
 export const CIRCLES = [ZONE.VC, ...REAR_GUARD_CIRCLES];
 

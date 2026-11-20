@@ -2,7 +2,7 @@
 // Every action is a plain serialisable object (see ./actions.js), so the same
 // actions can later be sent over the network for player-vs-player games.
 
-import { CIRCLES, ZONE, isCircle } from './constants';
+import { BOOST_TARGET, CIRCLES, ZONE, isCircle } from './constants';
 import { freshInstance } from './cards';
 import { shuffle } from './random';
 import { findCard } from './selectors';
@@ -22,6 +22,10 @@ export const PLAYER_ACTION = Object.freeze({
   STAND_UP: 'player/standUp',
   REVEAL_CHECK: 'player/revealCheck',
   RESOLVE_CHECK: 'player/resolveCheck',
+  ADJUST_POWER: 'player/adjustPower',
+  RESET_POWER: 'player/resetPower',
+  SET_BOOST: 'player/setBoost',
+  END_TURN: 'player/endTurn',
 });
 
 // ---------------------------------------------------------------------------
@@ -62,7 +66,20 @@ function moveCard(state, uid, to, { position = 'top', faceDown = false, rested =
     next = insertCard(next, destination, freshInstance(occupant));
   }
 
-  return insertCard(next, to, freshInstance(instance, { faceDown, rested }), position);
+  next = insertCard(next, to, freshInstance(instance, { faceDown, rested }), position);
+  // A boost belongs to one specific unit: it ends when that unit leaves or is replaced.
+  return clearBoostsInto(next, [found.zone, to]);
+}
+
+/** Stop boosting for the back-row units behind any of `frontZones`. */
+function clearBoostsInto(state, frontZones) {
+  const changes = {};
+  Object.entries(BOOST_TARGET).forEach(([back, front]) => {
+    if (!frontZones.includes(front)) return;
+    if (!state.zones[back].some((c) => c.boosting)) return;
+    changes[back] = state.zones[back].map((c) => ({ ...c, boosting: false }));
+  });
+  return Object.keys(changes).length ? withZones(state, changes) : state;
 }
 
 function moveTopCards(state, from, to, count, options) {
@@ -116,7 +133,10 @@ export function playerReducer(state, action) {
       return withZones(state, { [ZONE.DECK]: shuffle(state.zones[ZONE.DECK], action.seed) });
 
     case PLAYER_ACTION.TOGGLE_REST:
-      return updateCard(state, action.uid, (c) => ({ rested: !c.rested }));
+      // Standing a booster ends its boost.
+      return updateCard(state, action.uid, (c) => (c.rested
+        ? { rested: false, boosting: false }
+        : { rested: true }));
 
     case PLAYER_ACTION.TOGGLE_FACE_DOWN:
       return updateCard(state, action.uid, (c) => ({ faceDown: !c.faceDown }));
@@ -124,9 +144,40 @@ export function playerReducer(state, action) {
     case PLAYER_ACTION.STAND_ALL: {
       const changes = {};
       CIRCLES.forEach((zone) => {
-        changes[zone] = state.zones[zone].map((c) => ({ ...c, rested: false }));
+        changes[zone] = state.zones[zone].map((c) => ({ ...c, rested: false, boosting: false }));
       });
       return withZones(state, changes);
+    }
+
+    case PLAYER_ACTION.ADJUST_POWER: {
+      const found = findCard(state, action.uid);
+      if (!found || !isCircle(found.zone) || !action.delta) return state;
+      return updateCard(state, action.uid, (c) => ({ powerMod: (c.powerMod || 0) + action.delta }));
+    }
+
+    case PLAYER_ACTION.RESET_POWER:
+      return updateCard(state, action.uid, () => ({ powerMod: 0 }));
+
+    case PLAYER_ACTION.SET_BOOST: {
+      // Boosting rests the back-row unit and adds its power to the unit in front.
+      const found = findCard(state, action.uid);
+      const front = found && BOOST_TARGET[found.zone];
+      if (!front) return state;
+      if (action.boosting && !state.zones[front].length) return state;
+      return updateCard(state, action.uid, () => (action.boosting
+        ? { boosting: true, rested: true }
+        : { boosting: false }));
+    }
+
+    case PLAYER_ACTION.END_TURN: {
+      // "Until end of turn" power changes and boosts all wear off.
+      const changes = {};
+      CIRCLES.forEach((zone) => {
+        if (state.zones[zone].some((c) => c.powerMod || c.boosting)) {
+          changes[zone] = state.zones[zone].map((c) => ({ ...c, powerMod: 0, boosting: false }));
+        }
+      });
+      return Object.keys(changes).length ? withZones(state, changes) : state;
     }
 
     case PLAYER_ACTION.COUNTER_BLAST:

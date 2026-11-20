@@ -7,7 +7,7 @@
 import { PHASE, PHASE_ORDER } from './constants';
 import { playerReducer } from './playerReducer';
 import { createPlayerState } from './playerState';
-import { draw, standAll } from './actions';
+import { draw, endTurn, standAll } from './actions';
 
 export const GAME_ACTION = Object.freeze({
   PLAYER: 'game/player',
@@ -71,9 +71,11 @@ export function gameReducer(state, action) {
         const order = state.playerOrder;
         const nextPlayer = order[(order.indexOf(state.turn.activePlayerId) + 1) % order.length];
         turn = { number: state.turn.number + 1, phase: PHASE_ORDER[0], activePlayerId: nextPlayer };
-      } else {
-        turn = { ...state.turn, phase: PHASE_ORDER[index + 1] };
+        // Ending the turn resets every unit's power changes and boosts.
+        const ended = state.playerOrder.reduce((s, id) => applyToPlayer(s, id, endTurn()), state);
+        return enterPhase({ ...ended, turn }, turn.phase);
       }
+      turn = { ...state.turn, phase: PHASE_ORDER[index + 1] };
       return enterPhase({ ...state, turn }, turn.phase);
     }
 

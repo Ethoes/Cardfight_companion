@@ -35,3 +35,9 @@ export const retireGuardians = () => clearZone(ZONE.GUARDIAN, ZONE.DROP);
 export const resolveDriveChecks = () => clearZone(ZONE.TRIGGER, ZONE.HAND);
 export const mulligan = (uids) => ({ type: PLAYER_ACTION.MULLIGAN, uids, seed: newSeed() });
 export const standUp = () => ({ type: PLAYER_ACTION.STAND_UP });
+
+// Power ------------------------------------------------------------------------
+export const adjustPower = (uid, delta) => ({ type: PLAYER_ACTION.ADJUST_POWER, uid, delta });
+export const resetPower = (uid) => ({ type: PLAYER_ACTION.RESET_POWER, uid });
+export const setBoost = (uid, boosting = true) => ({ type: PLAYER_ACTION.SET_BOOST, uid, boosting });
+export const endTurn = () => ({ type: PLAYER_ACTION.END_TURN });

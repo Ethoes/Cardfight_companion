@@ -105,7 +105,7 @@
   align-items: stretch;
   gap: 10px;
 }
-.TestHand-table-inner > .vg-board {
+.TestHand-table-inner > .vg-board:not(.vg-board--centered) {
   align-self: center;
 }
 

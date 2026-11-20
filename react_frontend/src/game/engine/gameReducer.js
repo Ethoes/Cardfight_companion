@@ -19,7 +19,7 @@ export const GAME_ACTION = Object.freeze({
 /**
  * @param {Array<{id: string, name?: string, mainDeck: object[], rideDeck: object[], seed: number}>} players
  */
-export function createGameState(players, { autoPhaseActions = true } = {}) {
+export function createGameState(players, { autoPhaseActions = true, firstPlayerId } = {}) {
   const playerStates = {};
   players.forEach((p) => {
     playerStates[p.id] = { ...createPlayerState({ ...p, playerId: p.id }), name: p.name ?? p.id };
@@ -30,7 +30,7 @@ export function createGameState(players, { autoPhaseActions = true } = {}) {
     turn: {
       number: 1,
       phase: PHASE.STAND,
-      activePlayerId: players[0]?.id,
+      activePlayerId: firstPlayerId ?? players[0]?.id,
     },
     settings: { autoPhaseActions },
   };

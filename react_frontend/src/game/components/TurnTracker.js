@@ -2,7 +2,7 @@ import React from 'react';
 import { PHASE_LABEL, PHASE_ORDER } from '../engine';
 
 /** Turn counter + phase stepper (Stand → Draw → Ride → Main → Battle → End). */
-export default function TurnTracker({ turn, activePlayerName, onNextPhase, onSetPhase, autoPhase, onToggleAuto }) {
+export default function TurnTracker({ turn, activePlayerName, onNextPhase, onSetPhase, autoPhase, onToggleAuto, disabled = false }) {
   return (
     <div className="vg-turn">
       <div className="vg-turn__count">
@@ -17,6 +17,7 @@ export default function TurnTracker({ turn, activePlayerName, onNextPhase, onSet
               type="button"
               className={`vg-phase ${phase === turn.phase ? 'is-active' : ''}`}
               onClick={() => onSetPhase?.(phase)}
+              disabled={disabled}
               aria-current={phase === turn.phase ? 'step' : undefined}
             >
               {PHASE_LABEL[phase]}
@@ -24,7 +25,7 @@ export default function TurnTracker({ turn, activePlayerName, onNextPhase, onSet
           </li>
         ))}
       </ol>
-      <button type="button" className="vg-btn vg-btn--primary" onClick={onNextPhase}>
+      <button type="button" className="vg-btn vg-btn--primary" onClick={onNextPhase} disabled={disabled}>
         {turn.phase === PHASE_ORDER[PHASE_ORDER.length - 1] ? 'End turn' : 'Next phase'}
       </button>
       {onToggleAuto && (

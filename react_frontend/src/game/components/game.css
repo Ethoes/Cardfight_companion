@@ -768,6 +768,11 @@
    -------------------------------------------------------------------------- */
 .vg-board {
   --rc-w: calc(var(--card-w) * 1.22);
+  --dmg-w: calc(var(--card-h) + 16px); /* damage zone column */
+  /* Distance from the board's outer edges to the middle of the VC column,
+     used to centre the board on its vanguard circle (see .vg-board--centered). */
+  --vc-left: calc(1px + var(--dmg-w) + var(--rc-w) * 1.5 + var(--vg-gap) * 3);
+  --vc-right: calc(1px + var(--rc-w) * 3.5 + var(--vg-gap) * 4);
   display: grid;
   grid-template-columns: auto repeat(3, var(--rc-w)) var(--rc-w) var(--rc-w);
   grid-template-areas:
@@ -787,11 +792,20 @@
 }
 /* Rotated 180 degrees for the player across the table. */
 .vg-board--opponent {
+  --vc-left: calc(1px + var(--rc-w) * 3.5 + var(--vg-gap) * 4);
+  --vc-right: calc(1px + var(--dmg-w) + var(--rc-w) * 1.5 + var(--vg-gap) * 3);
   grid-template-columns: var(--rc-w) var(--rc-w) repeat(3, var(--rc-w)) auto;
   grid-template-areas:
     'bind  drop    br  bc  bl  damage'
     'ride  deck    fr  vc  fl  damage'
     'gzone trigger gc  gc  gc  order';
+}
+
+/* Put the vanguard circle in the middle of the parent (a block or a flex
+   column), sliding the board only as far as the free space allows. */
+.vg-board--centered {
+  align-self: flex-start;
+  margin-left: max(0px, min(calc(50% - var(--vc-left)), calc(100% - var(--vc-left) - var(--vc-right))));
 }
 
 .vg-area { display: flex; justify-content: center; align-items: center; min-width: 0; }

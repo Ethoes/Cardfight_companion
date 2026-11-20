@@ -12,7 +12,10 @@ import UserDecks from './user_decks/UserDecks.js'; // Add this import
 import DeckDetails from './deck_details/DeckDetails.js';
 import TournamentNotes from './tournament_notes/TournamentNotes.js';
 import TournamentDetails from './tournament_notes/tournament_details/TournamentDetails.js';
-import TestHand from './deck_details/test_hand/TestHand.js';import RulesQuery from './rules_query/RulesQuery.js';
+import TestHand from './deck_details/test_hand/TestHand.js';
+import CardfightLobby from './cardfight/CardfightLobby.js';
+import CardfightMatch from './cardfight/CardfightMatch.js';
+import RulesQuery from './rules_query/RulesQuery.js';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -81,12 +84,17 @@ function AnimatedRoutes({ username }) {
             <Route path="/tournament-notes" element={<TournamentNotes username={username} />} />
             <Route path="/tournament-details" element={<TournamentDetails />} />
             <Route path="/test-hand" element={<TestHand />} />
+            <Route path="/cardfight" element={<CardfightLobby username={username} />} />
+            <Route path="/cardfight/:roomId" element={<CardfightMatch />} />
             <Route path="/rules-query" element={<RulesQuery />} />
             <Route
               path="/"
               element={
                 <div className="App-main">
                   <div className="App-buttons-container">
+                    <Link to="/cardfight">
+                      <button>Cardfight</button>
+                    </Link>
                     <Link to="/deck-builder">
                       <button>Go to Deck Builder</button>
                     </Link>

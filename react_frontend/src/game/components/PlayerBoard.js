@@ -19,6 +19,7 @@ export default function PlayerBoard({
   player,
   playerId,
   perspective = 'self',
+  centerOnVanguard = true,
   onOpenZone,
   onDeckActivate,
   onDeckContextMenu,
@@ -42,7 +43,7 @@ export default function PlayerBoard({
   };
 
   return (
-    <section className={`vg-board vg-board--${perspective}`} aria-label={`${player.name || playerId} field`}>
+    <section className={`vg-board vg-board--${perspective} ${centerOnVanguard ? 'vg-board--centered' : ''}`} aria-label={`${player.name || playerId} field`}>
       <div className="vg-area vg-area--order">
         <CardRow
           playerId={playerId}

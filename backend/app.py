@@ -26,6 +26,7 @@ from routes.card_routes import card_bp
 from routes.tournament_routes import tournament_bp
 from routes.misc_routes import misc_bp
 from routes.feedback_routes import feedback_bp
+from routes.fight_routes import fight_bp
 
 def create_app(enable_rules=True):
     # Point Flask to the React build directory
@@ -38,6 +39,11 @@ def create_app(enable_rules=True):
     # Request logging middleware
     @app.before_request
     def log_request_info():
+        g.start_time = datetime.utcnow()
+        # Cardfight sync traffic (long-polls, every game action) would flood the log.
+        if request.path.startswith('/api/fight/'):
+            g.quiet = True
+            return
         logger.info('=== NEW REQUEST ===')
         logger.info(f'Request URL: {request.url}')
         logger.info(f'Request Path: {request.path}')
@@ -52,6 +58,8 @@ def create_app(enable_rules=True):
     
     @app.after_request
     def log_response_info(response):
+        if getattr(g, 'quiet', False):
+            return response
         if hasattr(g, 'start_time'):
             duration = datetime.utcnow() - g.start_time
             logger.info(f'Response Status: {response.status_code}')
@@ -113,6 +121,8 @@ def create_app(enable_rules=True):
         logger.info("Rules bot disabled (--no-rules)")
     app.register_blueprint(feedback_bp, url_prefix='/api')
     logger.info("Feedback blueprint registered")
+    app.register_blueprint(fight_bp, url_prefix='/api')
+    logger.info("Fight blueprint registered")
     logger.info("All blueprints registered successfully")
     
     # Debug route to see all registered routes

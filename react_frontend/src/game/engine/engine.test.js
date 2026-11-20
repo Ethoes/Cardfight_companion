@@ -13,6 +13,7 @@ import {
   initHistory,
   undo,
   unitPower,
+  createCardInstance,
 } from './index';
 
 const unit = (id, grade, extra = {}) => ({ id, name: `Card ${id}`, grade: `Grade ${grade}`, type: 'Normal Unit', ...extra });
@@ -183,6 +184,28 @@ describe('power and boost', () => {
     const p = setup();
     expect(unitPower(p, ZONE.VC)).toBeNull();
     expect(unitPower(p, ZONE.RC_FRONT_LEFT)).toBeNull();
+  });
+});
+
+describe('online setup', () => {
+  it('builds identical games on every client, whatever else was created before', () => {
+    const players = [
+      { id: 'p1', mainDeck, rideDeck, seed: 11 },
+      { id: 'p2', mainDeck, rideDeck, seed: 22 },
+    ];
+    const a = createGameState(players, { firstPlayerId: 'p2' });
+    createCardInstance(mainDeck[0]); // e.g. a test hand opened earlier in this tab
+    const b = createGameState(players, { firstPlayerId: 'p2' });
+    expect(b).toEqual(a);
+    expect(a.turn.activePlayerId).toBe('p2');
+    // replaying the same actions gives the same result
+    const log = [
+      playerAction('p1', actions.mulligan(a.players.p1.zones[ZONE.HAND].slice(0, 2).map((c) => c.uid))),
+      playerAction('p2', actions.standUp()),
+      nextPhase(),
+      playerAction('p2', actions.driveCheck()),
+    ];
+    expect(log.reduce(gameReducer, b)).toEqual(log.reduce(gameReducer, a));
   });
 });
 

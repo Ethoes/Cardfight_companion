@@ -4,10 +4,19 @@
 
 let uidCounter = 0;
 
-export function createCardInstance(card, ownerId = 'p1') {
-  uidCounter += 1;
+/**
+ * @param index  position within the owner's card list. When given, the uid is
+ *               deterministic, so every client in an online match builds the
+ *               exact same uids (actions refer to cards by uid).
+ */
+export function createCardInstance(card, ownerId = 'p1', index) {
+  let n = index;
+  if (n === undefined) {
+    uidCounter += 1;
+    n = `x${uidCounter}`;
+  }
   return {
-    uid: `${ownerId}-${uidCounter}-${card?.id ?? 'x'}`,
+    uid: `${ownerId}-${n}-${card?.id ?? 'x'}`,
     card,
     rested: false,
     faceDown: false,

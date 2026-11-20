@@ -31,11 +31,15 @@ export default function DropTarget({
     className,
     isTarget ? 'is-target' : '',
     over ? 'is-over' : '',
-    onActivate && interactive ? 'is-clickable' : '',
+    onActivate && !disabled ? 'is-clickable' : '',
   ].filter(Boolean).join(' ');
 
   const handleClick = (e) => {
-    if (!interactive) return;
+    // Boards you don't control can still be looked at (e.g. the opponent's drop zone).
+    if (!interactive) {
+      if (!disabled) onActivate?.(e);
+      return;
+    }
     if (isTarget) {
       e.stopPropagation();
       ctx.placeInto(playerId, zone, { position });

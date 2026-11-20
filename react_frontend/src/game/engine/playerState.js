@@ -27,7 +27,11 @@ export function createPlayerState({
   handSize = STARTING_HAND_SIZE,
 }) {
   const zones = emptyZones();
-  const make = (card) => createCardInstance(card, playerId);
+  let index = 0;
+  const make = (card) => {
+    index += 1;
+    return createCardInstance(card, playerId, index);
+  };
 
   // G units live in the G zone, Ride Deck Crests start in the order zone.
   const mainInstances = [];

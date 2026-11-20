@@ -10,6 +10,8 @@ import './components/game.css';
 export * from './engine';
 export { default as useGame } from './hooks/useGame';
 export { default as useCheckResolver } from './hooks/useCheckResolver';
+export { default as usePlayerTools } from './hooks/usePlayerTools';
+export { default as useRemoteGame } from './hooks/useRemoteGame';
 export { default as useBoardInteraction, BoardInteractionContext, useInteraction } from './hooks/useBoardInteraction';
 export { default as GameCard, CardBack, CardFace } from './components/GameCard';
 export { default as DropTarget } from './components/DropTarget';

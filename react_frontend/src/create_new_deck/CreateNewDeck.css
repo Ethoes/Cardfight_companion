@@ -1,322 +1,221 @@
-.CreateNewDeck-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh; /* Make the container take the full viewport height */
-  }
-  
-  .CreateNewDeck-title {
-    margin-bottom: 10px;
-  }
-  
-  .CreateNewDeck-dropdown {
-    outline: 2px solid black; /* Default outline color */
-    padding: 5px;
-    border-radius: 4px;
-    display: block;
-    margin-bottom: 10px;
-    width: 50%;
-  }
-  
-/* Bounding box for the entire middle section */
-.CreateNewDeck-middle-box {
-  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Gradient background */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  padding: 20px;
-  width: 80%; /* Restrict the width to 80% of the screen */
-  max-width: 1200px; /* Limit the maximum width */
-  margin: 20px auto; /* Center the box horizontally and add vertical spacing */
-  box-sizing: border-box; /* Include padding in width calculation */
-}
+/* Layout for .CreateNewDeck-container lives in deck_details/DeckDetails.css (shared). */
 
-/* Restrict the search results grid */
-.CreateNewDeck-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
-  gap: 10px; /* Space between cards */
-  justify-content: center; /* Center the grid within the container */
-  width: 70%; /* Restrict the grid to 70% of the bounding box */
-  margin: 0 auto; /* Center the grid horizontally */
-  max-height: 70vh; /* Restrict the height to 70% of the viewport */
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  padding: 10px; /* Add padding inside the grid */
-  background: white; /* Add a white background for contrast */
-  border-radius: 8px; /* Rounded corners for the grid */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-  
-  .CreateNewDeck-card {
-    text-align: center;
-  }
-  
-  .CreateNewDeck-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-
-  .CreateNewDeck-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust card size */
-    gap: 10px; /* Add spacing between cards */
-  }
-  
-  .CreateNewDeck-card {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    width: 150px; /* Set a fixed width for the card */
-    height: 250px; /* Set a fixed height for the card */
-    overflow: hidden; /* Ensure content doesn't overflow */
-  }
-  
-  .CreateNewDeck-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .CreateNewDeck-card-counter {
-    position: absolute;
-    bottom: 5px; /* Position the counter at the bottom */
-    right: 5px; /* Position the counter at the right */
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-  }
-
-  .CreateNewDeck-deckname-input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-    width: 200px;
-  }
-  
-  .CreateNewDeck-deckname-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .CreateNewDeck-card-counter {
-    position: absolute;
-    bottom: 40px;
-    right: 5px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-  }
-
-.CreateNewDeck-selectors-container {
-  display: flex; /* Align selectors horizontally */
-  flex-wrap: wrap; /* Allow selectors to wrap to the next row */
-  gap: 20px; /* Add space between selectors */
-  justify-content: center; /* Center the selectors within the container */
-  margin-bottom: 20px; /* Add space below the container */
-  width: 100%; /* Ensure the container spans the full width of the middle box */
-  box-sizing: border-box; /* Include padding in width calculation */
-}
-
-.CreateNewDeck-selector,
-./* Specific styles for the search input and button */
-.CreateNewDeck-input-container {
-  display: flex; /* Align input and button horizontally */
-  flex-wrap: nowrap; /* Prevent wrapping */
-  gap: 10px; /* Add space between the input and button */
-  width: 100%; /* Ensure the container spans the full width */
-  box-sizing: border-box; /* Include padding and borders in width calculation */
-}
-
-.CreateNewDeck-input {
-  flex: 1; /* Allow the input to take up the remaining space */
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  box-sizing: border-box; /* Include padding and borders in width calculation */
-}
-
-.CreateNewDeck-button {
-  flex: 0 0 100px; /* Set a fixed width for the search button */
-  padding: 10px;
-  border-radius: 4px;
-  border: none;
-  background-color: #007bff;
+.CreateNewDeck-title {
+  margin: 0 0 4px;
   color: white;
-  cursor: pointer;
-  box-sizing: border-box; /* Include padding and borders in width calculation */
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-.CreateNewDeck-button:hover {
-  background-color: #0056b3;
-}
-
-/* General button styles (restore previous layout for other buttons) */
-button {
-  padding: 10px 20px; /* Restore padding for other buttons */
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block; /* Ensure buttons don't take up full width */
-  box-sizing: border-box; /* Include padding and borders in width calculation */
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.CreateNewDeck-label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px; /* Add space between label and dropdown */
+.CreateNewDeck-middle-box > p {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.9);
   text-align: center;
 }
 
-.CreateNewDeck-dropdown {
-  outline: 2px solid black; /* Default outline color */
-  padding: 5px;
-  border-radius: 4px;
-  width: 100%; /* Make the dropdown fill the width of its container */
-  box-sizing: border-box; /* Include padding and borders in width calculation */
-}
-/* Modal overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Modal content */
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  max-height: 80%;
-  overflow-y: auto;
-  position: relative;
-  text-align: left;
-}
-
-/* Modal close button */
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* Modal image */
-.modal-image {
-  display: block; /* Ensures the image behaves like a block element */
-  margin: 0 auto 20px; /* Centers the image horizontally and adds space below */
-  width: 40%; /* Adjust the width as needed */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Scrollable content */
-.modal-scrollable-content {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-/* Modal text */
-.modal-content p {
-  margin: 10px 0;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.modal-content a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.modal-content a:hover {
-  text-decoration: underline;
-}
-
-/* Info button on each card */
-.CreateNewDeck-info-button {
-  position: absolute;
-  top: 5px; /* Position at the top-right corner */
-  right: 5px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 10;
-  transition: background-color 0.3s ease;
-}
-
-.CreateNewDeck-info-button:hover {
-  background-color: rgba(0, 0, 0, 0.9);
+/* Bounding box for the entire middle section */
+.CreateNewDeck-middle-box {
+  background: var(--cc-panel-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cc-radius-lg);
+  box-shadow: var(--cc-shadow-lg);
+  padding: 26px 24px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  box-sizing: border-box;
 }
 
 .CreateNewDeck-format {
-  margin: 10px 0;
-  font-size: 18px;
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 18px;
+}
+
+.CreateNewDeck-format p {
+  margin: 0;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  font-size: 15px;
+}
+
+.CreateNewDeck-format strong {
+  color: white;
+}
+
+/* Deck name / description / create */
+.CreateNewDeck-deckname-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 560px;
+  margin: 24px auto 0;
+  padding: 20px;
+  border-radius: var(--cc-radius);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--cc-shadow-sm);
+}
+
+.CreateNewDeck-deckname-input,
+.CreateNewDeck-description-input {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1.5px solid #d6dbe3;
+  border-radius: var(--cc-radius-sm);
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color var(--cc-fast) ease, box-shadow var(--cc-fast) ease;
+}
+
+/* Inline style sets a top margin; the container's gap handles spacing */
+.CreateNewDeck-deckname-container .CreateNewDeck-description-input {
+  margin-top: 0 !important;
+}
+
+.CreateNewDeck-deckname-input:focus,
+.CreateNewDeck-description-input:focus {
+  outline: none;
+  border-color: var(--cc-blue);
+  box-shadow: var(--cc-focus);
+}
+
+.App .CreateNewDeck-deckname-button {
+  align-self: stretch;
+  padding: 13px 20px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #5cbf60, var(--cc-green-deep));
+}
+
+.App .CreateNewDeck-deckname-button:hover {
+  background: linear-gradient(135deg, var(--cc-green), #357f38);
+}
+
+/* Ride deck picker (Standard only) */
+.ride-deck-section {
+  max-width: 560px;
+  margin: 20px auto 0;
+  padding: 18px 20px;
+  border-radius: var(--cc-radius);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--cc-shadow-sm);
+}
+
+.ride-deck-section h3 {
+  margin: 0 0 12px;
+  color: var(--cc-ink);
   text-align: center;
 }
 
-.format-button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease;
+.ride-deck-hint {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #5b6472;
 }
 
-.format-button:hover {
-  background-color: #0056b3;
+.ride-deck-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .ride-deck-slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ride-deck-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  min-height: 120px;
+  border: 2px dashed #cfd6e0;
+  border-radius: var(--cc-radius-sm);
+  text-align: center;
+  font-size: 12px;
+}
+
+.ride-deck-slot.filled {
+  border-style: solid;
+  border-color: var(--cc-blue, #1976d2);
+}
+
+.ride-deck-slot-grade {
+  font-weight: 700;
+  color: var(--cc-ink);
+}
+
+.ride-deck-slot img {
+  width: 100%;
+  max-width: 90px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ride-deck-slot-name {
+  font-weight: 600;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.ride-deck-slot-empty {
+  margin: auto 0;
+  color: #9aa3b0;
+}
+
+.App .ride-deck-section .ride-deck-slot-clear {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Cards currently in the deck */
+.deck-card-container {
+  padding: 8px;
+  border-radius: var(--cc-radius-sm);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--cc-shadow-sm);
+  text-align: center;
+  font-size: 12px;
+  vertical-align: top;
+  transition: transform var(--cc-med) var(--cc-ease), box-shadow var(--cc-med) var(--cc-ease);
+}
+
+.deck-card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--cc-shadow);
+}
+
+/* Format picker modal */
+.App .format-button {
+  margin: 8px;
+  min-width: 140px;
+}
+
+.modal-content .format-button:first-of-type {
+  margin-left: 0;
+}
+
+/* Center the format picker's buttons */
+.CreateNewDeck-container > .modal-overlay .modal-content {
+  text-align: center;
+  max-width: 420px;
 }
 
 .CreateNewDeck-ride-button {
@@ -337,8 +236,26 @@ button:hover {
   color: #1976d2;
   transition: background 0.2s, color 0.2s;
 }
+
 .CreateNewDeck-ride-button:disabled {
   background: #1976d2;
   color: #fff;
   cursor: default;
+}
+
+/* General button styles (applies outside .App, e.g. before login) */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #0056b3;
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // Import API base URL configuration
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-function Login({ onLogin }) {
+function Login({ onLogin, onShowRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -29,23 +29,38 @@ function Login({ onLogin }) {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
-    <div className="Login">
-      <h2>Login</h2>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
-      {error && <p>{error}</p>}
+    <div className="auth-screen">
+      <form className="auth-card Login" onSubmit={handleSubmit}>
+        <p className="auth-brand">Cardfight Companion</p>
+        <h2>Login</h2>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+          autoComplete="username"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          autoComplete="current-password"
+        />
+        {error && <p className="auth-error">{error}</p>}
+        <button type="submit" className="auth-primary">Login</button>
+        {onShowRegister && (
+          <button type="button" className="auth-secondary" onClick={onShowRegister}>
+            Create an account
+          </button>
+        )}
+      </form>
     </div>
   );
 }

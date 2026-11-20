@@ -113,19 +113,18 @@ function DeckDetails() {
       </div>
 
       {/* Main Content Container */}
-      <div style={{ 
-        display: 'flex', 
-        gap: '20px', 
-        width: '100%', 
-        maxWidth: '1400px',
-        justifyContent: deck.deck_type === 'Standard' && rideDeckCards.length > 0 ? 'flex-start' : 'center'
-      }}>
+      <div
+        className="DeckDetails-content"
+        style={{
+          justifyContent: deck.deck_type === 'Standard' && rideDeckCards.length > 0 ? 'flex-start' : 'center'
+        }}
+      >
         
         {/* Main Deck Cards */}
         <div className="CreateNewDeck-grid-box" style={{ 
           flex: deck.deck_type === 'Standard' && rideDeckCards.length > 0 ? '1' : '0 0 auto'
         }}>
-          <h3 style={{ textAlign: 'center', margin: '0 0 20px 0', color: 'white' }}>Main Deck</h3>
+          <h3 className="DeckDetails-section-title">Main Deck</h3>
           {loading ? (
             <div className="loading-spinner"></div>
           ) : (
@@ -151,69 +150,23 @@ function DeckDetails() {
 
         {/* Ride Deck Section */}
         {deck.deck_type === 'Standard' && rideDeckCards.length > 0 && (
-          <div style={{ 
-            background: 'linear-gradient(135deg, #699fd0, #a2c4c9)',
-            padding: '20px',
-            borderRadius: '12px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            flex: '0 0 280px', 
-            height: 'calc(60vh)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflowY: 'auto'
-          }}>
-            <h3 style={{ textAlign: 'center', margin: '0 0 20px 0', color: 'white' }}>Ride Deck</h3>
+          <div className="DeckDetails-ride-box">
+            <h3 className="DeckDetails-section-title">Ride Deck</h3>
             {loading ? (
               <div className="loading-spinner"></div>
             ) : (
-              <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: '15px',
-                alignItems: 'center',
-                paddingBottom: '20px'
-              }}>
+              <div className="DeckDetails-ride-list">
                 {rideDeckCards.map((card, index) => (
                   <div
                     key={index}
+                    className="DeckDetails-ride-card"
                     onClick={() => openModal(card)}
-                    style={{ 
-                      backgroundColor: 'white',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      transition: 'transform 0.2s, box-shadow 0.2s',
-                      width: '140px',
-                      position: 'relative'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-5px)';
-                      e.target.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-                    }}
                   >
                     <img
                       src={`data:image/png;base64,${card.image}`}
                       alt={card.name || 'Card Image'}
-                      style={{ 
-                        width: '100%', 
-                        height: 'auto',
-                        display: 'block'
-                      }}
                     />
-                    <div style={{ 
-                      textAlign: 'center', 
-                      fontSize: '12px', 
-                      fontWeight: 'bold',
-                      color: '#333',
-                      padding: '8px 5px',
-                      backgroundColor: '#f5f5f5',
-                      borderTop: '1px solid #ddd'
-                    }}>
+                    <div className="DeckDetails-ride-grade">
                       Grade {card.grade}
                     </div>
                   </div>
@@ -228,7 +181,7 @@ function DeckDetails() {
       {modalCard && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>X</button>
+            <button className="modal-close" onClick={closeModal} aria-label="Close">×</button>
             <div className="modal-scrollable-content">
               {modalCard.image && (
                 <img

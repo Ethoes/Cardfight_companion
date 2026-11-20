@@ -1,103 +1,142 @@
 .TournamentNotes-container {
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-  color: #333;
+  padding: 100px 20px 40px; /* Clear the fixed banner */
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  color: var(--cc-text);
+}
+
+.TournamentNotes-container > h2 {
+  padding: 16px 20px;
+  margin: 0 auto 28px;
+  max-width: 600px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.TournamentNotes-container > .TournamentNotes-list > p {
+  text-align: center;
+  padding: 28px;
+  border-radius: var(--cc-radius);
+  background: var(--cc-surface);
+  border: 2px dashed rgba(105, 159, 208, 0.6);
+  color: var(--cc-muted);
 }
 
 .TournamentNotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .TournamentNotes-item {
   display: flex;
   justify-content: space-between;
-  align-items: stretch; /* Ensure all columns stretch to the same height */
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  background: radial-gradient(
-    circle,
-    #699fd0, /* Start with #699fd0 */
-    #a2c4c9 /* Transition to #a2c4c9 */
-  ); /* Gradient originating from the middle */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  align-items: stretch;
+  padding: 10px;
+  border: 1px solid var(--cc-surface-border);
+  border-left: 5px solid var(--cc-blue);
+  border-radius: var(--cc-radius);
+  background: var(--cc-surface);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--cc-shadow-sm);
+  transition:
+    transform var(--cc-med) var(--cc-ease),
+    box-shadow var(--cc-med) var(--cc-ease),
+    border-color var(--cc-med) ease;
 }
 
 .TournamentNotes-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--cc-shadow);
+  border-left-color: var(--cc-blue-deep);
+}
+
+.TournamentNotes-item:active {
+  transform: translateY(-1px);
+  transition-duration: 80ms;
 }
 
 .TournamentNotes-field {
   flex: 1;
-  margin-right: 10px;
   font-size: 14px;
-  color: #555;
+  color: var(--cc-muted);
   text-align: center;
   padding: 10px;
-  background: none; /* Remove the gradient from the individual columns */
-  border-radius: 4px;
   display: flex;
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  box-sizing: border-box; /* Include padding and border in the height calculation */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
-.TournamentNotes-field:last-child {
-  margin-right: 0; /* Remove margin for the last column */
+.TournamentNotes-field + .TournamentNotes-field {
+  border-left: 1px solid #e6eaf0;
 }
 
 .TournamentNotes-field strong {
-  color: #333;
+  color: var(--cc-blue-deep);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.TournamentNotes-save-button {
+.App .TournamentNotes-save-button {
   display: block;
-  margin: 20px auto;
-  padding: 12px 24px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  margin: 28px auto;
+  padding: 13px 28px;
+  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5cbf60, var(--cc-green-deep));
 }
 
-.TournamentNotes-save-button:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
+.App .TournamentNotes-save-button:hover {
+  background: linear-gradient(135deg, var(--cc-green), #357f38);
 }
 
+/* Create-tournament modal */
 .TournamentNotes-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background: rgba(22, 26, 38, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  z-index: 1100;
+  animation: cc-fade-in var(--cc-med) ease-out backwards;
 }
 
 .TournamentNotes-modal-content {
   background: white;
-  padding: 25px;
-  border-radius: 12px;
-  width: 400px;
+  padding: 28px;
+  border-radius: var(--cc-radius-lg);
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+  box-shadow: var(--cc-shadow-lg);
+  animation: cc-pop-in var(--cc-med) var(--cc-ease) backwards;
+}
+
+.TournamentNotes-modal-content h3 {
+  margin: 0 0 18px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: var(--cc-ink);
 }
 
 .TournamentNotes-modal-content label {
   display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #333;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cc-ink);
   text-align: left;
 }
 
@@ -105,47 +144,66 @@
 .TournamentNotes-modal-content textarea,
 .TournamentNotes-modal-content select {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
+  margin: 6px 0 14px;
+  padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  transition: border-color 0.3s;
+  font-family: inherit;
+  border: 1.5px solid #d6dbe3;
+  border-radius: var(--cc-radius-sm);
+  box-sizing: border-box;
+  background: white;
+  transition: border-color var(--cc-fast) ease, box-shadow var(--cc-fast) ease;
+}
+
+.TournamentNotes-modal-content textarea {
+  min-height: 80px;
+  resize: vertical;
 }
 
 .TournamentNotes-modal-content input:focus,
 .TournamentNotes-modal-content textarea:focus,
 .TournamentNotes-modal-content select:focus {
-  border-color: #4caf50;
+  border-color: var(--cc-blue);
+  box-shadow: var(--cc-focus);
   outline: none;
 }
 
-.TournamentNotes-modal-content button {
-  padding: 10px 20px;
+.App .TournamentNotes-modal-content button {
+  padding: 11px 22px;
   font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  font-weight: 600;
+  margin-top: 6px;
 }
 
-.TournamentNotes-modal-content button:first-of-type {
-  background-color: #4caf50;
-  color: white;
+.App .TournamentNotes-modal-content button:first-of-type {
+  background: linear-gradient(135deg, #5cbf60, var(--cc-green-deep));
   margin-right: 10px;
 }
 
-.TournamentNotes-modal-content button:first-of-type:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
+.App .TournamentNotes-modal-content button:first-of-type:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--cc-green), #357f38);
 }
 
-.TournamentNotes-modal-content button:last-of-type {
-  background-color: #f44336;
-  color: white;
+.App .TournamentNotes-modal-content button:last-of-type {
+  background: transparent;
+  color: var(--cc-muted);
+  box-shadow: none;
 }
 
-.TournamentNotes-modal-content button:last-of-type:hover {
-  background-color: #e53935;
-  transform: translateY(-2px);
+.App .TournamentNotes-modal-content button:last-of-type:hover {
+  background: #f1f3f6;
+  color: var(--cc-ink);
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .TournamentNotes-item {
+    flex-direction: column;
+  }
+
+  .TournamentNotes-field + .TournamentNotes-field {
+    border-left: none;
+    border-top: 1px solid #e6eaf0;
+  }
 }

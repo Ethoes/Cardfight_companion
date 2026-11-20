@@ -21,12 +21,18 @@ function CreateNewDeck({ username }) {
     setShowFormatModal(false); // Close the format selection modal
   };
 
+  const getTotalCopies = (card) => {
+    const mainCount = CurrentDeck.filter((deckCard) => deckCard.id === card.id).length;
+    const rideCount = Object.values(rideDeck).filter((rideCard) => rideCard?.id === card.id).length;
+    return mainCount + rideCount;
+  };
+
   const handleCardClick = (card) => {
     console.log('Card clicked:', card);
   
-    const cardCount = CurrentDeck.filter((deckCard) => deckCard.id === card.id).length;
-    if (cardCount >= 4) {
-      alert('You can only add up to 4 of the same card to a deck!');
+    // The 4-copy limit counts the main deck and ride deck together
+    if (getTotalCopies(card) >= 4) {
+      alert('You can only have up to 4 copies of the same card (main deck + ride deck)!');
       return;
     }
   
@@ -70,9 +76,23 @@ function CreateNewDeck({ username }) {
     setModalCard(null); // Close the modal
   };
 
-  // Helper to select a card for the ride deck
-  const handleSelectRideDeck = (grade, card) => {
+  // Put a card in (or take it out of) the ride deck slot for its grade.
+  // Ride deck cards are separate from the 50-card main deck.
+  const handleRideDeckToggle = (grade, card) => {
+    if (rideDeck[grade]?.id === card.id) {
+      setRideDeck(prev => ({ ...prev, [grade]: null }));
+      return;
+    }
+    const mainCount = CurrentDeck.filter((deckCard) => deckCard.id === card.id).length;
+    if (mainCount >= 4) {
+      alert('You already have 4 copies of this card in your main deck!');
+      return;
+    }
     setRideDeck(prev => ({ ...prev, [grade]: card }));
+  };
+
+  const clearRideDeckSlot = (grade) => {
+    setRideDeck(prev => ({ ...prev, [grade]: null }));
   };
 
   // Validation before creating a Standard deck
@@ -173,7 +193,47 @@ function CreateNewDeck({ username }) {
         currentDeck={CurrentDeck}
         showAddButton={false}
         compact={false}
+        rideDeck={format === 'Standard' ? rideDeck : null}
+        onRideDeckToggle={format === 'Standard' ? handleRideDeckToggle : null}
       />
+
+      {format === 'Standard' && (
+        <div className="ride-deck-section">
+          <h3>Ride Deck</h3>
+          <p className="ride-deck-hint">
+            Use the <strong>R</strong> button in the top-left corner of a card to put it in your ride deck.
+          </p>
+          <div className="ride-deck-slots">
+            {[0, 1, 2, 3].map(grade => {
+              const card = rideDeck[grade];
+              return (
+                <div key={grade} className={`ride-deck-slot ${card ? 'filled' : ''}`}>
+                  <span className="ride-deck-slot-grade">Grade {grade}</span>
+                  {card ? (
+                    <>
+                      <img
+                        src={`data:image/png;base64,${card.image}`}
+                        alt={card.name}
+                        onClick={() => handleCardInfo(card)}
+                      />
+                      <span className="ride-deck-slot-name">{card.name}</span>
+                      <button
+                        className="ride-deck-slot-clear"
+                        onClick={() => clearRideDeckSlot(grade)}
+                        aria-label={`Remove Grade ${grade} ride deck card`}
+                      >
+                        ×
+                      </button>
+                    </>
+                  ) : (
+                    <span className="ride-deck-slot-empty">Empty</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="CreateNewDeck-deckname-container" style={{ marginTop: '20px', textAlign: 'center' }}>
         <input
@@ -201,7 +261,7 @@ function CreateNewDeck({ username }) {
       {modalCard && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>X</button>
+            <button className="modal-close" onClick={closeModal} aria-label="Close">×</button>
             <div className="modal-scrollable-content">
               <img
                 src={`data:image/png;base64,${modalCard.image}`}
@@ -233,67 +293,6 @@ function CreateNewDeck({ username }) {
         </div>
       )}
 
-      {format === 'Standard' && (
-        <div className="ride-deck-section">
-          <h3>Ride Deck (Standard Only)</h3>
-          {[0, 1, 2, 3].map(grade => (
-            <div key={grade}>
-              <span>Grade {grade}: </span>
-              {rideDeck[grade]
-                ? <span>{rideDeck[grade].name}</span>
-                : <span style={{ color: 'red' }}>Not selected</span>}
-              <button
-                onClick={() => {
-                  // Show a modal or dropdown to select a card of this grade from CurrentDeck
-                  // For simplicity, just select the first matching card:
-                  const card = CurrentDeck.find(c => c.grade === `Grade ${grade}`);
-                  if (card) handleSelectRideDeck(grade, card);
-                  else alert(`No Grade ${grade} card in deck!`);
-                }}
-              >
-                Select
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {CurrentDeck.map((card, idx) => (
-        <div key={idx} className="deck-card-container" style={{ position: 'relative', display: 'inline-block', margin: 8 }}>
-          {/* Add to Ride Deck button (top-left) */}
-          {format === 'Standard' && card.grade && [0,1,2,3].includes(Number(card.grade.replace('Grade ',''))) && (
-            <button
-              style={{
-                position: 'absolute',
-                top: 2,
-                left: 2,
-                zIndex: 2,
-                background: rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '#1976d2' : '#fff',
-                color: rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '#fff' : '#1976d2',
-                border: '1px solid #1976d2',
-                borderRadius: '50%',
-                width: 24,
-                height: 24,
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                fontSize: 16,
-                lineHeight: '20px',
-                padding: 0,
-              }}
-              title={`Set as Grade ${card.grade.replace('Grade ', '')} Ride Deck card`}
-              onClick={() => handleSelectRideDeck(Number(card.grade.replace('Grade ','')), card)}
-              disabled={rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id}
-            >
-              {rideDeck[Number(card.grade.replace('Grade ',''))]?.id === card.id ? '✓' : '+'}
-            </button>
-          )}
-          {/* Card image and info */}
-          <img src={card.image} alt={card.name} style={{ width: 100, borderRadius: 8 }} />
-          <div>{card.name}</div>
-          <div>{card.grade}</div>
-          {/* ...other card info... */}
-        </div>
-      ))}
       </div>
       )}
     </div>

@@ -12,6 +12,25 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(current_dir, '..', 'database', 'second db', 'scraped_data_2.db')  # Define the database path as a constant
 
 
+def create_ride_deck_table():
+    """Create the ride_deck table if it doesn't exist."""
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ride_deck (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            deck_id INTEGER NOT NULL,
+            card_id INTEGER NOT NULL,
+            grade INTEGER NOT NULL,
+            FOREIGN KEY (deck_id) REFERENCES decks(deck_id) ON DELETE CASCADE
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+create_ride_deck_table()
+
+
 def get_data_from_db(query):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -481,6 +500,7 @@ def delete_deck_by_id(deck_id):
     """
     Delete a deck and all its associated cards from the database.
     """
+    conn = None
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -494,21 +514,26 @@ def delete_deck_by_id(deck_id):
         # Delete the deck itself
         cursor.execute("DELETE FROM decks WHERE deck_id = ?", (deck_id,))
         
-        conn.commit()
-        
         # Check if the deck was actually deleted
         deleted_rows = cursor.rowcount
-        conn.close()
+        conn.commit()
         
         return deleted_rows > 0
     except Exception as e:
+        # Roll back so a half-finished delete doesn't keep the DB write-locked
+        if conn:
+            conn.rollback()
         print(f"[ERROR] Failed to delete deck: {e}")
         return False
+    finally:
+        if conn:
+            conn.close()
 
 def delete_tournament_by_id(tournament_id):
     """
     Delete a tournament and all its associated match details from the database.
     """
+    conn = None
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -519,13 +544,17 @@ def delete_tournament_by_id(tournament_id):
         # Delete the tournament itself
         cursor.execute("DELETE FROM tournaments WHERE id = ?", (tournament_id,))
         
-        conn.commit()
-        
         # Check if the tournament was actually deleted
         deleted_rows = cursor.rowcount
-        conn.close()
+        conn.commit()
         
         return deleted_rows > 0
     except Exception as e:
+        # Roll back so a half-finished delete doesn't keep the DB write-locked
+        if conn:
+            conn.rollback()
         print(f"[ERROR] Failed to delete tournament: {e}")
         return False
+    finally:
+        if conn:
+            conn.close()

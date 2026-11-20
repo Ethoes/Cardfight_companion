@@ -2484,3 +2484,589 @@
 2026-03-20 17:11:12,846 - app - INFO - Response Duration: 1.283s
 2026-03-20 17:11:12,847 - app - INFO - === REQUEST COMPLETE ===
 2026-03-20 17:11:12,847 - werkzeug - INFO - 127.0.0.1 - - [20/Mar/2026 17:11:12] "POST /api/search HTTP/1.1" 200 -
+2026-11-19 23:10:39,853 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-11-19 23:10:40,033 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-11-19 23:10:40,055 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2026-11-19 23:11:19,100 - __main__ - INFO - Registering blueprints...
+2026-11-19 23:11:19,101 - __main__ - INFO - Auth blueprint registered
+2026-11-19 23:11:19,102 - __main__ - INFO - Deck blueprint registered
+2026-11-19 23:11:19,103 - __main__ - INFO - Card blueprint registered
+2026-11-19 23:11:19,103 - __main__ - INFO - Tournament blueprint registered
+2026-11-19 23:11:19,104 - __main__ - INFO - Misc blueprint registered
+2026-11-19 23:11:19,104 - __main__ - INFO - Rules blueprint registered
+2026-11-19 23:11:19,105 - __main__ - INFO - Feedback blueprint registered
+2026-11-19 23:11:19,105 - __main__ - INFO - All blueprints registered successfully
+2026-11-19 23:11:19,122 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.178.75:5000
+2026-11-19 23:11:19,122 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-11-19 23:15:14,549 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:14,551 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:14,551 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:14,551 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:14,551 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:14,551 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:14,552 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:14,552 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:14,552 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:14,552 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:14,552 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:14,552 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:14,552 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:14,552 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:14,552 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:14,553 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:14] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:14,553 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:14,553 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:14,553 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:14,554 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:14] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:14,559 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:14,559 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:14,559 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:14,559 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:14,559 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:14,559 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:14,559 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:14,559 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:14,560 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:14,560 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:14,560 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:14,560 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:14,560 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:14,560 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:14,561 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:14,561 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:14,561 - __main__ - INFO - Response Duration: 0.001s
+2026-11-19 23:15:14,562 - __main__ - INFO - Response Duration: 0.001s
+2026-11-19 23:15:14,562 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:14,562 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:14,562 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:14] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:14,562 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:14] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:15,975 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:15,976 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/cards
+2026-11-19 23:15:15,976 - __main__ - INFO - Request Path: /api/decks/2/cards
+2026-11-19 23:15:15,976 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:15,976 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:15,976 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:16,095 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:16,095 - __main__ - INFO - Response Duration: 0.119s
+2026-11-19 23:15:16,095 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:16,095 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:16] "GET /api/decks/2/cards HTTP/1.1" 200 -
+2026-11-19 23:15:16,122 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:16,123 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/cards
+2026-11-19 23:15:16,123 - __main__ - INFO - Request Path: /api/decks/2/cards
+2026-11-19 23:15:16,123 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:16,123 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:16,123 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:16,195 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:16,195 - __main__ - INFO - Response Duration: 0.072s
+2026-11-19 23:15:16,195 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:16,196 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:16,196 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/ride-deck
+2026-11-19 23:15:16,196 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:16] "GET /api/decks/2/cards HTTP/1.1" 200 -
+2026-11-19 23:15:16,196 - __main__ - INFO - Request Path: /api/decks/2/ride-deck
+2026-11-19 23:15:16,196 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:16,196 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:16,196 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:16,197 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:16,197 - __main__ - INFO - Response Duration: 0.001s
+2026-11-19 23:15:16,197 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:16,197 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:16] "GET /api/decks/2/ride-deck HTTP/1.1" 200 -
+2026-11-19 23:15:16,281 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:16,281 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/ride-deck
+2026-11-19 23:15:16,281 - __main__ - INFO - Request Path: /api/decks/2/ride-deck
+2026-11-19 23:15:16,283 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:16,283 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:16,283 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:16,283 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:16,283 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:16,283 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:16,284 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:16] "GET /api/decks/2/ride-deck HTTP/1.1" 200 -
+2026-11-19 23:15:26,017 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:26,018 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:26,018 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:26,018 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:26,018 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:26,018 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:26,018 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:26,018 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:26,018 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:26,018 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:26,019 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:26] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:26,019 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:26,020 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:26,021 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:26,021 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:26,021 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:26,021 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:26,021 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:26,021 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:26,022 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:26,022 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:26,023 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:26,023 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:26,021 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:26,023 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:26] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:26,023 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:26,023 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:26,023 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:26,026 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:26,026 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:26,027 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:26] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:26,028 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:26,029 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:26,029 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:26,029 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:26,029 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:26,029 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:26,029 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:26,032 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:26,032 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:26,032 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:26,033 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:26] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:27,841 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:27,841 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3/cards
+2026-11-19 23:15:27,841 - __main__ - INFO - Request Path: /api/decks/3/cards
+2026-11-19 23:15:27,841 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:27,841 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:27,841 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:28,014 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:28,014 - __main__ - INFO - Response Duration: 0.172s
+2026-11-19 23:15:28,014 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:28,014 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:28] "GET /api/decks/3/cards HTTP/1.1" 200 -
+2026-11-19 23:15:28,060 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:28,060 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3/cards
+2026-11-19 23:15:28,060 - __main__ - INFO - Request Path: /api/decks/3/cards
+2026-11-19 23:15:28,060 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:28,060 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:28,060 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:28,175 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:28,175 - __main__ - INFO - Response Duration: 0.115s
+2026-11-19 23:15:28,175 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:28,175 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:28] "GET /api/decks/3/cards HTTP/1.1" 200 -
+2026-11-19 23:15:31,834 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:31,835 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:31,835 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:31,835 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:31,835 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:31,835 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:31,836 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:31,836 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:31,836 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:31,836 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:31,836 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:31,836 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:31,836 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:31,836 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:31] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:31,837 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:31,837 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:31,838 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:31,839 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:31,839 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:31,839 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:31,839 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:31,839 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:31,839 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:31,839 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:31,840 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:31,840 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:31,840 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:31,840 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:31] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:31,840 - __main__ - INFO - Response Duration: 0.001s
+2026-11-19 23:15:31,840 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:31,841 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:31] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:31,842 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:31,845 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:31,845 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:31,845 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:31,845 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:31,845 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:31,845 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:31,846 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:31,846 - __main__ - INFO - Response Duration: 0.001s
+2026-11-19 23:15:31,846 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:31,846 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:31] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:32,987 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:32,987 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/1/cards
+2026-11-19 23:15:32,987 - __main__ - INFO - Request Path: /api/decks/1/cards
+2026-11-19 23:15:32,987 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:32,987 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:32,987 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:33,176 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:33,176 - __main__ - INFO - Response Duration: 0.188s
+2026-11-19 23:15:33,176 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:33,176 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:33] "GET /api/decks/1/cards HTTP/1.1" 200 -
+2026-11-19 23:15:33,219 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:33,220 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/1/cards
+2026-11-19 23:15:33,220 - __main__ - INFO - Request Path: /api/decks/1/cards
+2026-11-19 23:15:33,220 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:33,220 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:33,220 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:33,354 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:33,355 - __main__ - INFO - Response Duration: 0.134s
+2026-11-19 23:15:33,355 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:33,355 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:33] "GET /api/decks/1/cards HTTP/1.1" 200 -
+2026-11-19 23:15:43,327 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:43,327 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:43,327 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:43,327 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:43,329 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:43,329 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:43,329 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:43,329 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:43,329 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:43,329 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:43] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:43,329 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:43,329 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:43,329 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:43,329 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:43,329 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:43,330 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:43,330 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:43,330 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:43,330 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:43,330 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:43] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:43,331 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:43,332 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:43,332 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:43,332 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-19 23:15:43,332 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:43,332 - __main__ - INFO - Request Path: /api/decks
+2026-11-19 23:15:43,332 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:43,332 - __main__ - INFO - Request Method: POST
+2026-11-19 23:15:43,332 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:43,333 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:43,333 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:43,333 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:43,333 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:43,333 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-19 23:15:43,333 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:43,334 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:43,334 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:43,334 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:43,334 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:43,334 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:43,334 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:43] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:43,334 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:43] "POST /api/decks HTTP/1.1" 200 -
+2026-11-19 23:15:50,107 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:50,108 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3/cards
+2026-11-19 23:15:50,108 - __main__ - INFO - Request Path: /api/decks/3/cards
+2026-11-19 23:15:50,108 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:50,108 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:50,108 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:50,229 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:50,229 - __main__ - INFO - Response Duration: 0.121s
+2026-11-19 23:15:50,229 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:50,231 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:50] "GET /api/decks/3/cards HTTP/1.1" 200 -
+2026-11-19 23:15:50,273 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:50,274 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3/cards
+2026-11-19 23:15:50,274 - __main__ - INFO - Request Path: /api/decks/3/cards
+2026-11-19 23:15:50,274 - __main__ - INFO - Request Method: GET
+2026-11-19 23:15:50,274 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:50,274 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:50,390 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:50,390 - __main__ - INFO - Response Duration: 0.116s
+2026-11-19 23:15:50,390 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:50,390 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:50] "GET /api/decks/3/cards HTTP/1.1" 200 -
+2026-11-19 23:15:53,126 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:53,126 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3
+2026-11-19 23:15:53,126 - __main__ - INFO - Request Path: /api/decks/3
+2026-11-19 23:15:53,126 - __main__ - INFO - Request Method: OPTIONS
+2026-11-19 23:15:53,126 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'DELETE', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-19 23:15:53,126 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:53,126 - __main__ - INFO - Response Status: 200
+2026-11-19 23:15:53,126 - __main__ - INFO - Response Duration: 0.000s
+2026-11-19 23:15:53,126 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:53,127 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:53] "OPTIONS /api/decks/3 HTTP/1.1" 200 -
+2026-11-19 23:15:53,128 - __main__ - INFO - === NEW REQUEST ===
+2026-11-19 23:15:53,128 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3
+2026-11-19 23:15:53,129 - __main__ - INFO - Request Path: /api/decks/3
+2026-11-19 23:15:53,129 - __main__ - INFO - Request Method: DELETE
+2026-11-19 23:15:53,129 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=0'}
+2026-11-19 23:15:53,129 - __main__ - INFO - Request Args: {}
+2026-11-19 23:15:53,132 - __main__ - INFO - Response Status: 500
+2026-11-19 23:15:53,132 - __main__ - INFO - Response Duration: 0.003s
+2026-11-19 23:15:53,132 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-19 23:15:53,132 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2026 23:15:53] "[35m[1mDELETE /api/decks/3 HTTP/1.1[0m" 500 -
+2026-11-20 00:26:57,127 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-11-20 00:26:57,301 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-11-20 00:26:57,320 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2026-11-20 00:27:29,367 - __main__ - INFO - Registering blueprints...
+2026-11-20 00:27:29,367 - __main__ - INFO - Auth blueprint registered
+2026-11-20 00:27:29,368 - __main__ - INFO - Deck blueprint registered
+2026-11-20 00:27:29,369 - __main__ - INFO - Card blueprint registered
+2026-11-20 00:27:29,369 - __main__ - INFO - Tournament blueprint registered
+2026-11-20 00:27:29,370 - __main__ - INFO - Misc blueprint registered
+2026-11-20 00:27:29,370 - __main__ - INFO - Rules blueprint registered
+2026-11-20 00:27:29,371 - __main__ - INFO - Feedback blueprint registered
+2026-11-20 00:27:29,371 - __main__ - INFO - All blueprints registered successfully
+2026-11-20 00:27:29,386 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.178.75:5000
+2026-11-20 00:27:29,386 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-11-20 00:28:43,217 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:43,219 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3
+2026-11-20 00:28:43,219 - __main__ - INFO - Request Path: /api/decks/3
+2026-11-20 00:28:43,219 - __main__ - INFO - Request Method: OPTIONS
+2026-11-20 00:28:43,219 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'DELETE', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:43,219 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:43,219 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:43,220 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:28:43,220 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:43,220 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:43] "OPTIONS /api/decks/3 HTTP/1.1" 200 -
+2026-11-20 00:28:43,221 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:43,221 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/3
+2026-11-20 00:28:43,221 - __main__ - INFO - Request Path: /api/decks/3
+2026-11-20 00:28:43,221 - __main__ - INFO - Request Method: DELETE
+2026-11-20 00:28:43,222 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=0'}
+2026-11-20 00:28:43,222 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:43,229 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:43,229 - __main__ - INFO - Response Duration: 0.007s
+2026-11-20 00:28:43,229 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:43,229 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:43] "DELETE /api/decks/3 HTTP/1.1" 200 -
+2026-11-20 00:28:45,523 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:45,523 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:45,523 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-20 00:28:45,523 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-20 00:28:45,523 - __main__ - INFO - Request Path: /api/decks
+2026-11-20 00:28:45,523 - __main__ - INFO - Request Path: /api/decks
+2026-11-20 00:28:45,523 - __main__ - INFO - Request Method: OPTIONS
+2026-11-20 00:28:45,523 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:45,523 - __main__ - INFO - Request Method: OPTIONS
+2026-11-20 00:28:45,526 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:45,526 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:45,526 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:45,526 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:45,526 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:28:45,526 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:45,527 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:45,527 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:28:45,527 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:45] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-20 00:28:45,527 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:45,527 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:45] "OPTIONS /api/decks HTTP/1.1" 200 -
+2026-11-20 00:28:45,530 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:45,531 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Path: /api/decks
+2026-11-20 00:28:45,531 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Method: POST
+2026-11-20 00:28:45,531 - __main__ - INFO - Request URL: http://localhost:5000/api/decks
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Path: /api/decks
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Method: POST
+2026-11-20 00:28:45,531 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Content-Type': 'application/json', 'Content-Length': '21', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:45,531 - __main__ - INFO - Request Args: {}
+2026-11-20 00:28:45,531 - __main__ - INFO - Request JSON: {'username': 'Ethoes'}
+2026-11-20 00:28:45,533 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:45,533 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:45,533 - __main__ - INFO - Response Duration: 0.001s
+2026-11-20 00:28:45,533 - __main__ - INFO - Response Duration: 0.002s
+2026-11-20 00:28:45,533 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:45,533 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:45,534 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:45] "POST /api/decks HTTP/1.1" 200 -
+2026-11-20 00:28:45,534 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:45] "POST /api/decks HTTP/1.1" 200 -
+2026-11-20 00:28:49,838 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:49,839 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:28:49,839 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:28:49,839 - __main__ - INFO - Request Method: GET
+2026-11-20 00:28:49,839 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:49,839 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:28:49,840 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:49,840 - __main__ - INFO - Response Duration: 0.001s
+2026-11-20 00:28:49,840 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:49,840 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:49] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:28:49,844 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:49,844 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:28:49,844 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:28:49,844 - __main__ - INFO - Request Method: GET
+2026-11-20 00:28:49,844 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:49,844 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:28:49,845 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:49,845 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:28:49,845 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:49,845 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:49] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:28:50,285 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:28:50,285 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:28:50,286 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:28:50,286 - __main__ - INFO - Request Method: GET
+2026-11-20 00:28:50,286 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:28:50,286 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:28:50,286 - __main__ - INFO - Response Status: 200
+2026-11-20 00:28:50,286 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:28:50,286 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:28:50,286 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:28:50] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:31:01,560 - app - INFO - Registering blueprints...
+2026-11-20 00:31:01,560 - app - INFO - Auth blueprint registered
+2026-11-20 00:31:01,562 - app - INFO - Deck blueprint registered
+2026-11-20 00:31:01,562 - app - INFO - Card blueprint registered
+2026-11-20 00:31:01,563 - app - INFO - Tournament blueprint registered
+2026-11-20 00:31:01,563 - app - INFO - Misc blueprint registered
+2026-11-20 00:31:01,563 - app - INFO - Rules blueprint registered
+2026-11-20 00:31:01,564 - app - INFO - Feedback blueprint registered
+2026-11-20 00:31:01,564 - app - INFO - All blueprints registered successfully
+2026-11-20 00:33:06,058 - app - INFO - Registering blueprints...
+2026-11-20 00:33:06,058 - app - INFO - Auth blueprint registered
+2026-11-20 00:33:06,059 - app - INFO - Deck blueprint registered
+2026-11-20 00:33:06,060 - app - INFO - Card blueprint registered
+2026-11-20 00:33:06,061 - app - INFO - Tournament blueprint registered
+2026-11-20 00:33:06,061 - app - INFO - Misc blueprint registered
+2026-11-20 00:33:06,061 - app - INFO - Rules bot disabled (--no-rules)
+2026-11-20 00:33:06,062 - app - INFO - Feedback blueprint registered
+2026-11-20 00:33:06,062 - app - INFO - All blueprints registered successfully
+2026-11-20 00:33:06,075 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:06,075 - app - INFO - Request URL: http://localhost/api/rules/health
+2026-11-20 00:33:06,075 - app - INFO - Request Path: /api/rules/health
+2026-11-20 00:33:06,075 - app - INFO - Request Method: GET
+2026-11-20 00:33:06,075 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost'}
+2026-11-20 00:33:06,075 - app - INFO - Request Args: {}
+2026-11-20 00:33:06,075 - app - INFO - Response Status: 503
+2026-11-20 00:33:06,075 - app - INFO - Response Duration: 0.000s
+2026-11-20 00:33:06,075 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:33:06,076 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:06,076 - app - INFO - Request URL: http://localhost/api/rules/ask
+2026-11-20 00:33:06,076 - app - INFO - Request Path: /api/rules/ask
+2026-11-20 00:33:06,076 - app - INFO - Request Method: POST
+2026-11-20 00:33:06,076 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost', 'Content-Type': 'application/json', 'Content-Length': '17'}
+2026-11-20 00:33:06,076 - app - INFO - Request Args: {}
+2026-11-20 00:33:06,076 - app - INFO - Request JSON: {'question': 'x'}
+2026-11-20 00:33:06,076 - app - INFO - Response Status: 503
+2026-11-20 00:33:06,076 - app - INFO - Response Duration: 0.000s
+2026-11-20 00:33:06,076 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:33:06,076 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:06,076 - app - INFO - Request URL: http://localhost/api/decks/3/ride-deck
+2026-11-20 00:33:06,076 - app - INFO - Request Path: /api/decks/3/ride-deck
+2026-11-20 00:33:06,076 - app - INFO - Request Method: GET
+2026-11-20 00:33:06,076 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost'}
+2026-11-20 00:33:06,076 - app - INFO - Request Args: {}
+2026-11-20 00:33:06,077 - app - INFO - Response Status: 200
+2026-11-20 00:33:06,077 - app - INFO - Response Duration: 0.001s
+2026-11-20 00:33:06,077 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:33:06,077 - app - INFO - Registering blueprints...
+2026-11-20 00:33:06,078 - app - INFO - Auth blueprint registered
+2026-11-20 00:33:06,079 - app - INFO - Deck blueprint registered
+2026-11-20 00:33:06,080 - app - INFO - Card blueprint registered
+2026-11-20 00:33:06,081 - app - INFO - Tournament blueprint registered
+2026-11-20 00:33:06,081 - app - INFO - Misc blueprint registered
+2026-11-20 00:33:06,119 - app - INFO - Rules blueprint registered
+2026-11-20 00:33:06,120 - app - INFO - Feedback blueprint registered
+2026-11-20 00:33:06,120 - app - INFO - All blueprints registered successfully
+2026-11-20 00:33:06,120 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:06,120 - app - INFO - Request URL: http://localhost/api/rules/health
+2026-11-20 00:33:06,120 - app - INFO - Request Path: /api/rules/health
+2026-11-20 00:33:06,120 - app - INFO - Request Method: GET
+2026-11-20 00:33:06,120 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost'}
+2026-11-20 00:33:06,120 - app - INFO - Request Args: {}
+2026-11-20 00:33:06,142 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-11-20 00:33:06,160 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-11-20 00:33:06,162 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2026-11-20 00:33:09,824 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2026-11-20 00:33:09,824 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-11-20 00:33:10,507 - app - INFO - Response Status: 200
+2026-11-20 00:33:10,507 - app - INFO - Response Duration: 4.386s
+2026-11-20 00:33:10,507 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:33:10,508 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:10,508 - app - INFO - Request URL: http://localhost/api/rules/ask
+2026-11-20 00:33:10,508 - app - INFO - Request Path: /api/rules/ask
+2026-11-20 00:33:10,508 - app - INFO - Request Method: POST
+2026-11-20 00:33:10,508 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost', 'Content-Type': 'application/json', 'Content-Length': '17'}
+2026-11-20 00:33:10,508 - app - INFO - Request Args: {}
+2026-11-20 00:33:10,508 - app - INFO - Request JSON: {'question': 'x'}
+2026-11-20 00:33:10,657 - app - INFO - Response Status: 500
+2026-11-20 00:33:10,657 - app - INFO - Response Duration: 0.149s
+2026-11-20 00:33:10,657 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:33:10,658 - app - INFO - === NEW REQUEST ===
+2026-11-20 00:33:10,658 - app - INFO - Request URL: http://localhost/api/decks/3/ride-deck
+2026-11-20 00:33:10,658 - app - INFO - Request Path: /api/decks/3/ride-deck
+2026-11-20 00:33:10,658 - app - INFO - Request Method: GET
+2026-11-20 00:33:10,658 - app - INFO - Request Headers: {'User-Agent': 'Werkzeug/3.1.3', 'Host': 'localhost'}
+2026-11-20 00:33:10,658 - app - INFO - Request Args: {}
+2026-11-20 00:33:10,658 - app - INFO - Response Status: 200
+2026-11-20 00:33:10,658 - app - INFO - Response Duration: 0.000s
+2026-11-20 00:33:10,659 - app - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:09,296 - __main__ - INFO - Registering blueprints...
+2026-11-20 00:34:09,297 - __main__ - INFO - Auth blueprint registered
+2026-11-20 00:34:09,298 - __main__ - INFO - Deck blueprint registered
+2026-11-20 00:34:09,298 - __main__ - INFO - Card blueprint registered
+2026-11-20 00:34:09,300 - __main__ - INFO - Tournament blueprint registered
+2026-11-20 00:34:09,300 - __main__ - INFO - Misc blueprint registered
+2026-11-20 00:34:09,301 - __main__ - INFO - Rules bot disabled (--no-rules)
+2026-11-20 00:34:09,301 - __main__ - INFO - Feedback blueprint registered
+2026-11-20 00:34:09,301 - __main__ - INFO - All blueprints registered successfully
+2026-11-20 00:34:09,308 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.178.75:5000
+2026-11-20 00:34:09,308 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-11-20 00:34:22,888 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:22,888 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:34:22,888 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:34:22,888 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:22,890 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:22,890 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:34:22,890 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:22,890 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:34:22,890 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:22,891 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:22] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:34:22,895 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:22,896 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:34:22,896 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:34:22,896 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:22,896 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:22,896 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:34:22,896 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:22,896 - __main__ - INFO - Response Duration: 0.000s
+2026-11-20 00:34:22,896 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:22,896 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:22] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:34:23,337 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:23,338 - __main__ - INFO - Request URL: http://localhost:5000/api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc
+2026-11-20 00:34:23,338 - __main__ - INFO - Request Path: /api/all-decks
+2026-11-20 00:34:23,338 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:23,338 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:23,338 - __main__ - INFO - Request Args: {'page': '1', 'per_page': '10', 'search': '', 'sort_field': 'deck_id', 'sort_direction': 'desc'}
+2026-11-20 00:34:23,339 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:23,339 - __main__ - INFO - Response Duration: 0.001s
+2026-11-20 00:34:23,339 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:23,339 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:23] "GET /api/all-decks?page=1&per_page=10&search=&sort_field=deck_id&sort_direction=desc HTTP/1.1" 200 -
+2026-11-20 00:34:24,457 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:24,457 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/cards
+2026-11-20 00:34:24,457 - __main__ - INFO - Request Path: /api/decks/2/cards
+2026-11-20 00:34:24,457 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:24,457 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:24,457 - __main__ - INFO - Request Args: {}
+2026-11-20 00:34:24,540 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:24,540 - __main__ - INFO - Response Duration: 0.083s
+2026-11-20 00:34:24,540 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:24,540 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:24] "GET /api/decks/2/cards HTTP/1.1" 200 -
+2026-11-20 00:34:24,559 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:24,559 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/cards
+2026-11-20 00:34:24,559 - __main__ - INFO - Request Path: /api/decks/2/cards
+2026-11-20 00:34:24,559 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:24,559 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:24,559 - __main__ - INFO - Request Args: {}
+2026-11-20 00:34:24,580 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:24,580 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/ride-deck
+2026-11-20 00:34:24,580 - __main__ - INFO - Request Path: /api/decks/2/ride-deck
+2026-11-20 00:34:24,580 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:24,580 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:24,580 - __main__ - INFO - Request Args: {}
+2026-11-20 00:34:24,581 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:24,581 - __main__ - INFO - Response Duration: 0.001s
+2026-11-20 00:34:24,581 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:24,581 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:24] "GET /api/decks/2/ride-deck HTTP/1.1" 200 -
+2026-11-20 00:34:24,641 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:24,641 - __main__ - INFO - Response Duration: 0.081s
+2026-11-20 00:34:24,641 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:24,641 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:24] "GET /api/decks/2/cards HTTP/1.1" 200 -
+2026-11-20 00:34:24,679 - __main__ - INFO - === NEW REQUEST ===
+2026-11-20 00:34:24,679 - __main__ - INFO - Request URL: http://localhost:5000/api/decks/2/ride-deck
+2026-11-20 00:34:24,679 - __main__ - INFO - Request Path: /api/decks/2/ride-deck
+2026-11-20 00:34:24,679 - __main__ - INFO - Request Method: GET
+2026-11-20 00:34:24,679 - __main__ - INFO - Request Headers: {'Host': 'localhost:5000', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0', 'Accept': '*/*', 'Accept-Language': 'en-US,en;q=0.9', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Referer': 'http://localhost:3000/', 'Origin': 'http://localhost:3000', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Priority': 'u=4'}
+2026-11-20 00:34:24,682 - __main__ - INFO - Request Args: {}
+2026-11-20 00:34:24,683 - __main__ - INFO - Response Status: 200
+2026-11-20 00:34:24,683 - __main__ - INFO - Response Duration: 0.001s
+2026-11-20 00:34:24,683 - __main__ - INFO - === REQUEST COMPLETE ===
+2026-11-20 00:34:24,683 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2026 00:34:24] "GET /api/decks/2/ride-deck HTTP/1.1" 200 -

@@ -97,8 +97,13 @@ function DeckDetails() {
       <button className="delete-deck-button" onClick={handleDeleteDeck}>
         Delete Deck
       </button>
-      <button className="test-hand-button" onClick={handleTestHand}>
-        Test Hand
+      <button
+        className="test-hand-button"
+        onClick={handleTestHand}
+        disabled={loading}
+        title={loading ? 'Loading the deck…' : undefined}
+      >
+        {loading ? 'Loading…' : 'Test Hand'}
       </button>
 
       {/* Title Section */}

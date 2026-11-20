@@ -1,813 +1,349 @@
-// ...existing imports...
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  ActionToolbar,
+  BoardInteractionContext,
+  CardActionBar,
+  CardPreview,
+  ContextMenu,
+  Hand,
+  Modal,
+  PileViewer,
+  PlayerBoard,
+  TurnTracker,
+  ZONE,
+  actions,
+  newSeed,
+  nextPhase,
+  setAutoPhaseActions,
+  setPhase,
+  topCards,
+  useBoardInteraction,
+  useCheckResolver,
+  useGame,
+  zoneLabel,
+} from '../../game';
 import './TestHand.css';
 
-const FIELD_ZONES = [
-  { id: 'rg1', label: 'Rear-Guard 1' },
-  { id: 'vanguard', label: 'Vanguard' },
-  { id: 'rg2', label: 'Rear-Guard 2' },
-  { id: 'rg3', label: 'Rear-Guard 3' },
-  { id: 'rg4', label: 'Rear-Guard 4' },
-  { id: 'rg5', label: 'Rear-Guard 5' },
-];
+const PLAYER_ID = 'p1';
+const PLAYER_IDS = [PLAYER_ID];
+const EMPTY = [];
 
+/**
+ * Solo "goldfish" table for trying out a deck: one player, local state.
+ * All game logic lives in src/game so a player-vs-player mode can reuse it.
+ */
 function TestHand() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { deck, cards, rideDeckCards } = location.state || {};
+  const mainDeck = cards || EMPTY;
+  const rideDeck = rideDeckCards || EMPTY;
 
-  const filteredCards = deck && deck.format === 'Premium'
-    ? (cards || []).filter((card) => card.type !== 'G Unit')
-    : (cards || []);
-  const shuffledCards = [...filteredCards].sort(() => Math.random() - 0.5);
+  const buildPlayers = useCallback(() => [{
+    id: PLAYER_ID,
+    name: 'You',
+    mainDeck,
+    rideDeck,
+    seed: newSeed(),
+  }], [mainDeck, rideDeck]);
 
-  const [hand, setHand] = useState(shuffledCards.slice(0, 5));
-  const [deckStack, setDeckStack] = useState(shuffledCards.slice(5));
-  const [rideStack, setRideStack] = useState(rideDeckCards || [])
-  // Vanguard is now a stack (array)
-  const [field, setField] = useState({
-    rg1: null,
-    vanguard: [],
-    rg2: null,
-    rg3: null,
-    rg4: null,
-    rg5: null,
+  const { game, dispatch, dispatchFor, undo, redo, reset, canUndo, canRedo } = useGame(buildPlayers);
+  const player = game.players[PLAYER_ID];
+  const act = dispatchFor(PLAYER_ID);
+  const z = player.zones;
+
+  // ---- local UI state ------------------------------------------------------
+  const [viewer, setViewer] = useState(null); // { type: 'zone', zone } | { type: 'top' } | { type: 'search' }
+  const [topCount, setTopCount] = useState(3);
+  const [deckMenu, setDeckMenu] = useState(null); // { x, y }
+  const [infoCard, setInfoCard] = useState(null);
+  const [mulliganMarks, setMulliganMarks] = useState([]);
+
+  const preGame = !player.stoodUp;
+
+  // Drive / damage checks sit in the trigger zone for 2s, then move on.
+  useCheckResolver(game.players, dispatchFor, PLAYER_IDS);
+
+  const interceptCardClick = useCallback((playerId, instance, zone) => {
+    if (!preGame || zone !== ZONE.HAND) return false;
+    setMulliganMarks((marks) => (marks.includes(instance.uid)
+      ? marks.filter((uid) => uid !== instance.uid)
+      : [...marks, instance.uid]));
+    return true;
+  }, [preGame]);
+
+  const interaction = useBoardInteraction({
+    dispatchFor,
+    interactivePlayers: PLAYER_IDS,
+    interceptCardClick,
+    markedUids: preGame ? mulliganMarks : EMPTY,
   });
-  const [drop, setDrop] = useState([]); // Drop pile (stack)
-  const [damage, setDamage] = useState([]); // Damage zone
-  const [faceDownDamage, setFaceDownDamage] = useState([]); // Indices of face-down cards
-  const [showDrop, setShowDrop] = useState(false); // For viewing drop pile
-  const [showVanguard, setShowVanguard] = useState(false); // For viewing vanguard pile
-  const [dragged, setDragged] = useState(null);
-  const [showDeckMenu, setShowDeckMenu] = useState(false);
-  const [deckMenuPos, setDeckMenuPos] = useState({ x: 0, y: 0 });
-  const [showDeckTopX, setShowDeckTopX] = useState(false);
-  const [deckTopX, setDeckTopXValue] = useState(1); // Changed setter name
-  const [showFullDeck, setShowFullDeck] = useState(false);
-  const [rotatedField, setRotatedField] = useState({}); // { zoneId: degrees }
 
-  React.useEffect(() => {
-    const hideMenu = () => setShowDeckMenu(false);
-    if (showDeckMenu) {
-      window.addEventListener('click', hideMenu);
-      return () => window.removeEventListener('click', hideMenu);
+  // ---- game actions --------------------------------------------------------
+  const startGame = () => {
+    if (mulliganMarks.length) act(actions.mulligan(mulliganMarks));
+    act(actions.standUp());
+    setMulliganMarks([]);
+  };
+
+  const newGame = () => {
+    reset();
+    setViewer(null);
+    setMulliganMarks([]);
+    interaction.clearSelection();
+  };
+
+  const openDeckMenu = (e) => {
+    e.preventDefault();
+    setDeckMenu({ x: e.clientX, y: e.clientY });
+  };
+
+  const deckEmpty = z[ZONE.DECK].length === 0;
+  const deckActions = [
+    { label: 'Draw', onClick: () => act(actions.draw()), disabled: deckEmpty, title: 'Draw the top card of your deck' },
+    { label: 'Drive check', onClick: () => act(actions.driveCheck()), disabled: deckEmpty, title: 'Reveal the top card in the trigger zone, then add it to your hand' },
+    { label: 'Damage check', onClick: () => act(actions.damageCheck()), disabled: deckEmpty, title: 'Reveal the top card in the trigger zone, then put it into your damage zone' },
+    { label: 'Soul charge', onClick: () => act(actions.soulCharge()), disabled: deckEmpty, title: 'Put the top card of your deck into your soul' },
+    { label: 'Look at top…', onClick: () => setViewer({ type: 'top' }), disabled: deckEmpty },
+    { label: 'Search deck', onClick: () => setViewer({ type: 'search' }), disabled: deckEmpty },
+    { label: 'Shuffle', onClick: () => act(actions.shuffleDeck()), disabled: deckEmpty },
+  ];
+
+  const faceUpDamage = z[ZONE.DAMAGE].filter((c) => !c.faceDown).length;
+  const faceDownDamage = z[ZONE.DAMAGE].length - faceUpDamage;
+
+  const toolbarGroups = [
+    { label: 'Deck', actions: deckActions },
+    {
+      label: 'Field',
+      actions: [
+        {
+          label: `Ride${z[ZONE.RIDE_DECK].length ? ` (${z[ZONE.RIDE_DECK].length})` : ''}`,
+          onClick: () => act(actions.rideFromRideDeck()),
+          disabled: !z[ZONE.RIDE_DECK].length,
+          tone: 'accent',
+          title: 'Ride the next card of your ride deck (discard a card from hand as the cost)',
+        },
+        { label: 'Stand all', onClick: () => act(actions.standAll()), title: 'Stand all your units' },
+        {
+          label: 'Drive checks → hand',
+          onClick: () => act(actions.resolveDriveChecks()),
+          disabled: !z[ZONE.TRIGGER].length,
+        },
+        {
+          label: 'Retire guardians',
+          onClick: () => act(actions.retireGuardians()),
+          disabled: !z[ZONE.GUARDIAN].length,
+          title: 'Put all cards on the guardian circle into the drop zone',
+        },
+      ],
+    },
+    {
+      label: 'Cost',
+      actions: [
+        { label: 'Counter blast 1', onClick: () => act(actions.counterBlast(1)), disabled: !faceUpDamage },
+        { label: 'Counter charge 1', onClick: () => act(actions.counterCharge(1)), disabled: !faceDownDamage },
+        { label: 'Soul blast 1', onClick: () => act(actions.moveTopCards(ZONE.SOUL, ZONE.DROP, 1)), disabled: !z[ZONE.SOUL].length },
+      ],
+    },
+  ];
+
+  // ---- viewer --------------------------------------------------------------
+  const renderViewer = () => {
+    if (!viewer) return null;
+    const close = () => setViewer(null);
+
+    if (viewer.type === 'top') {
+      const count = Math.max(1, Math.min(topCount, z[ZONE.DECK].length || 1));
+      return (
+        <PileViewer
+          playerId={PLAYER_ID}
+          zone={ZONE.DECK}
+          cards={topCards(player, ZONE.DECK, count)}
+          title={`Top ${count} of your deck`}
+          onClose={close}
+          headerControls={(
+            <label>
+              Look at the top{' '}
+              <input
+                type="number"
+                min={1}
+                max={z[ZONE.DECK].length}
+                value={topCount}
+                onChange={(e) => setTopCount(Number(e.target.value) || 1)}
+              />{' '}
+              cards
+            </label>
+          )}
+          actions={(
+            <>
+              <button type="button" className="vg-btn" onClick={() => { act(actions.shuffleDeck()); close(); }}>Shuffle deck</button>
+              <button type="button" className="vg-btn vg-btn--primary" onClick={close}>Done</button>
+            </>
+          )}
+        />
+      );
     }
-  }, [showDeckMenu]);
 
+    if (viewer.type === 'search') {
+      return (
+        <PileViewer
+          playerId={PLAYER_ID}
+          zone={ZONE.DECK}
+          cards={[...z[ZONE.DECK]].reverse()}
+          title={`Search deck (${z[ZONE.DECK].length})`}
+          onClose={close}
+          actions={(
+            <>
+              <button type="button" className="vg-btn" onClick={close}>Close without shuffling</button>
+              <button type="button" className="vg-btn vg-btn--primary" onClick={() => { act(actions.shuffleDeck()); close(); }}>
+                Shuffle &amp; close
+              </button>
+            </>
+          )}
+        />
+      );
+    }
+
+    const zoneCards = [...z[viewer.zone]].reverse();
+    return (
+      <PileViewer
+        playerId={PLAYER_ID}
+        zone={viewer.zone}
+        cards={zoneCards}
+        title={`${zoneLabel(viewer.zone)} (${zoneCards.length})`}
+        onClose={close}
+      />
+    );
+  };
+
+  // ---- render --------------------------------------------------------------
   if (!deck || !cards) {
-    return <p>No deck selected for testing.</p>;
+    return (
+      <div className="vg-root TestHand TestHand--empty">
+        <div className="TestHand-empty">
+          <h2>No deck selected</h2>
+          <p>Open one of your decks and press <strong>Test Hand</strong> to try it out here.</p>
+          <button type="button" className="vg-btn vg-btn--primary" onClick={() => navigate('/view-user-decks')}>
+            Go to my decks
+          </button>
+        </div>
+      </div>
+    );
   }
-
-  // Drag from hand
-  const onHandDragStart = (index) => setDragged({ from: 'hand', index });
-  // Drag from field
-  const onFieldDragStart = (zoneId) => {
-    if (zoneId === 'vanguard') {
-      setDragged({ from: 'vanguard', index: field.vanguard.length - 1 });
-    } else {
-      setDragged({ from: 'field', zoneId });
-    }
-  };
-  // Drag from drop
-  const onDropPileDragStart = (index) => setDragged({ from: 'drop', index });
-  // Drag from vanguard pile
-  const onVanguardPileDragStart = (index) => setDragged({ from: 'vanguard', index });
-  // Drag from damage
-  const onDamageDragStart = (index) => setDragged({ from: 'damage', index });
-
-  // Drop on field
-const onFieldDrop = (zoneId) => {
-  if (!dragged) return;
-  if (zoneId === 'vanguard') {
-    if (dragged.from === 'hand') {
-      setField({ ...field, vanguard: [...field.vanguard, hand[dragged.index]] });
-      setHand(hand.filter((_, idx) => idx !== dragged.index));
-    }
-    if (dragged.from === 'drop') {
-      setField({ ...field, vanguard: [...field.vanguard, drop[dragged.index]] });
-      setDrop(drop.filter((_, idx) => idx !== dragged.index));
-    }
-    if (dragged.from === 'damage') {
-      setField({ ...field, vanguard: [...field.vanguard, damage[dragged.index]] });
-      setDamage(damage.filter((_, idx) => idx !== dragged.index));
-    }
-    if (dragged.from === 'field' && dragged.zoneId !== 'vanguard') {
-      // Move from a rear-guard to vanguard stack
-      if (field[dragged.zoneId]) {
-        setField({
-          ...field,
-          vanguard: [...field.vanguard, field[dragged.zoneId]],
-          [dragged.zoneId]: null,
-        });
-      }
-    }
-    if (dragged.from === 'vanguard' && typeof dragged.index === 'number') {
-      // Move from vanguard pile to top of vanguard pile (reorder)
-      const card = field.vanguard[dragged.index];
-      const newVanguard = field.vanguard.filter((_, idx) => idx !== dragged.index);
-      setField({ ...field, vanguard: [...newVanguard, card] });
-    }
-  } else {
-    // Allow moving from field to field (rear-guard to rear-guard)
-    if (dragged.from === 'field' && dragged.zoneId !== zoneId && field[dragged.zoneId] && !field[zoneId]) {
-      setField({
-        ...field,
-        [zoneId]: field[dragged.zoneId],
-        [dragged.zoneId]: null,
-      });
-      // Reset rotation for the source zone
-      setRotatedField(prev => {
-        const updated = { ...prev };
-        delete updated[dragged.zoneId];
-        return updated;
-      });
-    }
-    if (dragged.from === 'vanguard' && typeof dragged.index === 'number' && !field[zoneId]) {
-      setField({
-        ...field,
-        [zoneId]: field.vanguard[dragged.index],
-        vanguard: field.vanguard.filter((_, idx) => idx !== dragged.index),
-      });
-    }
-    if (dragged.from === 'hand' && !field[zoneId]) {
-      setField({ ...field, [zoneId]: hand[dragged.index] });
-      setHand(hand.filter((_, idx) => idx !== dragged.index));
-    }
-    if (dragged.from === 'drop' && !field[zoneId]) {
-      setField({ ...field, [zoneId]: drop[dragged.index] });
-      setDrop(drop.filter((_, idx) => idx !== dragged.index));
-    }
-    if (dragged.from === 'damage' && !field[zoneId]) {
-      setField({ ...field, [zoneId]: damage[dragged.index] });
-      setDamage(damage.filter((_, idx) => idx !== dragged.index));
-    }
-    // New: Allow moving from fullDeck to field
-    if (dragged.from === 'fullDeck' && !field[zoneId]) {
-      setField({ ...field, [zoneId]: deckStack[dragged.index] });
-      setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-      setShowFullDeck(false);
-    }
-  }
-  setDragged(null);
-};
-
-// Drop on hand
-const onHandDrop = () => {
-  if (!dragged) return;
-  // From field to hand
-  if (dragged.from === 'field' && dragged.zoneId && field[dragged.zoneId]) {
-    setHand([...hand, field[dragged.zoneId]]);
-    setField({ ...field, [dragged.zoneId]: null });
-  }
-  // From vanguard stack to hand
-  if (dragged.from === 'vanguard' && typeof dragged.index === 'number') {
-    setHand([...hand, field.vanguard[dragged.index]]);
-    setField({ ...field, vanguard: field.vanguard.filter((_, idx) => idx !== dragged.index) });
-  }
-  // From drop to hand
-  if (dragged.from === 'drop' && typeof dragged.index === 'number') {
-    setHand([...hand, drop[dragged.index]]);
-    setDrop(drop.filter((_, idx) => idx !== dragged.index));
-  }
-  // From damage to hand
-  if (dragged.from === 'damage' && typeof dragged.index === 'number') {
-    setHand([...hand, damage[dragged.index]]);
-    setDamage(damage.filter((_, idx) => idx !== dragged.index));
-  }
-  // From deckTopX
-  if (dragged.from === 'deckTopX') {
-    setHand([...hand, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowDeckTopX(false);
-  }
-  // New: From fullDeck to hand
-  if (dragged.from === 'fullDeck') {
-    setHand([...hand, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowFullDeck(false);
-  }
-};
-
-const onDamageCardRightClick = (e, idx) => {
-  e.preventDefault();
-  setFaceDownDamage((prev) =>
-    prev.includes(idx)
-      ? prev.filter((i) => i !== idx)
-      : [...prev, idx]
-  );
-};
-
-// Drop on drop pile
-const onDropDrop = () => {
-  if (!dragged) return;
-  // ...existing logic...
-    if (dragged.from === 'hand' && typeof dragged.index === 'number') {
-    setDrop([...drop, hand[dragged.index]]);
-    setHand(hand.filter((_, idx) => idx !== dragged.index));
-  }
-  if (dragged.from === 'vanguard' && typeof dragged.index === 'number') {
-    setDrop([...drop, field.vanguard[dragged.index]]);
-    setField({ ...field, vanguard: field.vanguard.filter((_, idx) => idx !== dragged.index) });
-  }
-  if (dragged.from === 'field' && dragged.zoneId && field[dragged.zoneId]) {
-    setDrop([...drop, field[dragged.zoneId]]);
-    setField({ ...field, [dragged.zoneId]: null });
-  }
-  if (dragged.from === 'damage' && typeof dragged.index === 'number') {
-    setDrop([...drop, damage[dragged.index]]);
-    setDamage(damage.filter((_, idx) => idx !== dragged.index));
-  }
-  // From deckTopX
-  if (dragged.from === 'deckTopX') {
-    setDrop([...drop, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowDeckTopX(false);
-  }
-  // New: From fullDeck to drop
-  if (dragged.from === 'fullDeck') {
-    setDrop([...drop, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowFullDeck(false);
-  }
-  setDragged(null);
-};
-
-const onDamageDrop = () => {
-  if (!dragged) return;
-  // From hand to damage
-  if (dragged.from === 'hand' && typeof dragged.index === 'number') {
-    setDamage([...damage, hand[dragged.index]]);
-    setHand(hand.filter((_, idx) => idx !== dragged.index));
-  }
-  // From field to damage
-  if (dragged.from === 'field' && dragged.zoneId && field[dragged.zoneId]) {
-    setDamage([...damage, field[dragged.zoneId]]);
-    setField({ ...field, [dragged.zoneId]: null });
-  }
-  // From vanguard stack to damage
-  if (dragged.from === 'vanguard' && typeof dragged.index === 'number') {
-    setDamage([...damage, field.vanguard[dragged.index]]);
-    setField({ ...field, vanguard: field.vanguard.filter((_, idx) => idx !== dragged.index) });
-  }
-  // From drop to damage
-  if (dragged.from === 'drop' && typeof dragged.index === 'number') {
-    setDamage([...damage, drop[dragged.index]]);
-    setDrop(drop.filter((_, idx) => idx !== dragged.index));
-  }
-  // From deckTopX
-  if (dragged.from === 'deckTopX') {
-    setDamage([...damage, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowDeckTopX(false);
-  }
-  // New: From fullDeck to damage
-  if (dragged.from === 'fullDeck') {
-    setDamage([...damage, deckStack[dragged.index]]);
-    setDeckStack(deckStack.filter((_, idx) => idx !== dragged.index));
-    setShowFullDeck(false);
-  }
-  setDragged(null);
-};
-
-  // Draw a card from the deckStack to hand
-  const drawCard = () => {
-    if (deckStack.length === 0) return;
-    setHand([...hand, deckStack[0]]);
-    setDeckStack(deckStack.slice(1));
-  };
-
-  //TODO use ridestack not deckstack
-  const rideCard = () => {
-    if (rideStack.length === 0) return;
-    setField({ ...field, vanguard: [...field.vanguard, rideStack[0]] });
-    setRideStack(rideStack.slice(1));
-  };
-
-  const onFieldCardRightClick = (e, zoneId) => {
-  e.preventDefault();
-  setRotatedField(prev => {
-    const current = prev[zoneId] || 0;
-    // If not rotated, rotate 90deg right. If rotated, rotate back to 0.
-    return {
-      ...prev,
-      [zoneId]: current === 0 ? 90 : 0
-    };
-  });
-};
 
   return (
-    <div className="TestHand-container" style={{ display: 'flex', alignItems: 'flex-start' }}>
-      {/* Damage Zone on the left */}
-      <div
-        className="DamageZone"
-        onDragOver={e => e.preventDefault()}
-        onDrop={onDamageDrop}
-        style={{
-          minWidth: 120,
-          minHeight: 400,
-          background: '#f8d7da',
-          border: '2px solid #b71c1c',
-          borderRadius: 12,
-          marginRight: 24,
-          padding: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}
-        title="Damage Zone"
-      >
-        <div style={{ fontWeight: 'bold', fontSize: 18, color: '#b71c1c', marginBottom: 8 }}>
-          Damage ({damage.length})
-        </div>
-        {damage.length === 0 && <div style={{ color: '#b71c1c', fontSize: 14 }}>Empty</div>}
-        {damage.map((card, idx) => (
-          <div
-            key={idx}
-            style={{ width: 90, marginBottom: -20, cursor: 'grab' }}
-            draggable
-            onDragStart={() => onDamageDragStart(idx)}
-            onContextMenu={(e) => onDamageCardRightClick(e, idx)}
-            title="Drag to hand, field, or drop. Right-click to turn face down/up."
-          >
-            {faceDownDamage.includes(idx) ? (
-              <div
-                style={{
-                  width: '100%',
-                  height: 126, // match image aspect ratio
-                  borderRadius: 8,
-                  background: '#111',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-                  transform: 'rotate(-90deg)', // <-- keep rotated
-                  transition: 'transform 0.2s',
-                }}
-              />
+    <BoardInteractionContext.Provider value={interaction}>
+      <div className="vg-root TestHand" onClick={() => interaction.clearSelection()}>
+        <header className="TestHand-header" onClick={(e) => e.stopPropagation()}>
+          <div className="TestHand-heading">
+            <span className="TestHand-eyebrow">Test hand</span>
+            <h1 className="TestHand-title">{deck.name || deck.deck_name || 'Untitled deck'}</h1>
+          </div>
+
+          <div className="TestHand-status">
+            {preGame ? (
+              <div className="TestHand-mulligan">
+                <p>
+                  <strong>Mulligan:</strong> tap the cards you want to return to your deck, then stand up.
+                </p>
+                <button type="button" className="vg-btn vg-btn--primary" onClick={startGame}>
+                  {mulliganMarks.length
+                    ? `Redraw ${mulliganMarks.length} & Stand up, Vanguard!`
+                    : 'Keep hand & Stand up, Vanguard!'}
+                </button>
+              </div>
             ) : (
-              <img
-                src={`data:image/jpeg;base64,${card.image}`}
-                alt={card.name || 'Card'}
-                style={{
-                  width: '100%',
-                  borderRadius: 8,
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-                  transform: 'rotate(-90deg)',
-                  transition: 'transform 0.2s',
-                }}
+              <TurnTracker
+                turn={game.turn}
+                onNextPhase={() => dispatch(nextPhase())}
+                onSetPhase={(phase) => dispatch(setPhase(phase))}
+                autoPhase={game.settings.autoPhaseActions}
+                onToggleAuto={(enabled) => dispatch(setAutoPhaseActions(enabled))}
               />
             )}
           </div>
-        ))}
-      </div>
-      {/* Main play area */}
-      <div style={{ flex: 1 }}>
-        <h2 className="TestHand-title">Test Hand for {deck.name}</h2>
-        <div 
-          className="VanguardField"
-          style={{ '--field-columns': rideStack.length > 0 ? 5 : 4 }}
-        >
-          {/* Top row: 3 zones + deck stack + conditionally ride deck */}
-          {FIELD_ZONES.slice(0, 3).map((zone) =>
-            zone.id === 'vanguard' ? (
-              <div
-                key={zone.id}
-                className="VanguardField-zone VanguardField-vanguard"
-                onDragOver={e => e.preventDefault()}
-                onDrop={() => onFieldDrop('vanguard')}
-                style={{ cursor: 'pointer', position: 'relative' }}
-                title="Click to view Vanguard pile"
-                onClick={() => setShowVanguard(true)}
-              >
-                <div className="VanguardField-label">{zone.label}</div>
-                {field.vanguard.length > 0 ? (
-                  <img
-                    src={`data:image/jpeg;base64,${field.vanguard[field.vanguard.length - 1].image}`}
-                    alt={field.vanguard[field.vanguard.length - 1].name || 'Card'}
-                    className="VanguardField-card"
-                    draggable
-                    onDragStart={() => onVanguardPileDragStart(field.vanguard.length - 1)}
-                    onContextMenu={e => onFieldCardRightClick(e, 'vanguard')}
-                    style={{
-                      transform: `rotate(${rotatedField['vanguard'] || 0}deg)`,
-                      transition: 'transform 0.2s',
-                    }}
-                  />
-                ) : (
-                  <div className="VanguardField-empty">Empty</div>
-                )}
-                {field.vanguard.length > 1 && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 12,
-                    right: 12,
-                    background: '#fff',
-                    color: '#1976d2',
-                    borderRadius: '50%',
-                    width: 36,
-                    height: 36,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    border: '2px solid #1976d2'
-                  }}>
-                    {field.vanguard.length}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                key={zone.id}
-                className="VanguardField-zone"
-                onDragOver={e => e.preventDefault()}
-                onDrop={() => onFieldDrop(zone.id)}
-              >
-                <div className="VanguardField-label">{zone.label}</div>
-                {field[zone.id] ? (
-                  <img
-                    src={`data:image/jpeg;base64,${field[zone.id].image}`}
-                    alt={field[zone.id].name || 'Card'}
-                    className="VanguardField-card"
-                    draggable
-                    onDragStart={() => onFieldDragStart(zone.id)}
-                    onContextMenu={e => onFieldCardRightClick(e, zone.id)}
-                    style={{
-                      transform: `rotate(${rotatedField[zone.id] || 0}deg)`,
-                      transition: 'transform 0.2s',
-                    }}
-                  />
-                ) : (
-                  <div className="VanguardField-empty">Empty</div>
-                )}
-              </div>
-            )
-          )}
-          {/* Deck stack in the top row, last column */}
-          <div
-            className="VanguardField-zone VanguardField-deckstack"
-            onClick={drawCard}
-            onContextMenu={e => {
-              e.preventDefault();
-              setShowDeckMenu(true);
-              setDeckMenuPos({ x: e.clientX, y: e.clientY });
-            }}
-            style={{
-              cursor: deckStack.length > 0 ? 'pointer' : 'not-allowed',
-              background: '#1976d2',
-              color: '#fff',
-              border: '2px solid #1976d2',
-              position: 'relative'
-            }}
-            title={deckStack.length > 0 ? 'Click to draw a card' : 'Deck is empty'}
-          >
-            <div style={{ fontWeight: 'bold', fontSize: 22, marginBottom: 8 }}>
-              Deck
-            </div>
-            <div style={{
-              position: 'absolute',
-              bottom: 12,
-              right: 12,
-              background: '#fff',
-              color: '#1976d2',
-              borderRadius: '50%',
-              width: 36,
-              height: 36,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-              border: '2px solid #1976d2'
-            }}>
-              {deckStack.length}
-            </div>
-          </div>
-          {/* Conditionally render ride deck stack only if there are cards */}
-          {rideStack.length > 0 && (
-            <div
-              className="VanguardField-zone VanguardField-ride"
-              onClick={rideCard}
-              onContextMenu={e => {
-                e.preventDefault();
-                //TODO create methods
-                // setShowRideMenu(true);
-                // setRideMenuPos({ x: e.clientX, y: e.clientY });
-              }}
-              style={{
-                cursor: rideStack.length > 0 ? 'pointer' : 'not-allowed',
-                background: '#1976d2',
-                color: '#fff',
-                border: '2px solid #1976d2',
-                position: 'relative'
-              }}
-              title={rideStack.length > 0 ? 'Click to ride a card' : 'Ride deck is empty'}
-            >
-              <div style={{ fontWeight: 'bold', fontSize: 22, marginBottom: 8 }}>
-                Ride
-              </div>
-              <div style={{
-                position: 'absolute',
-                bottom: 12,
-                right: 12,
-                background: '#fff',
-                color: '#1976d2',
-                borderRadius: '50%',
-                width: 36,
-                height: 36,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-                fontSize: 18,
-                border: '2px solid #1976d2'
-              }}>
-                {rideStack.length}
-              </div>
-            </div>
-          )}
-          {/* Bottom row: 3 zones + drop zone */}
-          {FIELD_ZONES.slice(3).map((zone) => (
-            <div
-              key={zone.id}
-              className="VanguardField-zone"
-              onDragOver={e => e.preventDefault()}
-              onDrop={() => onFieldDrop(zone.id)}
-            >
-              <div className="VanguardField-label">{zone.label}</div>
-              {field[zone.id] ? (
-                <img
-                  src={`data:image/jpeg;base64,${field[zone.id].image}`}
-                  alt={field[zone.id].name || 'Card'}
-                  className="VanguardField-card"
-                  draggable
-                  onDragStart={() => onFieldDragStart(zone.id)}
-                  onContextMenu={e => onFieldCardRightClick(e, zone.id)}
-                  style={{
-                    transform: `rotate(${rotatedField[zone.id] || 0}deg)`,
-                    transition: 'transform 0.2s',
-                  }}
-                />
-              ) : (
-                <div className="VanguardField-empty">Empty</div>
-              )}
-            </div>
-          ))}
-          {/* Drop zone */}
-          <div
-            className="VanguardField-zone VanguardField-drop"
-            onDragOver={e => e.preventDefault()}
-            onDrop={onDropDrop}
-            style={{
-              background: '#bdbdbd',
-              color: '#333',
-              border: '2px solid #757575',
-              position: 'relative',
-              cursor: drop.length > 0 ? 'pointer' : 'default'
-            }}
-            title="Drop Zone"
-            onClick={() => setShowDrop(true)}
-          >
-            <div style={{ fontWeight: 'bold', fontSize: 22, marginBottom: 8 }}>
-              Drop
-            </div>
-            {drop.length > 0 && (
-              <img
-                src={`data:image/jpeg;base64,${drop[drop.length - 1].image}`}
-                alt={drop[drop.length - 1].name || 'Card'}
-                className="VanguardField-card"
-                style={{ marginBottom: 8 }}
-                draggable
-                onDragStart={() => onDropPileDragStart(drop.length - 1)}
-              />
-            )}
-            <div style={{
-              position: 'absolute',
-              bottom: 12,
-              right: 12,
-              background: '#fff',
-              color: '#757575',
-              borderRadius: '50%',
-              width: 36,
-              height: 36,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-              border: '2px solid #757575'
-            }}>
-              {drop.length}
-            </div>
-          </div>
-        </div>
-        {/* Hand */}
-        <div
-          className="TestHand-bottom-bar"
-          onDragOver={e => e.preventDefault()}
-          onDrop={onHandDrop}
-        >
-          {hand.map((card, index) => (
-            <div
-              key={index}
-              className="TestHand-card"
-              draggable
-              onDragStart={() => onHandDragStart(index)}
-              title="Drag to field"
-            >
-              <img
-                src={`data:image/jpeg;base64,${card.image}`}
-                alt={card.name || 'Card Image'}
-                className="TestHand-card-image"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Vanguard pile modal */}
-      {showVanguard && (
-        <div className="modal-overlay" onClick={() => setShowVanguard(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
-            <button className="modal-close" onClick={() => setShowVanguard(false)}>X</button>
-            <h3>Vanguard Pile ({field.vanguard.length})</h3>
-            <div style={{ display: 'flex', gap: 32, marginBottom: 92, justifyContent: 'center' }}>
-              {field.vanguard.length === 0 && <div>No cards in vanguard pile.</div>}
-              {field.vanguard.map((card, idx) => (
-                <div
-                  key={idx}
-                  style={{ width: 100, cursor: 'grab' }}
-                  draggable
-                  onDragStart={() => onVanguardPileDragStart(idx)}
-                  title="Drag to hand, field, or drop"
-                >
-                  <img
-                    src={`data:image/jpeg;base64,${card.image}`}
-                    alt={card.name || 'Card'}
-                    style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
-                  />
-                  <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Drop pile modal */}
-      {showDrop && (
-        <div className="modal-overlay" onClick={() => setShowDrop(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
-            <button className="modal-close" onClick={() => setShowDrop(false)}>X</button>
-            <h3>Drop Pile ({drop.length})</h3>
-            <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
-              {drop.length === 0 && <div>No cards in drop.</div>}
-              {drop.map((card, idx) => (
-                <div
-                  key={idx}
-                  style={{ width: 100, cursor: 'grab' }}
-                  draggable
-                  onDragStart={() => onDropPileDragStart(idx)}
-                  title="Drag to hand or field"
-                >
-                  <img
-                    src={`data:image/jpeg;base64,${card.image}`}
-                    alt={card.name || 'Card'}
-                    style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
-                  />
-                  <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      {showDeckMenu && (
-  <div
-    style={{
-      position: 'fixed',
-      top: deckMenuPos.y,
-      left: deckMenuPos.x,
-      background: '#fff',
-      border: '1px solid #1976d2',
-      borderRadius: 8,
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-      zIndex: 2000,
-      minWidth: 180,
-      padding: 8
-    }}
-    onClick={e => e.stopPropagation()}
-    onContextMenu={e => e.preventDefault()}
-  >
-    <div
-      style={{ padding: 8, cursor: 'pointer' }}
-      onClick={() => {
-        setShowDeckMenu(false);
-        setShowDeckTopX(true);
-      }}
-    >
-      Check top X cards
-    </div>
-    <div
-      style={{ padding: 8, cursor: 'pointer' }}
-      onClick={() => {
-        setShowDeckMenu(false);
-        setShowFullDeck(true);
-      }}
-    >
-      Look at whole deck
-    </div>
-    <div
-      style={{ padding: 8, cursor: 'pointer' }}
-      onClick={() => {
-        setShowDeckMenu(false);
-        if (deckStack.length > 0) {
-          setField(f => ({
-            ...f,
-            vanguard: [deckStack[0], ...f.vanguard]
-          }));
-          setDeckStack(ds => ds.slice(1));
-        }
-      }}
-    >
-      Put top card to top of Vanguard pile
-    </div>
-    <div
-      style={{ padding: 8, cursor: 'pointer' }}
-      onClick={() => {
-        setShowDeckMenu(false);
-        setDeckStack(ds => [...ds].sort(() => Math.random() - 0.5));
-      }}
-    >
-      Shuffle
-    </div>
-    <div
-      style={{ padding: 8, cursor: 'pointer', color: '#b71c1c' }}
-      onClick={() => setShowDeckMenu(false)}
-    >
-      Cancel
-    </div>
-  </div>
-)}
-{showDeckTopX && (
-  <div className="modal-overlay" onClick={() => setShowDeckTopX(false)}>
-    <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
-      <button className="modal-close" onClick={() => setShowDeckTopX(false)}>X</button>
-      <h3>Top X Cards</h3>
-      <input
-        type="number"
-        min={1}
-        max={deckStack.length}
-        value={deckTopX}
-        onChange={e => setDeckTopXValue(Number(e.target.value))} // Updated setter name
-        style={{ width: 60, marginBottom: 10 }}
-      />
-      <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
-        {deckStack.slice(0, deckTopX).map((card, idx) => (
-          <div
-            key={idx}
-            style={{ width: 100, cursor: 'grab' }}
-            draggable
-            onDragStart={() => setDragged({ from: 'deckTopX', index: idx })}
-            title="Drag to hand, field, drop, or damage"
-          >
-            <img
-              src={`data:image/jpeg;base64,${card.image}`}
-              alt={card.name || 'Card'}
-              style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
-            />
-            <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
 
-{showFullDeck && (
-  <div className="modal-overlay" onClick={() => setShowFullDeck(false)}>
-    <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: 600 }}>
-      <button className="modal-close" onClick={() => setShowFullDeck(false)}>X</button>
-      <h3>Full Deck ({deckStack.length})</h3>
-      <div style={{ display: 'flex', gap: 92, marginBottom: 32, justifyContent: 'center' }}>
-        {deckStack.map((card, idx) => (
-          <div
-            key={idx}
-            style={{ width: 100, cursor: 'grab' }}
-            draggable
-            onDragStart={() => setDragged({ from: 'fullDeck', index: idx })}
-            title="Drag to hand, field, drop, or damage"
-          >
-            <img
-              src={`data:image/jpeg;base64,${card.image}`}
-              alt={card.name || 'Card'}
-              style={{ width: '100%', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}
-            />
-            <div style={{ color: '#333', fontSize: 12, textAlign: 'center' }}>{card.name}</div>
+          <div className="TestHand-controls">
+            <button type="button" className="vg-btn" onClick={undo} disabled={!canUndo} title="Undo (Ctrl+Z)">Undo</button>
+            <button type="button" className="vg-btn" onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Y)">Redo</button>
+            <button type="button" className="vg-btn" onClick={newGame} title="Shuffle and deal a new opening hand">New game</button>
+            <button
+              type="button"
+              className="vg-btn vg-btn--ghost"
+              onClick={() => navigate('/deck-details', { state: { deck } })}
+            >
+              Back to deck
+            </button>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+        </header>
 
-    </div>
+        <div className="TestHand-main">
+          <div className="TestHand-table">
+            <div className="TestHand-table-inner">
+              <PlayerBoard
+                player={player}
+                playerId={PLAYER_ID}
+                onOpenZone={(zone) => setViewer({ type: 'zone', zone })}
+                onDeckActivate={() => act(actions.draw())}
+                onDeckContextMenu={openDeckMenu}
+                onRideDeckActivate={() => act(actions.rideFromRideDeck())}
+              />
+
+              <div className="TestHand-action-slot" onClick={(e) => e.stopPropagation()}>
+                {interaction.selection ? (
+                  <CardActionBar players={game.players} dispatchFor={dispatchFor} onShowInfo={setInfoCard} />
+                ) : (
+                  <p className="TestHand-tip">
+                    Drag cards between zones, or tap a card for its actions.
+                    Shortcut: right-click a unit to rest / stand it, or a damage card to counter blast it.
+                  </p>
+                )}
+              </div>
+
+              <Hand playerId={PLAYER_ID} cards={z[ZONE.HAND]}>
+                {preGame && mulliganMarks.length > 0 && (
+                  <span className="TestHand-hand-note">{mulliganMarks.length} marked for redraw</span>
+                )}
+              </Hand>
+            </div>
+          </div>
+
+          <aside className="TestHand-side" onClick={(e) => e.stopPropagation()}>
+            <ActionToolbar groups={toolbarGroups} className="TestHand-toolbar" />
+            <div className="TestHand-preview">
+              <CardPreview card={interaction.previewCard} />
+            </div>
+          </aside>
+        </div>
+
+        <div onClick={(e) => e.stopPropagation()}>
+          {renderViewer()}
+
+          {deckMenu && (
+            <ContextMenu
+              x={deckMenu.x}
+              y={deckMenu.y}
+              title={`Deck · ${z[ZONE.DECK].length} cards`}
+              onClose={() => setDeckMenu(null)}
+              items={[
+                ...deckActions.map((a) => ({ label: a.label, onSelect: a.onClick, disabled: a.disabled })),
+                { divider: true, key: 'd1' },
+                { label: 'Top card → drop zone', onSelect: () => act(actions.millTop()), disabled: deckEmpty },
+                { label: 'Top card → bind zone', onSelect: () => act(actions.moveTopCards(ZONE.DECK, ZONE.BIND)), disabled: deckEmpty },
+              ]}
+            />
+          )}
+
+          {infoCard && (
+            <Modal title={infoCard.name || 'Card'} onClose={() => setInfoCard(null)} size="md">
+              <CardPreview card={infoCard} compact />
+            </Modal>
+          )}
+        </div>
+      </div>
+    </BoardInteractionContext.Provider>
   );
 }
 

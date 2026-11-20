@@ -1,217 +1,264 @@
-/* Container for the entire page */
-.TestHand-container {
-  display: flex;
-  flex-direction: row; /* Row to allow deck on the right */
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  color: #333;
-  background: linear-gradient(135deg, #699fd0, #a2c4c9);
+/* Page layout for the solo test-hand table.
+   Component styles live in src/game/components/game.css. */
+
+.TestHand {
+  --side-w: 300px;
+  --banner-h: 72px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: calc(var(--banner-h) + 8px) clamp(8px, 2vw, 24px) 24px;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(78, 168, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, #0d1c31 0%, #081222 100%);
 }
 
-/* Title at the top */
-.TestHand-title {
-  margin-bottom: 16px;
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-}
-
-/* Bottom bar for the cards */
-.TestHand-bottom-bar {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 10px;
-  width: 100%;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 24px;
-}
-
-/* Individual card styling */
-.TestHand-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 120px;
-  text-align: center;
-  color: white;
-  cursor: grab;
-}
-
-.TestHand-card-image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.TestHand-card-name {
-  margin-top: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Vanguard field grid */
-.VanguardField {
+/* ---- header ------------------------------------------------------------- */
+.TestHand-header {
   display: grid;
-  grid-template-columns: repeat(var(--field-columns, 4), 200px); /* Dynamic columns */
-  grid-template-rows: repeat(2, 300px);
-  gap: 60px;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.VanguardField-deckstack {
-  background: #1976d2 !important; /* Solid blue */
-  color: #fff !important;
-  border: 2px solid #1976d2 !important;
-  cursor: pointer;
-  transition: background 0.2s;
-  position: relative;
-}
-.VanguardField-deckstack:hover {
-  background: #125299 !important;
-}
-.VanguardField-zone {
-  background: rgba(0,0,0,0.15);
-  border: 2px dashed #aaa;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
   align-items: center;
+  gap: 12px 20px;
+  max-width: 1600px;
+  margin: 0 auto 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(16, 32, 56, 0.75);
+  border: 1px solid var(--vg-border);
+  backdrop-filter: blur(6px);
+}
+.TestHand-heading {
+  min-width: 0;
+}
+.TestHand-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vg-accent);
+}
+.TestHand-title {
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vg-text);
+}
+.TestHand-status {
+  display: flex;
   justify-content: center;
-  min-height: 140px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s;
+  min-width: 0;
 }
-
-.VanguardField-zone:hover {
-  background: rgba(0,0,0,0.25);
+.TestHand-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
-
-.VanguardField-label {
+.TestHand-mulligan {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+}
+.TestHand-mulligan p {
+  margin: 0;
   font-size: 13px;
-  color: #333;
-  margin-bottom: 6px;
+  color: var(--vg-muted);
+}
+.TestHand-mulligan strong {
+  color: var(--vg-text);
 }
 
-.VanguardField-card {
-  width: 180px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  cursor: grab;
+/* ---- main area ---------------------------------------------------------- */
+.TestHand-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--side-w);
+  gap: 16px;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: start;
 }
 
-.VanguardField-empty {
-  color: #bbb;
-  font-size: 12px;
+/* The table is a size container so cards scale with the space they get. */
+.TestHand-table {
+  container-type: inline-size;
+  min-width: 0;
 }
-
-.VanguardField-vanguard {
-  border-color: #1976d2;
-}
-
-/* Deck stack on the right */
-.DeckStack {
-  margin-left: 32px;
+.TestHand-table-inner {
+  /* width budget: damage column (1.4w) + 4 columns (1.22w) + gaps.
+     height budget: board (~5.6 card widths) + hand (~1.4) + page chrome. */
+  --card-w-base: clamp(
+    48px,
+    min(
+      calc((100cqi - 6 * var(--vg-gap) - 28px) / 6.3),
+      calc((100dvh - 290px) / 7)
+    ),
+    132px
+  );
+  --card-w: var(--card-w-base);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 10px;
+}
+.TestHand-table-inner > .vg-board {
+  align-self: center;
 }
 
-.DeckStack-image {
-  width: 100px;
-  height: 140px;
-  background: #1976d2;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+.TestHand-action-slot {
+  min-height: 46px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  cursor: pointer;
-  margin-bottom: 8px;
-  user-select: none;
-  transition: box-shadow 0.2s;
 }
-
-.DeckStack-image:active {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-
-.VanguardField-drop {
-  background: #bdbdbd !important;
-  color: #333 !important;
-  border: 2px solid #757575 !important;
-  cursor: pointer;
-  transition: background 0.2s;
-  position: relative;
-}
-.VanguardField-drop:hover {
-  background: #9e9e9e !important;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.TestHand-action-slot > .vg-action-bar {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  /* Add this: */
-  pointer-events: none;
+  max-width: 980px;
+}
+.TestHand-tip {
+  margin: 0;
+  align-self: center;
+  max-width: 720px;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--vg-muted);
+}
+.TestHand-hand-note {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vg-danger);
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  max-height: 80%;
-  overflow-y: auto;
-  position: relative;
-  text-align: left;
-  /* Add this: */
-  pointer-events: auto;
-}
-
-.DamageZone {
-  background: #f8d7da;
-  border: 2px solid #b71c1c;
-  border-radius: 12px;
-  min-width: 120px;
-  min-height: 400px;
-  padding: 8px;
-  margin-right: 24px;
+/* ---- side panel --------------------------------------------------------- */
+.TestHand-side {
+  position: sticky;
+  top: calc(var(--banner-h) + 8px);
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  max-height: calc(100dvh - var(--banner-h) - 24px);
+  overflow-y: auto;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(16, 32, 56, 0.75);
+  border: 1px solid var(--vg-border);
+  scrollbar-width: thin;
+}
+.TestHand-preview {
+  border-top: 1px solid var(--vg-border);
+  padding-top: 14px;
+}
+
+/* ---- empty state -------------------------------------------------------- */
+.TestHand--empty {
+  display: flex;
   align-items: center;
-  margin-top: 60px;
+  justify-content: center;
+}
+.TestHand-empty {
+  max-width: 420px;
+  padding: 28px;
+  border-radius: 16px;
+  text-align: center;
+  background: rgba(16, 32, 56, 0.85);
+  border: 1px solid var(--vg-border);
+}
+.TestHand-empty h2 {
+  margin: 0 0 8px;
+}
+.TestHand-empty p {
+  margin: 0 0 18px;
+  color: var(--vg-muted);
 }
 
-.DamageZone img {
-  transform: rotate(-90deg);
-  transition: transform 0.2s;
+/* ---- responsive --------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .TestHand { --side-w: 260px; }
 }
 
-.DamageZone > div[draggable] {
-  margin-bottom: -20px;
+/* Below this the side panel turns into a horizontal toolbar above the table
+   and card details open in a dialog (the "Info" button). */
+@media (max-width: 1080px) {
+  .TestHand-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .TestHand-side {
+    position: static;
+    order: -1;
+    max-height: none;
+    padding: 10px;
+  }
+  .TestHand-preview {
+    display: none;
+  }
+  .TestHand-toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
+  .App .TestHand .vg-only-compact {
+    display: inline-flex;
+  }
+  .TestHand-table-inner {
+    --card-w-base: clamp(
+      48px,
+      min(
+        calc((100cqi - 6 * var(--vg-gap) - 28px) / 6.3),
+        calc((100dvh - 380px) / 7)
+      ),
+      132px
+    );
+  }
+}
+
+@media (max-width: 860px) {
+  .TestHand-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .TestHand-status {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .TestHand {
+    --banner-h: 100px; /* the app banner wraps onto two lines on phones */
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  /* Board first on phones; deck/field actions follow below the hand. */
+  .TestHand-side {
+    order: 1;
+  }
+  .App .TestHand .TestHand-toolbar .vg-btn {
+    min-height: 30px;
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+  .TestHand-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .TestHand-controls {
+    justify-content: flex-start;
+  }
+  .TestHand-table-inner {
+    /* On phones the width is the limit; let the page scroll vertically. */
+    --card-w-base: clamp(40px, calc((100cqi - 6 * var(--vg-gap) - 24px) / 6.3), 132px);
+  }
+  .TestHand .vg-board {
+    padding: 6px;
+    --vg-gap: 5px;
+  }
+  .TestHand .vg-zone__label {
+    font-size: 8px;
+    top: 2px;
+    left: 4px;
+  }
 }

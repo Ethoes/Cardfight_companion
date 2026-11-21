@@ -4,12 +4,15 @@ from database.DatabaseService import (
     get_cards_by_deck_id, get_ride_deck_by_deck_id, delete_deck_by_id, get_all_user_decks_paginated
 )
 from cardmarketApi import calculate_deck_cost
+from flask import g
+from session_auth import login_required, deck_owner, forbidden_unless_owner
 import base64
 
 deck_bp = Blueprint('deck', __name__)
 
 
 @deck_bp.route('/createDeck', methods=['POST'])
+@login_required
 def create_deck():
     data = request.get_json()
     
@@ -23,8 +26,6 @@ def create_deck():
     
     # Check each required field individually for better debugging
     missing_fields = []
-    if 'user' not in data:  # Changed from 'username' to 'user'
-        missing_fields.append('user')
     if 'name' not in data:  # Changed from 'deckName' to 'name'
         missing_fields.append('name')
     if 'deck' not in data:  # Changed from 'cards' to 'deck'
@@ -34,7 +35,7 @@ def create_deck():
         print(f"[ERROR] Missing required fields: {missing_fields}")
         return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
     
-    username = data['user']  # Changed from data['username']
+    username = g.username  # from the login session, never from the request body
     deck_name = data['name']  # Changed from data['deckName']
     cards = data['deck']  # Changed from data['cards']
     ride_deck = data.get('rideDeck', [])
@@ -75,13 +76,10 @@ def create_deck():
 
 
 @deck_bp.route('/decks', methods=['POST'])
+@login_required
 def get_decks():
-    data = request.get_json()
-    if not data or 'username' not in data:
-        return jsonify({"error": "Invalid input"}), 400
-    
-    username = data['username']
-    decks = get_decks_by_username(username)
+    """The logged-in user's own decks."""
+    decks = get_decks_by_username(g.username)
     return jsonify(decks)
 
 
@@ -106,7 +104,11 @@ def get_ride_deck(deck_id):
 
 
 @deck_bp.route('/decks/<int:deck_id>', methods=['DELETE'])
+@login_required
 def delete_deck(deck_id):
+    denied = forbidden_unless_owner(deck_owner(deck_id), "Deck")
+    if denied:
+        return denied
     try:
         success = delete_deck_by_id(deck_id)
         if success:

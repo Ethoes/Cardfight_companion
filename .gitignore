@@ -36,3 +36,6 @@ yarn-error.log*
 venv/
 *.pyc
 *.log
+
+# Session signing key (generated per machine)
+backend/.secret_key

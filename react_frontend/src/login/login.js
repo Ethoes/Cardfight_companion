@@ -19,7 +19,7 @@ function Login({ onLogin, onShowRegister }) {
       });
       const data = await response.json();
       if (response.ok) {
-        onLogin(username);
+        onLogin(data.username || username);
         setError(null);
       } else {
         setError(data.error);

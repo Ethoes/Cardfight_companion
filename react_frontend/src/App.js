@@ -16,31 +16,64 @@ import CardfightLobby from './cardfight/CardfightLobby.js';
 import CardfightMatch from './cardfight/CardfightMatch.js';
 import RulesQuery from './rules_query/RulesQuery.js';
 import './styles/polish.css'; // Shared tokens, transitions and modal styles (imported last so it wins)
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+
 function App() {
+  const [checkingSession, setCheckingSession] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState('');
 
-  // Load the username from localStorage when the app loads
+  // The server's session cookie decides who is logged in; ask it on load.
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setIsLoggedIn(true);
-      setUsername(storedUsername);
-    }
+    localStorage.removeItem('username'); // left over from before login sessions
+    fetch(`${API_BASE_URL}/api/me`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.username) {
+          setUsername(data.username);
+          setIsLoggedIn(true);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setCheckingSession(false));
+  }, []);
+
+  // If the session ends while the app is open (expired, or logged out in
+  // another tab), any protected request gets a 401: return to the login screen.
+  useEffect(() => {
+    const originalFetch = window.fetch;
+    window.fetch = async (...args) => {
+      const response = await originalFetch(...args);
+      const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
+      const isAuthCall = /\/api\/(login|register|me|logout)\b/.test(url);
+      if (response.status === 401 && url.includes('/api/') && !isAuthCall) {
+        setIsLoggedIn(false);
+        setUsername('');
+      }
+      return response;
+    };
+    return () => { window.fetch = originalFetch; };
   }, []);
 
   const handleLogin = (username) => {
     setIsLoggedIn(true);
     setUsername(username);
-    localStorage.setItem('username', username); // Save the username to localStorage
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/logout`, { method: 'POST' });
+    } catch {
+      // Still log out locally if the server can't be reached.
+    }
     setIsLoggedIn(false);
     setUsername('');
-    localStorage.removeItem('username'); // Remove the username from localStorage
   };
+
+  if (checkingSession) {
+    return null;
+  }
 
   if (!isLoggedIn) {
     return isRegistering ? (

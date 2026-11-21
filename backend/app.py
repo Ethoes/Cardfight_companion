@@ -28,7 +28,12 @@ from routes.misc_routes import misc_bp
 from routes.feedback_routes import feedback_bp
 from routes.fight_routes import fight_bp
 
+SECRET_FIELDS = {'password', 'cookie', 'set-cookie', 'authorization', 'x-room-token', 'token'}
+
+
 def create_app(enable_rules=True):
+    from session_auth import init_sessions
+
     from database.db_config import ensure_schema
     ensure_schema()
 
@@ -38,7 +43,16 @@ def create_app(enable_rules=True):
     print(f"Static folder exists: {os.path.exists(static_folder)}")
     app = Flask(__name__, static_folder=static_folder, static_url_path='')
     CORS(app)
-    
+    init_sessions(app)
+
+    def redact(data):
+        """Hide secrets before they reach backend.log."""
+        if isinstance(data, dict):
+            return {k: ('<redacted>' if k.lower() in SECRET_FIELDS else redact(v)) for k, v in data.items()}
+        if isinstance(data, list):
+            return [redact(v) for v in data]
+        return data
+
     # Request logging middleware
     @app.before_request
     def log_request_info():
@@ -51,12 +65,12 @@ def create_app(enable_rules=True):
         logger.info(f'Request URL: {request.url}')
         logger.info(f'Request Path: {request.path}')
         logger.info(f'Request Method: {request.method}')
-        logger.info(f'Request Headers: {dict(request.headers)}')
-        logger.info(f'Request Args: {dict(request.args)}')
+        logger.info(f'Request Headers: {redact(dict(request.headers))}')
+        logger.info(f'Request Args: {redact(dict(request.args))}')
         if request.is_json:
-            logger.info(f'Request JSON: {request.get_json()}')
+            logger.info(f'Request JSON: {redact(request.get_json(silent=True))}')
         elif request.form:
-            logger.info(f'Request Form: {dict(request.form)}')
+            logger.info(f'Request Form: {redact(dict(request.form))}')
         g.start_time = datetime.utcnow()
     
     @app.after_request

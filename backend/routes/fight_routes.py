@@ -3,10 +3,11 @@
 See services/fight_rooms.py for how a match is kept in sync.
 """
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
 
 from services import fight_rooms
 from services.fight_rooms import RoomError
+from session_auth import login_required
 
 fight_bp = Blueprint('fight', __name__)
 
@@ -25,22 +26,24 @@ def list_rooms():
 
 
 @fight_bp.route('/fight/rooms', methods=['POST'])
+@login_required
 def create_room():
     data = request.get_json(silent=True) or {}
     try:
         room, token = fight_rooms.create_room(
-            data.get('name'), data.get('username'), data.get('deckId'), data.get('deckName'))
+            data.get('name'), g.username, data.get('deckId'), data.get('deckName'))
         return jsonify({'room': room, 'token': token}), 201
     except RoomError as e:
         return _error(e)
 
 
 @fight_bp.route('/fight/rooms/<room_id>/join', methods=['POST'])
+@login_required
 def join_room(room_id):
     data = request.get_json(silent=True) or {}
     try:
         room, token = fight_rooms.join_room(
-            room_id, data.get('username'), data.get('deckId'), data.get('deckName'))
+            room_id, g.username, data.get('deckId'), data.get('deckName'))
         return jsonify({'room': room, 'token': token})
     except RoomError as e:
         return _error(e)

@@ -50,8 +50,10 @@ function Register({ onRegister, onCancel }) {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="Password (at least 8 characters)"
           autoComplete="new-password"
+          minLength={8}
+          required
         />
         {error && <p className="auth-error">{error}</p>}
         <button type="submit" className="auth-primary">Register</button>

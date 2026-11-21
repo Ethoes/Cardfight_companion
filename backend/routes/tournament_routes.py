@@ -1,27 +1,26 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
 from database.DatabaseService import (
     save_tournament, get_tournaments_by_username,
     save_tournament_details, get_tournament_details_with_deck,
     delete_tournament_by_id
 )
+from session_auth import login_required, tournament_owner, forbidden_unless_owner
 
 tournament_bp = Blueprint('tournament', __name__)
 
+# Tournament notes are private: every route needs a login, and anything that
+# touches one tournament checks it belongs to the logged-in user.
+
 
 @tournament_bp.route('/createTournament', methods=['POST'])
+@login_required
 def create_tournament():
-    data = request.get_json()
-    if not data or 'name' not in data or 'description' not in data or 'deck_id' not in data or 'username' not in data:
+    data = request.get_json(silent=True)
+    if not data or 'name' not in data or 'description' not in data or 'deck_id' not in data:
         return jsonify({"error": "Invalid input"}), 400
 
-    name = data['name']
-    description = data['description']
-    deck_id = data['deck_id']
-    username = data['username']
-
     try:
-        # Use the save_tournament function to save the tournament
-        tournament_id = save_tournament(name, description, deck_id, username)
+        tournament_id = save_tournament(data['name'], data['description'], data['deck_id'], g.username)
         if not tournament_id:
             return jsonify({"error": "Failed to create tournament"}), 500
 
@@ -32,70 +31,70 @@ def create_tournament():
 
 
 @tournament_bp.route('/tournaments', methods=['POST'])
+@login_required
 def get_tournaments():
-    data = request.get_json()
-    if not data or 'username' not in data:
-        return jsonify({"error": "Invalid input"}), 400
-    
-    username = data['username']
-    tournaments = get_tournaments_by_username(username)
+    tournaments = get_tournaments_by_username(g.username)
     if tournaments is not None:
         return jsonify(tournaments), 200
-    else:
-        return jsonify({"error": "Failed to fetch tournaments"}), 500
+    return jsonify({"error": "Failed to fetch tournaments"}), 500
 
 
 @tournament_bp.route('/saveTournamentDetails', methods=['POST'])
+@login_required
 def save_tournament_details_route():
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data or 'tournament_id' not in data or 'match_number' not in data or 'opponent_deck_name' not in data or 'match_result' not in data:
         return jsonify({"error": "Invalid input"}), 400
 
     tournament_id = data['tournament_id']
-    match_number = data['match_number']
-    opponent_deck_name = data['opponent_deck_name']
-    opponent_deck_log = data.get('opponent_deck_log', None)
-    match_result = data['match_result']
-    match_notes = data.get('match_notes', None)
+    denied = forbidden_unless_owner(tournament_owner(tournament_id), "Tournament")
+    if denied:
+        return denied
 
     try:
-        result = save_tournament_details(tournament_id, match_number, opponent_deck_name, opponent_deck_log, match_result, match_notes)
+        result = save_tournament_details(
+            tournament_id, data['match_number'], data['opponent_deck_name'],
+            data.get('opponent_deck_log'), data['match_result'], data.get('match_notes'))
         if result:
             return jsonify({"message": "Tournament details saved successfully"}), 201
-        else:
-            return jsonify({"error": "Failed to save tournament details"}), 500
+        return jsonify({"error": "Failed to save tournament details"}), 500
     except Exception as e:
         print(f"[ERROR] Failed to save tournament details: {e}")
         return jsonify({"error": "Failed to save tournament details"}), 500
 
 
 @tournament_bp.route('/tournamentDetails', methods=['POST'])
+@login_required
 def get_tournament_details():
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data or 'tournament_id' not in data:
         return jsonify({"error": "Invalid input"}), 400
 
     tournament_id = data['tournament_id']
+    denied = forbidden_unless_owner(tournament_owner(tournament_id), "Tournament")
+    if denied:
+        return denied
 
     try:
         details = get_tournament_details_with_deck(tournament_id)
         if details is not None:
             return jsonify(details), 200
-        else:
-            return jsonify({"error": "Failed to fetch tournament details"}), 500
+        return jsonify({"error": "Failed to fetch tournament details"}), 500
     except Exception as e:
         print(f"[ERROR] Failed to fetch tournament details: {e}")
         return jsonify({"error": "Failed to fetch tournament details"}), 500
 
 
 @tournament_bp.route('/tournaments/<int:tournament_id>', methods=['DELETE'])
+@login_required
 def delete_tournament(tournament_id):
+    denied = forbidden_unless_owner(tournament_owner(tournament_id), "Tournament")
+    if denied:
+        return denied
     try:
-        success = delete_tournament_by_id(tournament_id)
-        if success:
+        if delete_tournament_by_id(tournament_id):
             return jsonify({"message": "Tournament deleted successfully"}), 200
-        else:
-            return jsonify({"error": "Failed to delete tournament"}), 500
+        return jsonify({"error": "Failed to delete tournament"}), 500
     except Exception as e:
         print(f"[ERROR] Failed to delete tournament ID {tournament_id}: {e}")
         return jsonify({"error": "Failed to delete tournament"}), 500

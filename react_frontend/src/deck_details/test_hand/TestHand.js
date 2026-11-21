@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   ActionToolbar,
@@ -22,6 +22,7 @@ import {
 } from '../../game';
 import './TestHand.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
 const PLAYER_ID = 'p1';
 const PLAYER_IDS = [PLAYER_ID];
 const EMPTY = [];
@@ -30,10 +31,8 @@ const EMPTY = [];
  * Solo "goldfish" table for trying out a deck: one player, local state.
  * All game logic lives in src/game so a player-vs-player mode can reuse it.
  */
-function TestHand() {
-  const location = useLocation();
+function TestHandTable({ deck, cards, rideDeckCards }) {
   const navigate = useNavigate();
-  const { deck, cards, rideDeckCards } = location.state || {};
   const mainDeck = cards || EMPTY;
   const rideDeck = rideDeckCards || EMPTY;
 
@@ -90,20 +89,6 @@ function TestHand() {
   };
 
   // ---- render --------------------------------------------------------------
-  if (!deck || !cards) {
-    return (
-      <div className="vg-root TestHand TestHand--empty">
-        <div className="TestHand-empty">
-          <h2>No deck selected</h2>
-          <p>Open one of your decks and press <strong>Test Hand</strong> to try it out here.</p>
-          <button type="button" className="vg-btn vg-btn--primary" onClick={() => navigate('/view-user-decks')}>
-            Go to my decks
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <BoardInteractionContext.Provider value={interaction}>
       <div className="vg-root TestHand" onClick={() => interaction.clearSelection()}>
@@ -201,6 +186,81 @@ function TestHand() {
       </div>
     </BoardInteractionContext.Provider>
   );
+}
+
+function EmptyState({ title, message }) {
+  const navigate = useNavigate();
+  return (
+    <div className="vg-root TestHand TestHand--empty">
+      <div className="TestHand-empty">
+        <h2>{title}</h2>
+        <p>{message}</p>
+        <button type="button" className="vg-btn vg-btn--primary" onClick={() => navigate('/view-user-decks')}>
+          Go to my decks
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Only the small deck object travels in the router state; the cards (with
+ * their base64 images) are fetched here. Passing them through navigation state
+ * broke for larger decks, because browsers cap history state size (16 MiB in
+ * Firefox) and a 50-card deck's images can exceed that.
+ */
+function TestHand() {
+  const location = useLocation();
+  const { deck, cards: stateCards, rideDeckCards: stateRideDeck } = location.state || {};
+  const [cards, setCards] = useState(stateCards || null);
+  const [rideDeckCards, setRideDeckCards] = useState(stateRideDeck || EMPTY);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!deck || stateCards) return undefined;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/decks/${deck.id}/cards`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const deckCards = await res.json();
+        let ride = EMPTY;
+        if (deck.deck_type === 'Standard') {
+          const rideRes = await fetch(`${API_BASE_URL}/api/decks/${deck.id}/ride-deck`);
+          if (rideRes.ok) ride = await rideRes.json();
+        }
+        if (!cancelled) {
+          setRideDeckCards(ride);
+          setCards(deckCards);
+        }
+      } catch (err) {
+        console.error('Error loading deck for test hand:', err);
+        if (!cancelled) setError(err);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [deck, stateCards]);
+
+  if (!deck) {
+    return (
+      <EmptyState
+        title="No deck selected"
+        message={<>Open one of your decks and press <strong>Test Hand</strong> to try it out here.</>}
+      />
+    );
+  }
+  if (error) {
+    return <EmptyState title="Couldn't load this deck" message="Something went wrong fetching the deck's cards. Please try again." />;
+  }
+  if (!cards) {
+    return (
+      <div className="vg-root TestHand TestHand--empty">
+        <div className="TestHand-empty"><h2>Loading deck…</h2></div>
+      </div>
+    );
+  }
+
+  return <TestHandTable deck={deck} cards={cards} rideDeckCards={rideDeckCards} />;
 }
 
 export default TestHand;

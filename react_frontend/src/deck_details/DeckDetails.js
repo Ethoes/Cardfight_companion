@@ -58,8 +58,9 @@ function DeckDetails() {
   };
 
   const handleTestHand = () => {
-    console.log('Navigating to TestHand with:', { deck, cards, rideDeckCards }); // Debug log
-    navigate('/test-hand', { state: { deck, cards, rideDeckCards } }); // Pass deck, cards, and rideDeckCards
+    // Only pass the deck: TestHand fetches the cards itself. Card images are
+    // too large to fit in browser history state for bigger decks.
+    navigate('/test-hand', { state: { deck } });
   };
 
   const handleDeleteDeck = async () => {

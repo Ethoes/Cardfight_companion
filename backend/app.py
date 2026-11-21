@@ -73,6 +73,16 @@ def create_app(enable_rules=True):
     # Error handler
     @app.errorhandler(404)
     def not_found_error(error):
+        # Flask's static route (static_url_path='') claims every path before the
+        # catch-all below, so a page load of a React route like /test-hand ends up
+        # here. Serve the React app for those; keep JSON 404s for the API and for
+        # missing asset files (anything with a file extension).
+        last_segment = request.path.rsplit('/', 1)[-1]
+        if (request.method == 'GET'
+                and not request.path.startswith('/api/')
+                and '.' not in last_segment):
+            return send_from_directory(app.static_folder, 'index.html')
+
         logger.error(f'404 Error - Path not found: {request.path}')
         logger.error(f'Available routes:')
         for rule in app.url_map.iter_rules():

@@ -288,7 +288,7 @@ function CreateNewDeck({ username }) {
             </button>
           )}
           {/* Card image and info */}
-          <img src={card.image} alt={card.name} style={{ width: 100, borderRadius: 8 }} />
+          <img src={`data:image/png;base64,${card.image}`} alt={card.name} style={{ width: 100, borderRadius: 8 }} />
           <div>{card.name}</div>
           <div>{card.grade}</div>
           {/* ...other card info... */}

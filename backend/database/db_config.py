@@ -12,3 +12,20 @@ def get_database_connection():
 def get_db_type():
     """Return database type"""
     return 'sqlite'
+
+def ensure_schema():
+    """Create tables the code needs that older database copies may be missing."""
+    conn = get_database_connection()
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS ride_deck (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                deck_id INTEGER NOT NULL,
+                card_id INTEGER NOT NULL,
+                grade INTEGER NOT NULL,
+                FOREIGN KEY (deck_id) REFERENCES decks(deck_id) ON DELETE CASCADE
+            )
+        """)
+        conn.commit()
+    finally:
+        conn.close()

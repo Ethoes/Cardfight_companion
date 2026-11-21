@@ -1,10 +1,16 @@
-import faiss
 import json
 import numpy as np
 import requests
 import os
-from sentence_transformers import SentenceTransformer
+import threading
 from database.feedback_service import search_similar_good_feedback
+
+# NOTE: faiss and sentence_transformers are imported lazily inside
+# _load_components(). sentence_transformers pulls in torch/transformers/sklearn,
+# which takes several seconds to import, so keeping it out of module scope lets
+# the Flask app start quickly. See warm_up_rules_service() for preloading.
+
+EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
 
 class VanguardRulesService:
     """Service for handling Cardfight!! Vanguard rules questions using AI"""
@@ -29,6 +35,10 @@ class VanguardRulesService:
     def _load_components(self):
         """Load FAISS index, metadata, and embedding model"""
         try:
+            # Heavy imports deferred to here to keep app startup fast
+            import faiss
+            from sentence_transformers import SentenceTransformer
+
             # Load FAISS index
             if os.path.exists(self.index_path):
                 self.index = faiss.read_index(self.index_path)
@@ -43,7 +53,12 @@ class VanguardRulesService:
                 raise FileNotFoundError(f"Metadata file not found at {self.meta_path}")
             
             # Load embedding model
-            self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+            # Prefer the locally cached model to skip the Hugging Face network
+            # check; fall back to downloading it if it isn't cached yet.
+            try:
+                self.embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME, local_files_only=True)
+            except Exception:
+                self.embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
             
             print(f"✅ Rules service loaded successfully")
             print(f"   - Index size: {self.index.ntotal} entries")
@@ -503,15 +518,37 @@ Provide a helpful answer based on the rule excerpts above:"""
                 "context_sources": []
             }
 
-# Global instance - will be initialized when the module is imported
+# Global instance - created on first use (or by the startup warm-up thread)
 rules_service = None
+_rules_service_lock = threading.Lock()
 
 def get_rules_service():
-    """Get or create the global rules service instance"""
+    """Get or create the global rules service instance.
+
+    Thread-safe: if the warm-up thread is still loading, callers wait for it
+    instead of starting a second (slow) load.
+    """
     global rules_service
     if rules_service is None:
-        rules_service = VanguardRulesService()
+        with _rules_service_lock:
+            if rules_service is None:
+                rules_service = VanguardRulesService()
     return rules_service
+
+
+def warm_up_rules_service():
+    """Load the rules service in a background thread so the first rules
+    question doesn't pay the multi-second model load cost."""
+    def _load():
+        try:
+            get_rules_service()
+        except Exception as e:
+            # get_rules_service() will retry on the next real request
+            print(f"[WARNING] Rules service warm-up failed: {e}")
+
+    thread = threading.Thread(target=_load, name="rules-warmup", daemon=True)
+    thread.start()
+    return thread
 
 
 

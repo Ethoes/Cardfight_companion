@@ -4,6 +4,25 @@ import math
 from .db_config import DB_PATH
 
 
+def create_ride_deck_table():
+    """Create the ride_deck table if it doesn't exist."""
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ride_deck (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            deck_id INTEGER NOT NULL,
+            card_id INTEGER NOT NULL,
+            grade INTEGER NOT NULL,
+            FOREIGN KEY (deck_id) REFERENCES decks(deck_id) ON DELETE CASCADE
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+create_ride_deck_table()
+
+
 def save_deck(deck_name, username, description, format=None):
     """
     Save a new deck to the `decks` table.
@@ -211,29 +230,34 @@ def delete_deck_by_id(deck_id):
     """
     Delete a deck and all its associated cards from the database.
     """
+    conn = None
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        
+
         # Delete associated deck cards first (foreign key constraint)
         cursor.execute("DELETE FROM deck_cards WHERE deck_id = ?", (deck_id,))
-        
+
         # Delete associated ride deck cards if they exist
         cursor.execute("DELETE FROM ride_deck WHERE deck_id = ?", (deck_id,))
-        
+
         # Delete the deck itself
         cursor.execute("DELETE FROM decks WHERE deck_id = ?", (deck_id,))
-        
-        conn.commit()
-        
+
         # Check if the deck was actually deleted
         deleted_rows = cursor.rowcount
-        conn.close()
-        
+        conn.commit()
+
         return deleted_rows > 0
     except Exception as e:
+        # Roll back so a half-finished delete doesn't keep the DB write-locked
+        if conn:
+            conn.rollback()
         print(f"[ERROR] Failed to delete deck: {e}")
         return False
+    finally:
+        if conn:
+            conn.close()
 
 
 def get_all_user_decks_paginated(page=1, per_page=10, search='', sort_field='deck_id', sort_direction='desc'):

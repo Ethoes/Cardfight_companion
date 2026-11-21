@@ -13,7 +13,9 @@ function CardSearch({
   format = null,
   initialFilters = {},
   showAddButton = false,
-  compact = false 
+  compact = false,
+  rideDeck = null,
+  onRideDeckToggle = null
 }) {
   const [selectedOption, setSelectedOption] = useState(initialFilters.nation || '');
   const [selectedClan, setSelectedClan] = useState(initialFilters.clan || '');
@@ -97,6 +99,14 @@ function CardSearch({
   const getCardCount = (card) => {
     if (!showCardCounts || !currentDeck) return 0;
     return currentDeck.filter((deckCard) => deckCard.id === card.id).length;
+  };
+
+  // Returns 0-3 when the card can go into a ride deck slot, otherwise null
+  const getRideGrade = (card) => {
+    const match = /(\d)/.exec(String(card.grade ?? ''));
+    if (!match) return null;
+    const grade = Number(match[1]);
+    return grade >= 0 && grade <= 3 ? grade : null;
   };
 
   return (
@@ -247,6 +257,8 @@ function CardSearch({
       <div className="card-search-grid">
         {searchResult.map((card, index) => {
           const cardCount = getCardCount(card);
+          const rideGrade = rideDeck && onRideDeckToggle ? getRideGrade(card) : null;
+          const inRideDeck = rideGrade !== null && rideDeck[rideGrade]?.id === card.id;
 
           return (
             <div
@@ -280,6 +292,23 @@ function CardSearch({
                   }}
                 >
                   +
+                </button>
+              )}
+
+              {/* Ride Deck Button (top-left, Standard grade 0-3 only) */}
+              {rideGrade !== null && (
+                <button
+                  className={`card-search-ride-button ${inRideDeck ? 'active' : ''}`}
+                  title={inRideDeck
+                    ? `Remove from Ride Deck (Grade ${rideGrade})`
+                    : `Add to Ride Deck as Grade ${rideGrade}`}
+                  aria-pressed={inRideDeck}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRideDeckToggle(rideGrade, card);
+                  }}
+                >
+                  {inRideDeck ? `✓${rideGrade}` : `R${rideGrade}`}
                 </button>
               )}
 

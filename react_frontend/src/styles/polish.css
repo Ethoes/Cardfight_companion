@@ -1,0 +1,469 @@
+/*
+ * Shared polish layer for the main pages: design tokens, page/modal
+ * transitions, focus rings and reduced-motion handling.
+ * Imported last in App.js so these shared rules win over page files.
+ * Test-hand and multiplayer pages don't use any of these classes.
+ */
+
+:root {
+  --cc-blue: #699fd0;
+  --cc-blue-deep: #4f86ba;
+  --cc-teal: #a2c4c9;
+  --cc-ink: #2c2f3a;
+  --cc-ink-soft: #3a3f51;
+  --cc-text: #2f3340;
+  --cc-muted: #6b7280;
+  --cc-green: #4caf50;
+  --cc-green-deep: #3d9140;
+  --cc-red: #e5534b;
+  --cc-red-deep: #c93c35;
+
+  --cc-panel-gradient: linear-gradient(135deg, var(--cc-blue), var(--cc-teal));
+  --cc-button-gradient: linear-gradient(135deg, var(--cc-ink-soft), var(--cc-ink));
+  --cc-button-gradient-hover: linear-gradient(135deg, #4a4f63, #3a3d4f);
+  --cc-surface: rgba(255, 255, 255, 0.9);
+  --cc-surface-border: rgba(255, 255, 255, 0.7);
+
+  --cc-radius-sm: 8px;
+  --cc-radius: 12px;
+  --cc-radius-lg: 18px;
+
+  --cc-shadow-sm: 0 1px 2px rgba(20, 24, 40, 0.06), 0 2px 6px rgba(20, 24, 40, 0.08);
+  --cc-shadow: 0 2px 4px rgba(20, 24, 40, 0.06), 0 8px 24px rgba(20, 24, 40, 0.14);
+  --cc-shadow-lg: 0 4px 8px rgba(20, 24, 40, 0.08), 0 18px 48px rgba(20, 24, 40, 0.22);
+
+  --cc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cc-fast: 160ms;
+  --cc-med: 260ms;
+  --cc-slow: 420ms;
+
+  --cc-focus: 0 0 0 3px rgba(105, 159, 208, 0.55);
+}
+
+/* ---------- Page transitions ---------- */
+
+/*
+ * The page wrapper only fades: a transform on it would become the containing
+ * block for `position: fixed` modals inside the page. The "rise" comes from
+ * the page's own panels below instead.
+ */
+.page-transition {
+  animation: cc-fade-in var(--cc-med) ease-out backwards;
+}
+
+.DeckBuilder-header,
+.DeckBuilder-buttons-container,
+.view-decks h2,
+.user-decks-header,
+.user-decks-controls,
+.user-decks-content,
+.rules-query-header,
+.rules-query-content,
+.TournamentNotes-container > h2,
+.TournamentNotes-list,
+.TournamentDetails-header,
+.TournamentDetails-info,
+.TournamentDetails-list,
+.CreateNewDeck-title-box,
+.CreateNewDeck-middle-box,
+.DeckDetails-content,
+.App-buttons-container {
+  animation: cc-fade-up var(--cc-slow) var(--cc-ease) backwards;
+}
+
+.DeckBuilder-buttons-container,
+.user-decks-controls,
+.rules-query-content,
+.TournamentNotes-list,
+.TournamentDetails-info,
+.DeckDetails-content {
+  animation-delay: 60ms;
+}
+
+.user-decks-content,
+.TournamentDetails-list {
+  animation-delay: 120ms;
+}
+
+@keyframes cc-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cc-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cc-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Staggered entrance for lists of items (decks, tournaments, rows, menu) */
+.App-buttons-container > a,
+.DeckBuilder-buttons-container > a,
+.deck-card,
+.TournamentNotes-item,
+.decks-table tbody tr,
+.TournamentDetails-row:not(.TournamentDetails-header-row),
+.example-question {
+  animation: cc-fade-up var(--cc-slow) var(--cc-ease) backwards;
+}
+
+.App-buttons-container > a:nth-child(2),
+.DeckBuilder-buttons-container > a:nth-child(2),
+.deck-card:nth-child(2),
+.TournamentNotes-item:nth-child(2),
+.decks-table tbody tr:nth-child(2),
+.TournamentDetails-row:nth-child(3),
+.example-question:nth-child(2) { animation-delay: 40ms; }
+
+.App-buttons-container > a:nth-child(3),
+.deck-card:nth-child(3),
+.TournamentNotes-item:nth-child(3),
+.decks-table tbody tr:nth-child(3),
+.TournamentDetails-row:nth-child(4),
+.example-question:nth-child(3) { animation-delay: 80ms; }
+
+.App-buttons-container > a:nth-child(4),
+.deck-card:nth-child(4),
+.TournamentNotes-item:nth-child(4),
+.decks-table tbody tr:nth-child(4),
+.TournamentDetails-row:nth-child(5),
+.example-question:nth-child(4) { animation-delay: 120ms; }
+
+.App-buttons-container > a:nth-child(5),
+.deck-card:nth-child(5),
+.TournamentNotes-item:nth-child(5),
+.decks-table tbody tr:nth-child(5),
+.TournamentDetails-row:nth-child(6),
+.example-question:nth-child(5) { animation-delay: 160ms; }
+
+.deck-card:nth-child(n + 6),
+.TournamentNotes-item:nth-child(n + 6),
+.decks-table tbody tr:nth-child(n + 6),
+.TournamentDetails-row:nth-child(n + 7),
+.example-question:nth-child(n + 6) { animation-delay: 200ms; }
+
+/* ---------- Modals (card info, format picker, add match) ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 26, 38, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  animation: cc-fade-in var(--cc-med) ease-out backwards;
+}
+
+.modal-content {
+  background: #fff;
+  color: var(--cc-text);
+  border-radius: var(--cc-radius-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  padding: 28px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: relative;
+  text-align: left;
+  box-shadow: var(--cc-shadow-lg);
+  animation: cc-pop-in var(--cc-med) var(--cc-ease) backwards;
+}
+
+.modal-content h2,
+.modal-content h3 {
+  margin-top: 0;
+  color: var(--cc-ink);
+  text-align: center;
+}
+
+.App .modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(44, 47, 58, 0.08);
+  color: var(--cc-ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  transition: background var(--cc-fast) ease, transform var(--cc-fast) var(--cc-ease), color var(--cc-fast) ease;
+}
+
+.App .modal-close:hover {
+  background: var(--cc-red);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.modal-scrollable-content {
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+}
+
+.modal-image {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  margin: 0 auto 18px;
+  border-radius: var(--cc-radius-sm);
+  box-shadow: var(--cc-shadow);
+}
+
+.modal-content p {
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.modal-content strong {
+  color: var(--cc-ink);
+}
+
+.modal-content a {
+  color: var(--cc-blue-deep);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cc-ink);
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1.5px solid #d6dbe3;
+  border-radius: var(--cc-radius-sm);
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color var(--cc-fast) ease, box-shadow var(--cc-fast) ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: var(--cc-blue);
+  box-shadow: var(--cc-focus);
+}
+
+/* ---------- Shared bits ---------- */
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-top-color: var(--cc-blue-deep);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 24px auto;
+}
+
+/* Keyboard focus ring on main-page controls */
+.App a:focus-visible,
+.App button:focus-visible,
+.App input:focus-visible,
+.App select:focus-visible,
+.App textarea:focus-visible,
+.auth-card button:focus-visible {
+  outline: none;
+  box-shadow: var(--cc-focus);
+}
+
+/* ---------- Login / Register ---------- */
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px 30px;
+  border-radius: var(--cc-radius-lg);
+  background: var(--cc-panel-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--cc-shadow-lg);
+  box-sizing: border-box;
+  animation: cc-pop-in var(--cc-slow) var(--cc-ease) backwards;
+}
+
+.auth-brand {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin: 0 0 6px;
+  color: #fff;
+  text-align: center;
+  font-size: 28px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.auth-card input {
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--cc-radius-sm);
+  background: rgba(255, 255, 255, 0.92);
+  transition: border-color var(--cc-fast) ease, box-shadow var(--cc-fast) ease, background var(--cc-fast) ease;
+}
+
+.auth-card input:focus {
+  outline: none;
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(44, 47, 58, 0.25);
+}
+
+.auth-card .auth-primary {
+  margin-top: 4px;
+  padding: 13px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--cc-button-gradient);
+  border: none;
+  border-radius: var(--cc-radius-sm);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform var(--cc-fast) var(--cc-ease), box-shadow var(--cc-fast) ease, background var(--cc-fast) ease;
+}
+
+.auth-card .auth-primary:hover {
+  background: var(--cc-button-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.auth-card .auth-primary:active {
+  transform: translateY(0);
+}
+
+.auth-card .auth-secondary {
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: transparent;
+  border: none;
+  border-radius: var(--cc-radius-sm);
+  cursor: pointer;
+  transition: background var(--cc-fast) ease;
+}
+
+.auth-card .auth-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.auth-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--cc-radius-sm);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--cc-red-deep);
+  font-size: 14px;
+  animation: cc-fade-up var(--cc-med) var(--cc-ease) backwards;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    animation: none !important;
+  }
+
+  .page-transition,
+  .DeckBuilder-header,
+  .DeckBuilder-buttons-container,
+  .view-decks h2,
+  .user-decks-header,
+  .user-decks-controls,
+  .user-decks-content,
+  .rules-query-header,
+  .rules-query-content,
+  .TournamentNotes-container > h2,
+  .TournamentNotes-list,
+  .TournamentDetails-header,
+  .TournamentDetails-info,
+  .TournamentDetails-list,
+  .CreateNewDeck-title-box,
+  .CreateNewDeck-middle-box,
+  .DeckDetails-content,
+  .App-buttons-container,
+  .card-search-card,
+  .modal-overlay,
+  .modal-content,
+  .auth-card,
+  .auth-error,
+  .App-buttons-container > a,
+  .DeckBuilder-buttons-container > a,
+  .deck-card,
+  .TournamentNotes-item,
+  .decks-table tbody tr,
+  .TournamentDetails-row,
+  .example-question {
+    animation: none !important;
+  }
+}

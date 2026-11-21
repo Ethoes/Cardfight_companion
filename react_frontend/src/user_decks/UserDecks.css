@@ -1,81 +1,100 @@
 .user-decks {
-  padding: 20px;
-  padding-top: 80px; /* Add extra top padding to account for banner */
+  padding: 100px 20px 40px; /* Clear the fixed banner */
   max-width: 1400px;
   margin: 0 auto;
+  box-sizing: border-box;
+  color: var(--cc-text);
 }
 
 .user-decks-header {
-  text-align: center;
-  margin-bottom: 30px;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  padding: 18px 24px;
 }
 
 .user-decks-header h1 {
-  color: #333;
-  margin-bottom: 10px;
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 28px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .user-decks-header p {
-  color: #666;
-  font-size: 16px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 15px;
 }
 
 .user-decks-header p.error {
-  color: #d32f2f;
+  color: #fff;
+  font-weight: 600;
 }
 
 .user-decks-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   gap: 20px;
 }
 
 .search-container {
   flex: 1;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--cc-surface-border);
+  border-radius: 999px;
   font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: var(--cc-surface);
+  box-shadow: var(--cc-shadow-sm);
+  transition: border-color var(--cc-fast) ease, box-shadow var(--cc-fast) ease, background var(--cc-fast) ease;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  background: #fff;
+  border-color: var(--cc-blue);
+  box-shadow: var(--cc-focus);
 }
 
 .results-info {
-  color: #666;
-  font-size: 14px;
+  color: var(--cc-ink);
+  font-size: 13px;
+  font-weight: 500;
   white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--cc-surface);
+  box-shadow: var(--cc-shadow-sm);
 }
 
 .user-decks-content {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .no-results {
   text-align: center;
   padding: 40px;
-  color: #666;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 2px dashed #ccc;
+  color: var(--cc-muted);
+  background: var(--cc-surface);
+  border-radius: var(--cc-radius);
+  border: 2px dashed rgba(105, 159, 208, 0.6);
 }
 
 .decks-table-container {
-  background: white;
-  border-radius: 8px;
+  background: var(--cc-surface);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: var(--cc-radius);
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  box-shadow: var(--cc-shadow);
+  border: 1px solid var(--cc-surface-border);
 }
 
 .decks-table {
@@ -84,79 +103,93 @@
 }
 
 .decks-table th {
-  background-color: #f5f5f5;
-  padding: 15px 12px;
+  background: var(--cc-panel-gradient);
+  padding: 14px 12px;
   text-align: left;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #e0e0e0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  border-bottom: none;
 }
 
 .decks-table th.sortable {
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.2s;
+  transition: background-color var(--cc-fast) ease;
 }
 
 .decks-table th.sortable:hover {
-  background-color: #eeeeee;
+  background: var(--cc-blue-deep);
 }
 
 .decks-table td {
   padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e9edf2;
   vertical-align: middle;
 }
 
-.decks-table tr:hover {
-  background-color: #f9f9f9;
+.decks-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.decks-table tbody tr {
+  transition: background-color var(--cc-fast) ease;
+}
+
+.decks-table tbody tr:hover {
+  background-color: rgba(105, 159, 208, 0.08);
 }
 
 .decks-table tr.own-deck {
-  background-color: #e3f2fd;
+  background-color: rgba(105, 159, 208, 0.14);
+  box-shadow: inset 4px 0 0 var(--cc-blue);
 }
 
 .decks-table tr.own-deck:hover {
-  background-color: #bbdefb;
+  background-color: rgba(105, 159, 208, 0.22);
 }
 
 .deck-name {
-  font-weight: 500;
-  color: #1976d2;
+  font-weight: 600;
+  color: var(--cc-blue-deep);
 }
 
 .username {
-  color: #666;
+  color: var(--cc-muted);
 }
 
 .format-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .format-badge.standard {
-  background-color: #e8f5e8;
+  background-color: #e3f4e4;
   color: #2e7d32;
 }
 
 .format-badge.premium {
-  background-color: #fff3e0;
-  color: #ef6c00;
+  background-color: #fff1df;
+  color: #d96200;
 }
 
 .description {
-  color: #666;
-  max-width: 200px;
+  color: var(--cc-muted);
+  max-width: 220px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .created-date {
-  color: #666;
+  color: var(--cc-muted);
   font-size: 13px;
 }
 
@@ -165,32 +198,20 @@
   gap: 8px;
 }
 
-.view-btn, .edit-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.App .view-btn,
+.App .edit-btn {
+  padding: 7px 14px;
   font-size: 12px;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  border-radius: 999px;
 }
 
-.view-btn {
-  background-color: #1976d2;
-  color: white;
+.App .edit-btn {
+  background: linear-gradient(135deg, #f59a2f, #e07800);
 }
 
-.view-btn:hover {
-  background-color: #1565c0;
-}
-
-.edit-btn {
-  background-color: #f57c00;
-  color: white;
-}
-
-.edit-btn:hover {
-  background-color: #ef6c00;
+.App .edit-btn:hover {
+  background: linear-gradient(135deg, #f7a845, #c96c00);
 }
 
 .pagination {
@@ -198,31 +219,32 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  gap: 5px;
+  gap: 6px;
 }
 
-.pagination-btn {
+.App .pagination-btn {
+  min-width: 38px;
   padding: 8px 12px;
-  border: 1px solid #ddd;
-  background-color: white;
-  color: #333;
-  cursor: pointer;
-  border-radius: 4px;
+  background: var(--cc-surface);
+  color: var(--cc-ink);
   font-size: 14px;
-  transition: all 0.2s;
+  font-weight: 500;
+  border-radius: var(--cc-radius-sm);
+  box-shadow: var(--cc-shadow-sm);
 }
 
-.pagination-btn:hover:not(:disabled) {
-  background-color: #f0f0f0;
+.App .pagination-btn:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: var(--cc-shadow);
 }
 
-.pagination-btn.active {
-  background-color: #1976d2;
+.App .pagination-btn.active,
+.App .pagination-btn.active:hover {
+  background: var(--cc-button-gradient);
   color: white;
-  border-color: #1976d2;
 }
 
-.pagination-btn:disabled {
+.App .pagination-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -230,35 +252,34 @@
 .error-message {
   text-align: center;
   padding: 20px;
-  background-color: #ffebee;
-  border: 1px solid #e57373;
-  border-radius: 4px;
+  background-color: #fff0ef;
+  border: 1px solid #f2b8b5;
+  border-radius: var(--cc-radius);
   margin-bottom: 20px;
+  box-shadow: var(--cc-shadow-sm);
 }
 
 .error-message p {
-  color: #c62828;
-  margin-bottom: 10px;
+  color: var(--cc-red-deep);
+  margin: 0 0 12px;
 }
 
-.error-message button {
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+.App .error-message button {
+  background: linear-gradient(135deg, var(--cc-red), var(--cc-red-deep));
+  padding: 8px 18px;
+  font-size: 14px;
 }
 
 .loading-overlay {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: var(--cc-muted);
   font-style: italic;
+  animation: cc-fade-in var(--cc-med) ease backwards;
 }
 
 .deck-id {
-  color: #999;
+  color: #9aa3af;
   font-size: 13px;
 }
 
@@ -268,29 +289,29 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .search-container {
     max-width: none;
   }
-  
+
   .results-info {
-    text-align: center;
+    align-self: center;
   }
 }
 
 @media (max-width: 768px) {
   .user-decks {
-    padding: 15px;
+    padding: 90px 15px 30px;
   }
-  
+
   .decks-table-container {
     overflow-x: auto;
   }
-  
+
   .decks-table {
     min-width: 800px;
   }
-  
+
   .pagination {
     flex-wrap: wrap;
   }

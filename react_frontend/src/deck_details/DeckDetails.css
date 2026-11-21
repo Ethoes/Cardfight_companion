@@ -3,113 +3,230 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px; /* Add padding to account for the banner height */
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  gap: 20px; /* Add spacing between sections */
+  padding: 100px 20px 40px; /* Clear the fixed banner */
+  box-sizing: border-box;
+  color: var(--cc-text);
+  gap: 20px;
+  position: relative;
 }
 
 /* Background box for the title */
 .CreateNewDeck-title-box {
-  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Gradient background */
+  background: var(--cc-panel-gradient);
   color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  padding: 18px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cc-radius);
+  box-shadow: var(--cc-shadow);
   text-align: center;
   width: 100%;
-  max-width: 600px; /* Limit the width */
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.CreateNewDeck-title-box h2 {
+  margin: 0 0 6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.CreateNewDeck-title-box p {
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* Row holding the main deck and ride deck boxes */
+.DeckDetails-content {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.DeckDetails-section-title {
+  text-align: center;
+  margin: 0 0 16px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 /* Background box for the cards grid */
 .CreateNewDeck-grid-box {
-  background: linear-gradient(135deg, #699fd0, #a2c4c9); /* Gradient background */
-  padding: 10px 20px; /* Reduce padding to bring the grid closer to the edges */
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  display: flex; /* Use flexbox to align the grid */
-  justify-content: center; /* Center the grid horizontally */
-  align-items: stretch; /* Stretch the grid vertically to fill the box */
-  box-sizing: border-box; /* Include padding in width calculation */
+  background: var(--cc-panel-gradient);
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cc-radius-lg);
+  box-shadow: var(--cc-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
   width: 100%;
-  max-width: 1200px; /* Limit the width */
-  margin-top: 10px; /* Add a small margin to separate it from the title */
-  height: calc(60vh); /* Adjust height to stretch the box further down */
-  overflow-y: auto; /* Add vertical scrolling if content overflows */
+  max-width: 1200px;
+  height: 62vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
 }
 
 /* Cards grid */
-.CreateNewDeck-grid {
+.CreateNewDeck-grid-box .CreateNewDeck-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 150px); /* Fixed column width of 200px */
-  gap: 10px; /* Consistent gap between cards */
-  justify-content: center; /* Center the grid within the container */
-  width: 100%; /* Make the grid fill the container horizontally */
-  max-width: 100%; /* Prevent the grid from exceeding the container width */
+  grid-template-columns: repeat(auto-fill, 150px);
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  padding: 4px 4px 12px;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
 }
 
 /* Individual card styling */
-.CreateNewDeck-card img {
-  width: 100%; /* Ensure the image fills the card width */
-  height: 90%; /* Reduce the height of the card image to 80% */
-  object-fit: cover; /* Ensure the image scales properly without leaving white space */
+.CreateNewDeck-grid-box .CreateNewDeck-card {
+  width: auto;
+  height: auto;
+  background-color: white;
+  border-radius: var(--cc-radius-sm);
+  box-shadow: var(--cc-shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform var(--cc-med) var(--cc-ease),
+    box-shadow var(--cc-med) var(--cc-ease);
+}
+
+.CreateNewDeck-grid-box .CreateNewDeck-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.CreateNewDeck-grid-box .CreateNewDeck-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--cc-shadow-lg);
+  z-index: 1;
+}
+
+/* Ride deck column */
+.DeckDetails-ride-box {
+  background: var(--cc-panel-gradient);
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cc-radius-lg);
+  box-shadow: var(--cc-shadow);
+  flex: 0 0 280px;
+  height: 62vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+}
+
+.DeckDetails-ride-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  padding: 4px 0 20px;
+}
+
+.DeckDetails-ride-card {
+  width: 140px;
+  background-color: white;
+  border-radius: var(--cc-radius-sm);
+  box-shadow: var(--cc-shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    transform var(--cc-med) var(--cc-ease),
+    box-shadow var(--cc-med) var(--cc-ease);
+}
+
+.DeckDetails-ride-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: var(--cc-shadow-lg);
+}
+
+.DeckDetails-ride-card img {
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-
-/* Individual card styling */
-.CreateNewDeck-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+.DeckDetails-ride-grade {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cc-ink);
+  padding: 8px 5px;
+  background: #f3f5f8;
+  border-top: 1px solid #e3e7ee;
 }
 
-.CreateNewDeck-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-.test-hand-button {
+/* Corner action buttons (beat the global `.App button` look) */
+.App .test-hand-button,
+.App .delete-deck-button {
   position: absolute;
-  top: 100px; /* Adjust this value to move the button below the banner */
+  top: 100px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 999px;
+  color: white;
+  z-index: 2;
+}
+
+.App .test-hand-button {
   right: 20px;
-  background-color: #4caf50; /* Green background */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: background-color 0.3s, transform 0.2s;
+  background: linear-gradient(135deg, #5cbf60, var(--cc-green-deep));
 }
 
-.test-hand-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: translateY(-2px); /* Slight lift on hover */
+.App .test-hand-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--cc-green), #357f38);
 }
 
-.delete-deck-button {
-  position: absolute;
-  top: 100px; /* Same as test-hand-button to align horizontally */
-  left: 20px; /* Position on the left side */
-  background-color: #f44336; /* Red background */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: background-color 0.3s, transform 0.2s;
+.App .delete-deck-button {
+  left: 20px;
+  background: linear-gradient(135deg, var(--cc-red), var(--cc-red-deep));
 }
 
-.delete-deck-button:hover {
-  background-color: #d32f2f; /* Darker red on hover */
-  transform: translateY(-2px); /* Slight lift on hover */
+.App .delete-deck-button:hover {
+  background: linear-gradient(135deg, #ee6158, #b5332d);
+}
+
+@media (max-width: 900px) {
+  .DeckDetails-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .DeckDetails-ride-box {
+    flex: none;
+    width: 100%;
+    height: auto;
+    max-height: 62vh;
+  }
+
+  .DeckDetails-ride-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .App .test-hand-button,
+  .App .delete-deck-button {
+    position: static;
+  }
+
+  .CreateNewDeck-container {
+    padding-top: 90px;
+  }
 }

@@ -25,10 +25,10 @@ from routes.deck_routes import deck_bp
 from routes.card_routes import card_bp
 from routes.tournament_routes import tournament_bp
 from routes.misc_routes import misc_bp
-from routes.rules_routes import rules_bp
 from routes.feedback_routes import feedback_bp
+from routes.fight_routes import fight_bp
 
-def create_app():
+def create_app(enable_rules=True):
     from database.db_config import ensure_schema
     ensure_schema()
 
@@ -42,6 +42,11 @@ def create_app():
     # Request logging middleware
     @app.before_request
     def log_request_info():
+        g.start_time = datetime.utcnow()
+        # Cardfight sync traffic (long-polls, every game action) would flood the log.
+        if request.path.startswith('/api/fight/'):
+            g.quiet = True
+            return
         logger.info('=== NEW REQUEST ===')
         logger.info(f'Request URL: {request.url}')
         logger.info(f'Request Path: {request.path}')
@@ -56,6 +61,8 @@ def create_app():
     
     @app.after_request
     def log_response_info(response):
+        if getattr(g, 'quiet', False):
+            return response
         if hasattr(g, 'start_time'):
             duration = datetime.utcnow() - g.start_time
             logger.info(f'Response Status: {response.status_code}')
@@ -100,10 +107,25 @@ def create_app():
     logger.info("Tournament blueprint registered")
     app.register_blueprint(misc_bp, url_prefix='/api')
     logger.info("Misc blueprint registered")
-    app.register_blueprint(rules_bp, url_prefix='/api')
-    logger.info("Rules blueprint registered")
+    if enable_rules:
+        from routes.rules_routes import rules_bp
+        app.register_blueprint(rules_bp, url_prefix='/api')
+        logger.info("Rules blueprint registered")
+    else:
+        # Lightweight mode: answer rules endpoints with a clear 503 instead of a 404
+        @app.route('/api/rules', defaults={'subpath': ''}, methods=['GET', 'POST'])
+        @app.route('/api/rules/<path:subpath>', methods=['GET', 'POST'])
+        def rules_disabled(subpath):
+            return {
+                'success': False,
+                'status': 'disabled',
+                'error': 'Rules bot is disabled (backend started with --no-rules)'
+            }, 503
+        logger.info("Rules bot disabled (--no-rules)")
     app.register_blueprint(feedback_bp, url_prefix='/api')
     logger.info("Feedback blueprint registered")
+    app.register_blueprint(fight_bp, url_prefix='/api')
+    logger.info("Fight blueprint registered")
     logger.info("All blueprints registered successfully")
     
     # Debug route to see all registered routes
@@ -137,11 +159,26 @@ def create_app():
     return app
 
 if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description="Cardfight Companion backend")
+    parser.add_argument(
+        '--no-rules', action='store_true',
+        help="Skip the rules bot (no torch/embedding model/FAISS) for a lightweight test server"
+    )
+    args = parser.parse_args()
+
     port = int(os.environ.get('PORT', 5000))
-    app = create_app()
+    app = create_app(enable_rules=not args.no_rules)
     
     print("Registered routes:")
     for rule in app.url_map.iter_rules():
         print(f"  {rule.rule} -> {rule.endpoint} {list(rule.methods)}")
-    
+
+    # Preload the rules bot (torch, embedding model, FAISS index) in the
+    # background so the server starts accepting requests immediately.
+    if not args.no_rules:
+        from services.rules_service import warm_up_rules_service
+        warm_up_rules_service()
+        logger.info("Rules service warm-up started in background")
+
     app.run(host='0.0.0.0', port=port, debug=False)

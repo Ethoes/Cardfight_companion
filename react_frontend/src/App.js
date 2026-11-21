@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group'; // Import transition components
 import './App.css';
 import Login from './login/login.js';
 import Register from './login/register.js';
@@ -12,7 +11,11 @@ import UserDecks from './user_decks/UserDecks.js'; // Add this import
 import DeckDetails from './deck_details/DeckDetails.js';
 import TournamentNotes from './tournament_notes/TournamentNotes.js';
 import TournamentDetails from './tournament_notes/tournament_details/TournamentDetails.js';
-import TestHand from './deck_details/test_hand/TestHand.js';import RulesQuery from './rules_query/RulesQuery.js';
+import TestHand from './deck_details/test_hand/TestHand.js';
+import CardfightLobby from './cardfight/CardfightLobby.js';
+import CardfightMatch from './cardfight/CardfightMatch.js';
+import RulesQuery from './rules_query/RulesQuery.js';
+import './styles/polish.css'; // Shared tokens, transitions and modal styles (imported last so it wins)
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -41,12 +44,9 @@ function App() {
 
   if (!isLoggedIn) {
     return isRegistering ? (
-      <Register onRegister={() => setIsRegistering(false)} />
+      <Register onRegister={() => setIsRegistering(false)} onCancel={() => setIsRegistering(false)} />
     ) : (
-      <div>
-        <Login onLogin={handleLogin} />
-        <button onClick={() => setIsRegistering(true)}>Register</button>
-      </div>
+      <Login onLogin={handleLogin} onShowRegister={() => setIsRegistering(true)} />
     );
   }
 
@@ -62,50 +62,55 @@ function App() {
 
 function AnimatedRoutes({ username }) {
   const location = useLocation(); // Get the current location
-  const nodeRef = useRef(null); // Create a ref for the transition node
+
+  // Start each new page at the top so the enter animation is visible
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
-    <TransitionGroup component={null}> {/* Avoid wrapping in an extra div */}
-      <CSSTransition
-        key={location.key}
-        classNames="page-transition"
-        timeout={300}
-        nodeRef={nodeRef} // Pass the ref to CSSTransition
-      >
-        <div ref={nodeRef}>
-          <Routes location={location}>
-            <Route path="/deck-builder" element={<DeckBuilder />} />
-            <Route path="/view-decks" element={<ViewDecks username={username} />} />
-            <Route path="/view-user-decks" element={<UserDecks username={username} />} />
-            <Route path="/deck-details" element={<DeckDetails />} />
-            <Route path="/tournament-notes" element={<TournamentNotes username={username} />} />
-            <Route path="/tournament-details" element={<TournamentDetails />} />
-            <Route path="/test-hand" element={<TestHand />} />
-            <Route path="/rules-query" element={<RulesQuery />} />
-            <Route
-              path="/"
-              element={
-                <div className="App-main">
-                  <div className="App-buttons-container">
-                    <Link to="/deck-builder">
-                      <button>Go to Deck Builder</button>
-                    </Link>
-                    <Link to="/view-user-decks">
-                      <button>View all Decks</button>
-                    </Link>
-                    <Link to="/tournament-notes">
-                      <button>Go to Tournament Notes</button>
-                    </Link>                    <Link to="/rules-query">
-                      <button>Ask Rules Questions</button>
-                    </Link>                  </div>
-                </div>
-              }
-            />
-            <Route path="/create-new-deck" element={<CreateNewDeck username={username} />} />
-          </Routes>
-        </div>
-      </CSSTransition>
-    </TransitionGroup>
+    // Keying on the location remounts the wrapper, which replays the CSS
+    // enter animation. Only the incoming page is rendered, so there's no
+    // overlap/jump between the old and new page.
+    <div key={location.key} className="page-transition">
+      <Routes location={location}>
+        <Route path="/deck-builder" element={<DeckBuilder />} />
+        <Route path="/view-decks" element={<ViewDecks username={username} />} />
+        <Route path="/view-user-decks" element={<UserDecks username={username} />} />
+        <Route path="/deck-details" element={<DeckDetails />} />
+        <Route path="/tournament-notes" element={<TournamentNotes username={username} />} />
+        <Route path="/tournament-details" element={<TournamentDetails />} />
+        <Route path="/test-hand" element={<TestHand />} />
+        <Route path="/cardfight" element={<CardfightLobby username={username} />} />
+        <Route path="/cardfight/:roomId" element={<CardfightMatch />} />
+        <Route path="/rules-query" element={<RulesQuery />} />
+        <Route
+          path="/"
+          element={
+            <div className="App-main">
+              <div className="App-buttons-container">
+                <Link to="/cardfight">
+                  <button>Cardfight</button>
+                </Link>
+                <Link to="/deck-builder">
+                  <button>Go to Deck Builder</button>
+                </Link>
+                <Link to="/view-user-decks">
+                  <button>View all Decks</button>
+                </Link>
+                <Link to="/tournament-notes">
+                  <button>Go to Tournament Notes</button>
+                </Link>
+                <Link to="/rules-query">
+                  <button>Ask Rules Questions</button>
+                </Link>
+              </div>
+            </div>
+          }
+        />
+        <Route path="/create-new-deck" element={<CreateNewDeck username={username} />} />
+      </Routes>
+    </div>
   );
 }
 

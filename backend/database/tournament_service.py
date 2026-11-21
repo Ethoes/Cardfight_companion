@@ -144,6 +144,7 @@ def delete_tournament_by_id(tournament_id):
     """
     Delete a tournament and all its associated match details from the database.
     """
+    conn = None
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -154,13 +155,17 @@ def delete_tournament_by_id(tournament_id):
         # Delete the tournament itself
         cursor.execute("DELETE FROM tournaments WHERE id = ?", (tournament_id,))
         
-        conn.commit()
-        
         # Check if the tournament was actually deleted
         deleted_rows = cursor.rowcount
-        conn.close()
+        conn.commit()
         
         return deleted_rows > 0
     except Exception as e:
+        # Roll back so a half-finished delete doesn't keep the DB write-locked
+        if conn:
+            conn.rollback()
         print(f"[ERROR] Failed to delete tournament: {e}")
         return False
+    finally:
+        if conn:
+            conn.close()

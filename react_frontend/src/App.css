@@ -3,122 +3,120 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Center vertically */
+  padding: 90px 20px 30px; /* Keep clear of the fixed banner */
+  box-sizing: border-box;
   text-align: center;
 }
 
 .App {
-  /* Remove centering styles from .App */
   text-align: left;
   display: block;
   min-height: auto;
+  color: var(--cc-text);
 }
 
 .App-buttons-container {
-  background: linear-gradient(135deg, #699fd0, #699fd0); /* Use the new color palette */
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border for definition */
-  border-radius: 16px; /* Rounded corners for a modern look */
-  padding: 30px; /* Increased padding for better spacing */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+  background: var(--cc-panel-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--cc-radius-lg);
+  padding: 34px 32px;
+  box-shadow: var(--cc-shadow-lg);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 25px; /* Increased space between buttons */
-  max-width: 450px; /* Slightly wider bounding box */
-  margin: 0 auto; /* Center horizontally */
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.App-buttons-container a {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--cc-radius-sm);
+}
+
+.App-buttons-container a button {
+  width: 100%;
 }
 
 .App button {
   padding: 14px 32px;
   font-size: 16px;
   font-weight: 500;
+  font-family: inherit;
   color: #ffffff;
-  background: linear-gradient(135deg, #3a3f51, #2c2f3a); /* Muted gradient with dark tones */
+  background: var(--cc-button-gradient);
   border: none;
-  border-radius: 8px; /* Slightly more rounded corners */
+  border-radius: var(--cc-radius-sm);
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition:
+    transform var(--cc-fast) var(--cc-ease),
+    box-shadow var(--cc-fast) ease,
+    background var(--cc-fast) ease,
+    opacity var(--cc-fast) ease;
 }
 
 .App button:hover {
-  transform: translateY(-3px); /* Slightly more lift */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
-  background: linear-gradient(135deg, #4a4f63, #3a3d4f); /* Slightly lighter gradient */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  background: var(--cc-button-gradient-hover);
 }
 
 .App button:active {
-  transform: translateY(0); /* Reset lift effect */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration: 80ms;
+}
+
+.App button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .App button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(58, 63, 81, 0.5); /* Focus ring with muted color */
 }
-
 
 html {
   --s: 150px; /* control the size */
-  
+
   background:
     linear-gradient(135deg, #0000 18.75%, #ea9999 0 31.25%, #0000 0),
     repeating-linear-gradient(45deg, #ea9999 -6.25% 6.25%, #f4cccc 0 18.75%);
   background-size: var(--s) var(--s);
-  animation: moveBackground 20s linear infinite; /* Add animation */
+  background-color: #f4cccc;
+  animation: moveBackground 20s linear infinite;
 }
 
 html, body {
   overflow: auto; /* Ensure scrolling is enabled globally */
 }
 
-/* Define the animation */
+/* Seamless loop: moving exactly two tiles brings the pattern back to its start */
 @keyframes moveBackground {
   0% {
     background-position: 0 0;
   }
   100% {
-    background-position: 300px 300px; /* Adjust for diagonal movement */
+    background-position: 300px 300px;
   }
 }
 
-.fade-enter {
-  opacity: 0;
-  transform: translateY(20px); /* Start slightly below */
-}
-
-.fade-enter-active {
-  opacity: 1;
-  transform: translateY(0); /* Move to the original position */
-  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-}
-
-.fade-exit {
-  opacity: 1;
-  transform: translateY(0); /* Start at the original position */
-}
-
-.fade-exit-active {
-  opacity: 0;
-  transform: translateY(-20px); /* Move slightly above */
-  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-}
-
-/* Fade-out animation for exiting */
-.page-transition-exit {
-  opacity: 1;
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-in-out;
-}
-
-/* Fade-in animation for entering */
-.page-transition-enter {
-  opacity: 0;
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in-out;
+/* Shared page header pill used by most pages (blue panel with white title) */
+.cc-page-title,
+.view-decks h2,
+.TournamentNotes-container > h2,
+.user-decks-header,
+.rules-query-header {
+  background: var(--cc-panel-gradient);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--cc-radius);
+  box-shadow: var(--cc-shadow);
+  text-align: center;
+  box-sizing: border-box;
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CardSearch from '../components/CardSearch';
 import './RulesQuery.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
 
 function RulesQuery() {
   const [question, setQuestion] = useState('');

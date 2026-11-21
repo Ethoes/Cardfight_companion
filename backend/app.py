@@ -29,6 +29,9 @@ from routes.feedback_routes import feedback_bp
 from routes.fight_routes import fight_bp
 
 def create_app(enable_rules=True):
+    from database.db_config import ensure_schema
+    ensure_schema()
+
     # Point Flask to the React build directory
     static_folder = os.path.join(os.path.dirname(__file__), '..', 'react_frontend', 'build')
     print(f"Static folder path: {static_folder}")

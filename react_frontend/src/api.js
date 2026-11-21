@@ -1,5 +1,5 @@
 // When served through Flask, API calls use relative URLs with /api prefix
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
 console.log(`[API] Using API_BASE_URL: "${API_BASE_URL}"`);
 console.log(`[API] REACT_APP_API_URL environment variable: "${process.env.REACT_APP_API_URL}"`);
 

@@ -31,3 +31,8 @@ yarn-error.log*
 /database
 
 .env*
+# Python
+.venv/
+venv/
+*.pyc
+*.log
